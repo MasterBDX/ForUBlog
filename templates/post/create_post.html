@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+
+{% load crispy_forms_tags %}
+
+  <div class='container'>
+    <div class='row '>
+      <div class='col-lg-8 col-xs-8 offset-lg-2'>
+
+          <h1 class=" mt-5 display-4 text-center">
+            {% if post %}
+              Edit {{post.title|capfirst}} Post
+            {% else %}
+             Add Post
+            {% endif %}
+             <hr>
+          </h1>
+          {{ form.media}}
+          <form  method='post' enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form|crispy }}
+
+            {% if post %}
+            <button class='btn btn-dark m-3  '>
+                Edit Post
+            </button>
+              {% else %}
+              <button class='btn btn-dark m-3'>
+                  Add Post
+              </button>
+              {% endif %}
+
+          </form>
+      </div>
+    </div>
+    </div>
+
+{% endblock %}

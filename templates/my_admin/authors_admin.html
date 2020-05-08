@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+
+
+<div class='container'>
+  {% if messages %}
+  <div class="messages alert alert-success">
+    {% for message in messages %}
+    <span {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</span>
+    {% endfor %}
+  </div>
+  {% endif %}
+  <div class='row '>
+    <div class='col-lg-12 '>
+      <h1 class="text-center mt-5 display-4">
+        Authors Dashboard
+        <hr>
+      </h1>
+    </div>
+    <div class='col-lg-12'>
+      {% include 'snippets/search_users.html' %}
+    </div>
+    <div class='col-lg-12 text-center'>
+      {% for a in alpha %}
+      <a href="?beta={{a}}" class='alpha'>{{a|upper}}</a>
+      {% endfor %}
+      <br>
+      <br>
+      <br>
+    </div>
+    <div class="col-lg-12">
+      {% if page_obj %}
+      <table class="table">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">UserName</th>
+            <th scope="col">Slug</th>
+            <th scope="col">Email</th>
+            <th scope="col">Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for user in page_obj.object_list %}
+          <tr>
+            <th scope="row">{{user.id}}</th>
+            <td>{{user.username}}</td>
+            <td>{{user.slug}}</td>
+            <td>{{user.email}}</td>
+            <td>
+              <form method='post' action="{% url 'myadmin:confirm_author' slug=user.slug %}">
+                {% csrf_token %}
+                <input type="hidden" name='status' value="{% if user.is_author %}delete {% else %} create{% endif %}" />
+                <button user-slug='{{user.slug}}' id='author-control' class="btn 
+                                       {% if user.is_author %}
+                                            btn-danger
+                                          {% else %}
+                                            btn-info
+                                          {% endif %}
+
+                                  ">
+                  {% if user.is_author %}
+                  Remove Author
+                  {% else %}
+                  Add Author
+                  {% endif %}
+                </button>
+              </form>
+
+            </td>
+          </tr>
+          {% endfor %}
+
+        </tbody>
+
+      </table>
+      {% else %}
+      <div class='col-lg-12 text-center '>
+        {% if request.GET.q %}
+        <h2> Could not find any results for {{request.GET.q}} </h2>
+        {% else %}
+        <h2> There are no users </h2>
+        {% endif %}
+      </div>
+      {% endif %}
+    </div>
+
+    {% if page_obj %}
+    <div class='col-lg-12 '>
+      <!-- Pagination -->
+      {% include 'snippets/paginator.html' with page_obj=page_obj page_var=page_var beta=request.GET.beta %}
+      <br>
+    </div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

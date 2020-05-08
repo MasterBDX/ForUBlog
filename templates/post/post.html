@@ -1,0 +1,163 @@
+{% extends 'base.html' %}
+{% block  content %}
+{% load static %}
+
+<div class="container">
+  <div class="row">
+
+    <!-- Latest Posts -->
+    <main class="post blog-post col-lg-8">
+      <div class="container">
+        <div class="post-single">
+          <div class="post-thumbnail">
+            <img src="{{obj.thumbnail.url}}" alt="..." class="img-fluid img-radius">
+          </div>
+          <div class="post-details">
+            <div class="post-meta d-flex justify-content-between">
+              <div class="category">
+                {% for cat in obj.categories.all %}
+                <a href="{% url 'posts:category_posts' cat_slug=cat.slug %}">
+                  {{cat.title}}
+                </a>
+                {% endfor %}
+              </div>
+            </div>
+            <h1>{{obj.title|capfirst}}
+              <a href="{#}">
+                    <i class="fa fa-bookmark-o"></i>
+                  </a>
+                </h1>
+                  <div class="post-footer d-flex align-items-center flex-column flex-sm-row">
+
+                    <a href="{% url 'posts:author_posts' auth_slug=obj.author.user.slug %}" class="author d-flex align-items-center flex-wrap">
+
+                    <div class="avatar"
+                         style=" {% if obj.author.user.profileimage.image %}
+                                      background-image:url({{ obj.author.user.profileimage.image.url }})
+                                      {% else %}
+                                      background-image:url({% static 'img/default.png' %})
+                                      {% endif %}
+                                      ;
+                                      background-size: cover;
+                                      " 
+                      
+                                  >
+                
+                    </div>
+                    <div class="title"><span>{{obj.author.user.username}}</span></div></a>
+                  <div class="d-flex align-items-center flex-wrap">
+                    <div class="date"><i class="icon-clock"></i>{{obj.timestamp|timesince}}</div>
+                    <!-- <div class="views"><i class="icon-eye"></i> {{obj.view_count}}</div> -->
+                    <div class="comments meta-last"><i class="icon-comment"></i>{{obj.comments.count}}</div>
+                  </div>
+                </div>
+                <div class="post-body">
+                  <p class="lead">{{obj.overview}}</p>
+                <p>{{obj.content|safe}}</p>
+                </div>
+                <div class="social-btns text-center">
+                  <hr>
+                  <p class="lead"> share it on</p>
+        <a  href="https://www.facebook.com/sharer/sharer.php?u={{request.build_absolute_uri}}">
+            <i class="fab fa-facebook-square fa-fw fa-2x"></i>
+          
+        </a>
+         <a  
+            href="https://twitter.com/intent/tweet?url={{request.build_absolute_uri}}&text={{share_str}}&
+            original_referer=https://twitter.com/share?url={{request.build_absolute_uri}}&text={{share_str}}"            
+            >
+            <i class="fab fa-twitter-square fa-fw fa-2x"></i>
+            
+        </a>
+        <a  href="http://www.reddit.com/submit?url={{request.build_absolute_uri}}&title={{share_title}}">
+            
+            <i class="fab fa-reddit-square fa-fw fa-2x"></i>
+            </a>
+            
+
+            
+                </div>
+
+
+                <div class="post-tags">
+                  {% for cat in obj.categories.all %}
+                    <a href="{% url 'posts:category_posts' cat_slug=cat.slug %}" class="tag">#{{cat.title}}</a>
+                  {% endfor %}
+                </div>
+
+                <div class="posts-nav d-flex justify-content-between align-items-stretch flex-column flex-md-row">
+                  {% if previous %}
+                      <a href="{%  url 'posts:detail' slug=previous.slug %}" class="prev-post text-left d-flex align-items-center">
+                        <div class="icon prev">
+                          <i class="fa fa-angle-left"></i>
+                        </div>
+                        <div class="text">
+                          <strong class="text-primary">Previous Post </strong>
+                          <h6>{{previous.title}}</h6>
+                        </div>
+                      </a>
+                  {% else %}
+                    <div class=" prev">
+                          
+                        </div>
+                        <div class="text">
+                          
+                        </div>
+                  {% endif %}
+                  {% if next %}
+                  <a href="{%  url 'posts:detail' slug=next.slug %}" class="next-post text-right d-flex align-items-center justify-content-end">
+                      <div class="text">
+
+                        <strong class="text-primary">Next Post </strong>
+                        <h6>{{next.title}}</h6>
+                      </div>
+                      <div class="icon next">
+                        <i class="fa fa-angle-right"></i>
+                    </div>
+                  </a>
+                  {% endif %}
+                </div>
+                {% if user.is_author %}
+                <div class='col-lg-12'>
+
+                    <a href="{% url 'posts:edit_post' post_slug=obj.slug %}" class='btn btn-dark mr-4'>
+                      Edit
+                    </a>
+
+                    <a href="{% url 'posts:delete_post' post_slug=obj.slug %}" class='btn btn-dark'>
+                      Delete
+                    </a>
+                </div>
+                {% endif %}
+                
+                <!-- ############################################## -->
+                 
+
+               {% include 'snippets/comment.html' %}
+
+                
+              </div>
+            </div>
+          </div>
+        </main>
+        <aside class="col-lg-4">
+
+          <!-- Widget [Search Bar Widget]-->
+            {% include 'snippets/search_bar_widget.html' %}
+
+          <!-- Widget [Latest Posts Widget]        -->
+            {% include 'snippets/latest_posts.html' with recent_posts=recent_posts %}
+
+          <!-- Widget [Categories Widget]-->
+            {% include 'snippets/categories_widget.html' with num_cates=num_cates %}
+
+          <!-- Widget [Tags Cloud Widget]-->
+            {% include 'snippets/tags_widget.html' with num_cates=num_cates %}
+
+        </aside>
+      </div>
+      
+         
+     
+    </div>
+{% endblock %}

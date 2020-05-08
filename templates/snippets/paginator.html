@@ -1,0 +1,27 @@
+<nav aria-label="Page navigation example ">
+
+  <ul class="pagination pagination-template d-flex justify-content-center">
+
+    {% if page_obj.has_previous %}
+
+    <li class="page-item"><a href="?{{page_var}}={{page_obj.previous_page_number}}{% if beta %}&beta={{beta}}{% endif %}" class="page-link"> <i class="fa fa-angle-left"></i></a></li>
+
+    {% endif %}
+
+    {% for page in page_obj.paginator.page_range %}
+
+      {% if page == page_obj.number %}
+        <li class="page-item"><a href="?{{page_var}}={{page_obj.number}}{% if request.GET.q %}&q={{request.GET.q}}{% endif %}{% if beta %}&beta={{beta}}{% endif %}"
+          class="page-link active">{{page_obj.number}}</a></li>
+      {% elif page > page_obj.number|add:'-3' and page < page_obj.number|add:'3'  %}
+        <li class="page-item"><a href="?{{page_var}}={{page}}{% if request.GET.q %}&q={{request.GET.q}}{% endif %}{% if beta %}&beta={{beta}}{% endif %}" class="page-link">{{page}}</a></li>
+      {% endif %}
+
+    {% endfor %}
+
+    {% if page_obj.has_next %}
+      <li class="page-item"><a href="?{{page_var}}={{page_obj.next_page_number}}{% if request.GET.q %}&q={{request.GET.q}}{% endif %}{% if beta %}&beta={{beta}}{% endif %}"
+        class="page-link"> <i class="fa fa-angle-right"></i></a></li>
+    {% endif %}
+  </ul>
+</nav>

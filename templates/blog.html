@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+
+<div class="container">
+  <div class="row">
+
+    <!-- Latest Posts -->
+    <main class="posts-listing col-lg-8">
+      <div class="container">
+        <div class="row">
+          <!-- post -->
+          {% if page_obj.object_list %}
+          {% for obj in page_obj.object_list %}
+          <div class="post col-xl-6">
+            <div class="post-thumbnail">
+              <a href="{% url 'posts:detail' slug=obj.slug %}">
+                <img src="{% if obj.thumbnail.url %} 
+                            {{ obj.thumbnail.url }}
+                            {% else %}
+                            {% static 'img/python.png' %}
+                            {% endif %} " alt="..." class="img-fluid img-thumbnail">
+              </a>
+            </div>
+            <div class="post-details">
+              <div class="post-meta d-flex justify-content-between">
+                <div class="date meta-last">{{obj.timestamp|date:'j M | Y'}}</div>
+                <div class="category">
+                  {% for category in obj.categories.all %}
+                  <a href="{% url 'posts:category_posts' cat_slug=category.slug %}">{{category}}</a>
+                  {% endfor %}
+                </div>
+              </div><a href="{% url 'posts:detail' slug=obj.slug %}">
+                <h3 class="h4">{{obj.title|capfirst}}</h3>
+              </a>
+              <p class="text-muted">{{obj.overview|truncatewords:26}}</p>
+
+              <footer class="post-footer d-flex align-items-center">
+                <a href="{% url 'posts:author_posts' auth_slug=obj.author.user.slug %}"
+                  class="author d-flex align-items-center flex-wrap">
+
+                  <div class="avatar" style=" {% if obj.author.user.profileimage.image %}
+                                    background-image:url({{ obj.author.user.profileimage.image.url  }})
+                                    {% else %}
+                                    background-image:url({% static 'img/default.png' %})
+                                    {% endif %}
+                                    ;
+                                    background-size: cover;">
+                  </div>
+
+                  <div class="title"><span>{{obj.author.user.username}}</span></div>
+                </a>
+                <div class="date"><i class="icon-clock"></i>{{obj.timestamp|timesince}}</div>
+                <div class="comments meta-last"><i class="icon-comment"></i>{{obj.comments.count}}</div>
+              </footer>
+            </div>
+          </div>
+          {% endfor %}
+
+          {% else %}
+          {% if request.GET.q %}
+          <div class="col-lg-12 text-center ">
+            <h4 class='display-4'> There are no results for {{request.GET.q|capfirst}} </h4>
+          </div>
+          {% else %}
+          <div class="col-lg-12 text-center ">
+            <h4 class='display-4'> There are no Posts </h4>
+          </div>
+          {% endif %}
+          {% endif %}
+
+        </div>
+
+        {% if  page_obj.object_list %}
+        {% include 'snippets/paginator.html' with page_obj=page_obj page_var=page_var %}
+        {% endif %}
+      </div>
+    </main>
+    <aside class="col-lg-4">
+
+      <!-- Widget [Search Bar Widget]-->
+      {% include 'snippets/search_bar_widget.html' %}
+
+      {% if  blog_var %}
+      <!-- Widget [Latest Posts Widget]        -->
+      {% include 'snippets/latest_posts.html' %}
+
+
+      <!-- Widget [Categories Widget]-->
+      {% include 'snippets/categories_widget.html' %}
+
+      <!-- Widget [Tags Cloud Widget]-->
+      {% include 'snippets/tags_widget.html' %}
+      {% endif %}
+    </aside>
+  </div>
+</div>
+{% endblock %}

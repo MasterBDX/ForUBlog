@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  {% load static %}
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="all,follow">
+  <meta name="google-site-verification" content="iViYx1PMWln9N-D5hvwpC_KsabxT7qk1OIii91UHwBc" />
+
+  <title>{% block title %}{% endblock %}</title>
+  {% include 'snippets/css_files.html' %}
+    <script src="https://kit.fontawesome.com/7818a3d390.js"></script>
+    <script src="{% static 'js/highlight.pack.js' %}"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+<script src="https://kit.fontawesome.com/7818a3d390.js"></script>
+  
+</head>
+
+
+  {% load static %}
+
+  <body>
+    
+      <header class="header">
+        {% include 'snippets/navbar.html' %}
+      </header>
+
+    {% block content %}{% endblock %}
+
+    <!-- Page Footer-->
+    {% include 'snippets/footer.html' %}
+
+    <!-- javaScript files -->
+    {% include 'snippets/javaScriptFiles.html' %}
+
+  </body>
+
+</html>

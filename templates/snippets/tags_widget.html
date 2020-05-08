@@ -1,0 +1,13 @@
+{% if cates_num %}
+<div class="widget tags">
+  <header>
+    <h3 class="h6">Tags</h3>
+  </header>
+  <ul class="list-inline">
+    {% for cat in cates_num %}
+    <li class="list-inline-item"><a href="{% url 'posts:category_posts' cat_slug=cat.categories__slug %}"
+        class="tag">#{{cat.categories__title}}</a></li>
+    {% endfor %}
+  </ul>
+</div>
+{% endif %}

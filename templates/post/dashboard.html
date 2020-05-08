@@ -1,0 +1,267 @@
+{% extends 'base.html' %}
+{% block title %}Dashboard{% endblock %}
+{% block  content %}
+{% load static %}
+
+<div class="container dash-board">
+  <div class="row">
+    <div class="col-sm-10 offset-md-1 text-center">
+      <h1 class="display-4"><br> Dashboard<br>
+        <hr>
+      </h1>
+    </div>
+    <div class="col-sm-10 offset-md-1">
+      <h2>Posts</h2>
+      <p class="lead"><i class="fa fa-plus"></i> To add new post</p>
+      <a class="btn btn-info" href="{% url 'posts:add_post' %}">Add</a>
+    </div>
+    <div class="col-sm-10 offset-md-1">
+      <br />
+      {% if posts %}
+      <table class="table">
+
+        <thead class="thead-dark">
+          <tr style="border-radius: 6px">
+            <th scope="col">Title</th>
+
+            <th scope="col">Slug</th>
+            <th scope="col">Created At</th>
+            <th scope="col">
+
+              ###
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for post in posts %}
+          <tr>
+            <th scope="row">
+
+              <a href="{{post.get_absolute_url}}">
+                {{post.title|capfirst}}
+              </a>
+            </th>
+
+            <td>{{post.slug}}</td>
+            <td>{{post.timestamp}}</td>
+            <td class="">
+              <a href="{% url 'posts:edit_post' post_slug=post.slug %}" class='btn'>
+                Edit
+              </a>
+
+              <a href="{% url 'posts:delete_post' post_slug=post.slug %}" class='btn'>
+                Delete
+              </a>
+            </td>
+          </tr>
+          {% endfor %}
+
+        </tbody>
+      </table>
+      {% else %}
+      <p class="das-par text-center"> There are No Posts for you</p>
+      {% endif %}
+
+    </div>
+
+    <div class="col-sm-10 offset-md-1">
+      <h2>Categories</h2>
+      <p class=""><i class="fa fa-plus"></i> To add new Category</p>
+      <a class="btn btn-info" href="{% url 'posts:add_category' %}">Add</a>
+    </div>
+    <div class="col-sm-10 offset-md-1">
+      <br />
+      {% if cates %}
+      <table class="table">
+
+        <thead class="thead-dark">
+          <tr style="border-radius: 6px">
+            <th scope="col">Title</th>
+            <th scope="col">Created At</th>
+            <th scope="col">
+
+              ###
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for cate in cates %}
+          <tr>
+            <th scope="row">{{cate.title|capfirst}}</th>
+            <td>{{cate.timestamp}}</td>
+            <td class="">
+              <a href="{% url 'posts:edit_category' slug=cate.slug %}" class='btn'>
+                Edit
+              </a>
+
+            </td>
+          </tr>
+          {% endfor %}
+
+        </tbody>
+      </table>
+      {% else %}
+      <p class="das-par text-center"> There are No Categories</p>
+      {% endif %}
+
+    </div>
+    {% if request.user.is_admin %}
+    <div class="col-sm-10 offset-md-1">
+      <h2>About Me</h2>
+      {% if not about_me %}
+      <p class="">
+        <i class="fa fa-plus"></i> To add new about me description
+      </p>
+      <a class="btn btn-info" href="{% url 'myadmin:add_aboutme' %}">Add</a>
+      {% endif %}
+    </div>
+    <div class="col-sm-10 offset-md-1">
+      <br />
+      {% if about_me %}
+      <table class="table">
+
+        <thead class="thead-dark">
+          <tr style="border-radius: 6px">
+            <th scope="col">ID</th>
+            <th scope="col">Created At</th>
+            <th scope="col">Updated At</th>
+            <th scope="col">
+
+              ###
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for about in about_me %}
+          <tr>
+            <th scope="row">{{about.id}}</th>
+            <td>{{about.timestamp}}</td>
+            <td>{{about.updated}}</td>
+            <td class="">
+              <a href="{% url 'myadmin:edit_aboutme' pk=about.id %}" class='btn'>
+                Edit
+              </a>
+
+              <a href="{% url 'myadmin:delete_aboutme' pk=about.id %}" class='btn'>
+                Delete
+              </a>
+
+            </td>
+          </tr>
+          {% endfor %}
+
+        </tbody>
+      </table>
+      {% else %}
+      <p class="das-par text-center"> There are No About Me Description yet</p>
+      {% endif %}
+
+    </div>
+
+    <div class="col-sm-10 offset-md-1">
+      <h2>About Blog</h2>
+      {% if not about_blog %}
+      <p class="">
+        <i class="fa fa-plus"></i> To add new about blog description
+      </p>
+      <a class="btn btn-info" href="{% url 'myadmin:add_aboutblog' %}">Add</a>
+      {% endif %}
+    </div>
+    <div class="col-sm-10 offset-md-1">
+      <br />
+      {% if about_blog %}
+      <table class="table">
+
+        <thead class="thead-dark">
+          <tr style="border-radius: 6px">
+            <th scope="col">ID</th>
+            <th scope="col">Created At</th>
+            <th scope="col">Updated At</th>
+            <th scope="col">
+
+              ###
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for about in about_blog %}
+          <tr>
+            <th scope="row">{{about.id}}</th>
+            <td>{{about.timestamp}}</td>
+            <td>{{about.updated}}</td>
+            <td class="">
+              <a href="{% url 'myadmin:edit_aboutblog' pk=about.id %}" class='btn'>
+                Edit
+              </a>
+
+              <a href="{% url 'myadmin:delete_aboutblog' pk=about.id %}" class='btn'>
+                Delete
+              </a>
+
+            </td>
+          </tr>
+          {% endfor %}
+
+        </tbody>
+      </table>
+      {% else %}
+      <p class="das-par text-center"> There are No About Blog Description yet</p>
+      {% endif %}
+
+    </div>
+    <div class="col-sm-10 offset-md-1">
+      <h2>Privacy & Policy</h2>
+      {% if not privacy_policy %}
+      <p class="">
+        <i class="fa fa-plus"></i> To add new Privacy & Policy description
+      </p>
+      <a class="btn btn-info" href="{% url 'myadmin:add_privacy_policy' %}">Add</a>
+      {% endif %}
+    </div>
+    <div class="col-sm-10 offset-md-1">
+      <br />
+      {% if privacy_policy %}
+      <table class="table">
+
+        <thead class="thead-dark">
+          <tr style="border-radius: 6px">
+            <th scope="col">ID</th>
+            <th scope="col">Created At</th>
+            <th scope="col">Updated At</th>
+            <th scope="col">
+
+              ###
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for pp in privacy_policy %}
+          <tr>
+            <th scope="row">{{pp.id}}</th>
+            <td>{{pp.timestamp}}</td>
+            <td>{{pp.updated}}</td>
+            <td class="">
+              <a href="{% url 'myadmin:edit_privacy_policy' pk=pp.id %}" class='btn'>
+                Edit
+              </a>
+
+              <a href="{% url 'myadmin:delete_privacy_policy' pk=pp.id %}" class='btn'>
+                Delete
+              </a>
+
+            </td>
+          </tr>
+          {% endfor %}
+
+        </tbody>
+      </table>
+      {% else %}
+      <p class="das-par text-center"> There are No Privacy Policy Description yet</p>
+      {% endif %}
+
+    </div>
+    {% endif %}
+
+  </div>
+</div>
+{% endblock %}

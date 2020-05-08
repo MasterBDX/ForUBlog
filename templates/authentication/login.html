@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block title %}{% endblock %}
+
+{% block content %}
+{% load crispy_forms_tags %}
+<div class="container mt-5 mb-5">
+  <div class='row'>
+    {% if messages %}
+    <div class=" col-lg-8 offset-lg-2 alert alert-success messages text-center">
+      {% for message in messages %}
+      <span {% if message.tags %} class="{{ message.tags }}" {% endif %}>
+
+        {{ message }}
+      </span>
+      {% endfor %}
+    </div>
+    {% endif %}
+    <div class='col-lg-8 offset-lg-2'>
+      <h2 class=' text-center display-4 myh2'> Login </h2>
+
+      <form method="post">
+        {% csrf_token %}
+        {{form|crispy}}
+        <input type="submit" value="Login">
+      </form>
+      <br>
+      <a href="{% url 'password_reset' %}">forgot your password</a>
+    </div>
+  </div>
+</div>
+{% endblock %}

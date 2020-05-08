@@ -1,0 +1,12 @@
+{% if cates_num %}
+<div class="widget categories">
+  <header>
+    <h3 class="h6">Categories</h3>
+  </header>
+  {% for cat in cates_num %}
+  <div class="item d-flex justify-content-between"><a
+      href="{% url 'posts:category_posts' cat_slug=cat.categories__slug %}">{{cat.categories__title|capfirst}}</a><span>{{cat.cat_num}}</span>
+  </div>
+  {% endfor %}
+</div>
+{% endif %}

@@ -1,0 +1,66 @@
+<div class="comment" id="reply-{{reply.id}}">
+  <div class="comment-header d-flex justify-content-between">
+    <div class="user d-flex align-items-center">
+      <div class="image">
+        <img src="{% if user.have_image %}
+                  {{ reply.user.profileimage.image.url }}
+                  {% endif %}
+          "  alt="..." class="img-fluid rounded-circle"></div>
+      <div class="title">
+        <strong>{{reply.user.username}}</strong>
+        <span class="date">{{reply.timestamp|timesince}} ago</span>
+      </div>
+    </div>
+  </div>
+  
+  <div class="comment-body">
+    
+    <p id="reply-content-{{reply.id}}">{{reply.content}}</p>
+    
+    <!-- Reply Option -->
+        
+        <div class="row">
+        
+        {% if user == reply.user %}
+          <div class="col-md-2">
+               <a href="#" id="reply-edit-{{reply.id}}" class="replyEditCommentBtn " > edit </a>
+          </div>
+          <div class="col-md-2">
+              <a href="" id="reply-delete-{{reply.id}}"  class="replyDeleteCommentBtn " > delete </a>
+          </div>
+          {% endif %}
+
+        </div>
+    <!-- ================================================================ -->
+
+    <!-- Comment Options Dev Section -->
+     
+      {% if user == reply.user %}
+          
+          <!-- Edit Div -->
+              
+              <div class="editDiv" id='reply-editDiv-{{reply.id}}'>
+                <br>
+
+                <form action="{% url 'comments:edit_reply' post_slug=comment.post.slug comment_pk=comment.id reply_pk=reply.id %}"
+                      method="post" id="reply-editForm-{{reply.id}}" >
+                      {% csrf_token %}
+                      {{editform}}
+                      <br />
+                      <button type="submit" class="btn btn-dark">Edit reply</button>
+
+                </form>
+              </div>
+          
+          <!-- Delete Div -->
+              <div id="reply-deleteDiv-{{reply.id}}" class="deleteDiv">
+                <p class="alert alert-warning"> are you sure you want to delete your reply ??</p>
+                <br>
+                <a href="{% url 'comments:delete_reply' post_slug=comment.post.slug comment_pk=comment.id reply_pk=reply.id %}"
+                   class=" btn btn-dark" >delete</a>
+              </div>
+
+    {% endif %}
+  </div>
+
+</div>

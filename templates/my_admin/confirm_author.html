@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+
+<div class='container'>
+  <div class='row '>
+    <div class='col-lg-12 '>
+
+      <h1 class="text-center mt-5 display-4">
+        Confirm Author
+        <hr>
+      </h1>
+      <p class='text-center lead'>
+        are you sure you want to {{status}} author for {{username}} ?</p>
+      <form class='text-center' method='post'>
+        {% csrf_token %}
+        <input type="hidden" name='confirm' value='True' />
+        <button class='btn btn-dark '>{{status|upper}}</button>
+        <br>
+        <br>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

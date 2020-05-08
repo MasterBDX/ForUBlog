@@ -1,0 +1,145 @@
+{% load static %}
+<div class="add-comment">
+  <header>
+    <h4>Leave a comment</h4>
+  </header>
+
+  <form action="{% url 'comments:add' post_slug=obj.slug %}" method='post' id="commentsForm" class="commenting-form">
+    <div class="row">
+      <div class="form-group col-md-12">
+        {% csrf_token %}
+        {{form}}
+      </div>
+      <div class="form-group col-md-12">
+        <button type="submit" class="btn btn-dark">Add Comment</button>
+      </div>
+    </div>
+  </form>
+</div>
+
+<div class="post-comments" id="postComments">
+  <header id='commentsHeader'>
+
+    {% if messages %}
+    {% for message in messages %}
+    <div class="
+              {% if message.tags %} 
+                {{ message.tags }}
+              {% endif %}
+              {% if message.level == DEFAULT_MESSAGE_LEVELS.WARNING %}
+                alert alert-warning  
+              {% else %}
+                alert alert-success
+              {% endif %}
+
+               alert-dismissible fade show messages
+              " role="alert">
+
+      {{ message }}
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    {% endfor %}
+
+    {% endif %}
+
+    <h4 id='postComments'>Post Comments<span class="no-of-comments">({{obj.comments_count}})</span></h3>
+  </header>
+  <!-- ---- -->
+  {% for comment in obj.all_comments %}
+  <div class="comment" id="{{comment.id}}">
+    <div class="comment-header d-flex justify-content-between">
+      <div class="user d-flex align-items-center">
+        <div class="image">
+          <img src="{% if comment.user.profileimage.image %}
+                  {{ comment.user.profileimage.image.url }}
+                  {% else %}
+                  {% static 'img/python.png' %}
+                  {% endif %}
+          " alt="..." class="img-fluid rounded-circle"></div>
+        <div class="title">
+          <strong>{{comment.user.username}}</strong>
+          <span class="date">{{comment.timestamp|timesince}} ago</span>
+        </div>
+      </div>
+    </div>
+    <div class="comment-body">
+      <p id="comment-content-{{comment.id}}">{{comment.content}}</p>
+
+      <!-- Comment Option -->
+      <div class="row">
+        {% if user == comment.user %}
+        <div class="col-md-2">
+          <a href="#" id="edit-{{comment.id}}" class="EditCommentBtn "> edit </a>
+        </div>
+        <div class="col-md-2">
+          <a href="" id="delete-{{comment.id}}" class="DeleteCommentBtn "> delete </a>
+        </div>
+        {% endif %}
+        {% if comment.replies.count > 0 %}
+        <div class="col-md-2">
+          <a href="" id="replies-{{comment.id}}" class="repliesBtn "> <span>replies {{comment.replies.count}}</span>
+          </a>
+        </div>
+        {% endif %}
+        <div class="col-md-3">
+          <a href="" id="add-reply-{{comment.id}}" class="addReplyBtn "> add reply </a>
+        </div>
+
+      </div>
+      <!-- ================================================================ -->
+
+      <!-- Comment Options Dev Section -->
+      {% if user == comment.user %}
+      <!-- Edit Div -->
+      <div class="editDiv" id='editDiv-{{comment.id}}'>
+        <br>
+        <form action="{% url 'comments:edit' post_slug=comment.post.slug comment_pk=comment.id %}" method="post"
+          id="editForm-{{comment.id}}">
+          {% csrf_token %}
+          {{editform}}
+          <br />
+          <button type="submit" class="btn btn-dark">Edit</button>
+
+        </form>
+      </div>
+      <!-- ============================================ -->
+
+      <!-- Delete Div -->
+
+      <div id="deleteDiv-{{comment.id}}" class="deleteDiv">
+        <p class="alert alert-warning"> are you sure you want to delete your comment ??</p>
+        <br>
+        <a href="{% url 'comments:delete' post_slug=comment.post.slug comment_pk=comment.id %}"
+          class="  btn btn-dark">delete</a>
+      </div>
+
+      {% endif %}
+      <!-- ========================================================== -->
+      <div id="repliesDiv-{{comment.id}}" class="replies">
+        <br>
+        {% for reply in comment.replies.all %}
+        {% include 'snippets/reply.html' %}
+        {% endfor %}
+      </div>
+      <div id="addReplyDiv-{{comment.id}}" class="addReply">
+        <br>
+        <form action="{% url 'comments:add_reply' post_slug=comment.post.slug comment_pk=comment.id %}" method="post"
+          id="add-reply-{{comment.id}}">
+          {% csrf_token %}
+          {{replyform}}
+          <br />
+          <button type="submit" class="btn btn-dark">Add Reply</button>
+
+        </form>
+      </div>
+
+
+      <!-- ================================================================================ -->
+    </div>
+
+  </div>
+  {% endfor %}
+  <!-- --- -->
+</div>
