@@ -1,0 +1,124 @@
+{% extends 'base.html' %}
+{% block title %}Info Dashboard{% endblock %}
+{% block  content %}
+{% load static %}
+
+<div class="container dash-board">
+  <div class="row">
+    
+    <div class="col-sm-10 offset-md-1 text-center">
+      <h1 class="display-4">
+          <br>
+            Info Dashboard
+          <br>
+        <hr>
+      </h1>
+    </div>
+    
+    <div class="col-sm-10 offset-md-1">
+      <h2>About Blog</h2>
+      {% if not about_blog %}
+      <p class="">
+        <i class="fa fa-plus"></i> To add new about blog description
+      </p>
+      <a class="btn btn-info" href="{% url 'myadmin:add_aboutblog' %}">Add</a>
+      {% endif %}
+    </div>
+    <div class="col-sm-10 offset-md-1">
+      <br />
+      {% if about_blog %}
+      <table class="table">
+
+        <thead class="thead-dark">
+          <tr style="border-radius: 6px">
+            <th scope="col">ID</th>
+            <th scope="col">Created At</th>
+            <th scope="col">Updated At</th>
+            <th scope="col">
+
+              ###
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for about in about_blog %}
+          <tr>
+            <th scope="row">{{about.id}}</th>
+            <td>{{about.timestamp}}</td>
+            <td>{{about.updated}}</td>
+            <td class="">
+              <a href="{% url 'myadmin:edit_aboutblog' pk=about.id %}" class='btn'>
+                Edit
+              </a>
+
+              <a href="{% url 'myadmin:delete_aboutblog' pk=about.id %}" class='btn'>
+                Delete
+              </a>
+
+            </td>
+          </tr>
+          {% endfor %}
+
+        </tbody>
+      </table>
+      {% else %}
+      <p class="das-par text-center"> There are No About Blog Description yet</p>
+      {% endif %}
+
+    </div>
+    <div class="col-sm-10 offset-md-1">
+      <h2>Privacy & Policy</h2>
+      {% if not privacy_policy %}
+      <p class="">
+        <i class="fa fa-plus"></i> To add new Privacy & Policy description
+      </p>
+      <a class="btn btn-info" href="{% url 'myadmin:add_privacy_policy' %}">Add</a>
+      {% endif %}
+    </div>
+    <div class="col-sm-10 offset-md-1">
+      <br />
+      {% if privacy_policy %}
+      <table class="table">
+
+        <thead class="thead-dark">
+          <tr style="border-radius: 6px">
+            <th scope="col">ID</th>
+            <th scope="col">Created At</th>
+            <th scope="col">Updated At</th>
+            <th scope="col">
+
+              ###
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for pp in privacy_policy %}
+          <tr>
+            <th scope="row">{{pp.id}}</th>
+            <td>{{pp.timestamp}}</td>
+            <td>{{pp.updated}}</td>
+            <td class="">
+              <a href="{% url 'myadmin:edit_privacy_policy' pk=pp.id %}" class='btn'>
+                Edit
+              </a>
+
+              <a href="{% url 'myadmin:delete_privacy_policy' pk=pp.id %}" class='btn'>
+                Delete
+              </a>
+
+            </td>
+          </tr>
+          {% endfor %}
+
+        </tbody>
+      </table>
+      {% else %}
+      <p class="das-par text-center"> There are No Privacy Policy Description yet</p>
+      {% endif %}
+
+    </div>
+    {% endif %}
+
+  </div>
+</div>
+{% endblock %}

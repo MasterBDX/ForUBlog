@@ -32,7 +32,7 @@ def search_posts_view(request):
         'page_var': page_var,
         'page_obj': page_qy,
     }
-    return render(request, 'blog.html', context)
+    return render(request, 'posts/list.html', context)
 
 
 class SearchUserView(ListView):

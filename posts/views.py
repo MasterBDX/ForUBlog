@@ -8,12 +8,34 @@ from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import Http404
 
-from posts.mixins import AuthorRequiredMixin, AuthorCheckMixin
 from .forms import AddPostForm
-from comments.forms import CommentForm, EditCommentForm, ReplyForm
 from .models import Post, Author, Category
+
+from comments.forms import CommentForm, EditCommentForm, ReplyForm
+
+from main.mixins import AuthorRequiredMixin, AuthorCheckMixin
+from main.models import (AboutBlog, AboutMe, PrivacyPolicy)
+
 from urllib.parse import quote_plus
-from myadmin.models import (AboutBlog, AboutMe, PrivacyPolicy)
+
+
+def posts_list_view(request):
+    page = request.GET.get('page', 1)
+    page_var = 'page'
+    blog_var = True
+    cates_num = Post.objects.categories_count()
+    recent_posts = Post.objects.latest().select_related(
+        'author__user').prefetch_related('comments')
+    page_qy = Post.objects.qs_paginator(page=page)
+    context = {
+
+        'page_var': page_var,
+        'page_obj': page_qy,
+        'recent_posts': recent_posts,
+        'cates_num': cates_num,
+        'blog_var': blog_var,
+    }
+    return render(request, 'posts/list.html', context)
 
 
 def post_detail(request, slug):
@@ -46,7 +68,7 @@ def post_detail(request, slug):
                    'share_str': share_str, 'editform': EditCommentForm(),
                    'share_title': share_title, 'replyform': ReplyForm()}
 
-        return render(request, 'post/post.html', context)
+        return render(request, 'posts/detail.html', context)
 
     raise Http404()
 
@@ -63,7 +85,7 @@ def category_post_view(request, cat_slug):
 
     }
 
-    return render(request, 'blog.html', context)
+    return render(request, 'posts/list.html', context)
 
 
 def authors_post_view(request, auth_slug):
@@ -78,11 +100,11 @@ def authors_post_view(request, auth_slug):
         'page_obj': auth_posts,
         'page_var': page_var,
     }
-    return render(request, 'blog.html', context)
+    return render(request, 'posts/list.html', context)
 
 
 class AddPostView(LoginRequiredMixin, AuthorRequiredMixin, generic.CreateView):
-    template_name = 'post/create_post.html'
+    template_name = 'posts/create.html'
     form_class = AddPostForm
 
     def form_valid(self, form):
@@ -95,47 +117,28 @@ class AddPostView(LoginRequiredMixin, AuthorRequiredMixin, generic.CreateView):
 
 
 class EditPostView(LoginRequiredMixin, AuthorRequiredMixin, AuthorCheckMixin, generic.UpdateView):
-    template_name = 'post/create_post.html'
+    template_name = 'posts/create.html'
     model = Post
     form_class = AddPostForm
     slug_url_kwarg = 'post_slug'
 
 
 class DeletePostView(LoginRequiredMixin, AuthorRequiredMixin, AuthorCheckMixin, generic.DeleteView):
-    template_name = 'post/post_confirm_delete.html'
+    template_name = 'posts/confirm_delete.html'
     model = Post
     slug_url_kwarg = 'post_slug'
     success_url = reverse_lazy('blog')
 
 
-class Dashboard(LoginRequiredMixin, AuthorRequiredMixin, generic.ListView):
-    template_name = 'post/dashboard.html'
-    model = Post
-    context_object_name = 'posts'
-
-    def get_queryset(self):
-        author = self.request.user.author
-        qs = super().get_queryset().filter(author=author).order_by('slug')
-        return qs
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['cates'] = Category.objects.all()
-        context['about_me'] = AboutMe.objects.all()
-        context['about_blog'] = AboutBlog.objects.all()
-        context['privacy_policy'] = PrivacyPolicy.objects.all()
-        return context
-
-
 class AddCategoryView(LoginRequiredMixin, AuthorRequiredMixin, generic.CreateView):
-    template_name = 'post/create_category.html'
+    template_name = 'posts/create_category.html'
     model = Category
     fields = ['title']
     success_url = reverse_lazy('posts:dashboard')
 
 
 class EditCategoryView(LoginRequiredMixin, AuthorRequiredMixin, generic.UpdateView):
-    template_name = 'post/create_category.html'
+    template_name = 'posts/create_category.html'
     model = Category
     fields = ['title']
     success_url = reverse_lazy('posts:dashboard')

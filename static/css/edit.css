@@ -10,20 +10,17 @@ h1{
   font-size: 45px;
 }
 
-h1 hr{
-  background-color: #ddd;
-  margin-bottom: 50px;
-}
-
-h2
+.contact h2,
+.auth h2
 {
   color: #4c4c4c;
   font-weight: 600;
   text-transform: capitalize;
-  margin-bottom: 1.2em;
+  margin-bottom: 15px;
   display: inline-block;
   border-bottom: 2px solid #888;
-  padding: 0 1px 3px 1px;
+  padding-bottom: 14px;
+  padding: 0 1px 10px 1px;
 }
 
 h2 span { text-transform: uppercase; font-weight: 100;}
@@ -560,12 +557,6 @@ section.python-cover .container .row{
   padding-bottom: 2px;
 }
 
-.contact-form label .asteriskField{
-  color: #d72f2f;
-  font-size: 14px;
-  margin: 0 7px;
-}
-
 .contact-form button{
   background-color: transparent;
   padding: 8px 30px;
@@ -602,23 +593,6 @@ section.python-cover .container .row{
 .dash-board p i{
   color: #4f4f4f;
   font-size: 14px;
-}
-
-.dash-board a.btn-info{
-  width: 9.5em;
-  background-color: transparent;
-  border: none;
-  color: #444;
-  border: 1px solid #444;
-  transition: all 0.3s ease;
-  -webkit-transition: all 0.3s ease;
-  -moz-transition: all 0.3s ease;
-  -o-transition: all 0.3s ease;
-}
-
-.dash-board a.btn-info:hover{
-  background-color: #444;
-  color: #fff;
 }
 
 .dash-board table{
@@ -833,3 +807,32 @@ footer.main-footer .contact-details .social-menu a::after{
 footer.main-footer .contact-details .social-menu a:hover::after{ left: 0; }
 
 /* End (Footer) */
+
+
+
+
+/* Global Styels  */
+.my-button{
+  background-color: transparent;
+  border: none;
+  color: #444;
+  border: 1px solid #444;
+  padding: 5px 30px;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+}
+
+.my-button:hover{
+  background-color: #444;
+  color: #fff;
+}
+
+label .asteriskField{
+  color: #d72f2f;
+  font-size: 14px;
+  margin: 0 7px;
+}
+/* -------------------------- */

@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% block title %}Posts Dashboard{% endblock %}
+{% block  content %}
+{% load static %}
+
+<div class="container dash-board">
+  <div class="row">
+   
+    <div class="col-sm-10 offset-md-1 text-center">
+      <h1 class="display-4"><br> Posts Dashboard<br>
+        <hr>
+      </h1>
+    </div>
+
+    <div class="col-sm-10 offset-md-1">
+      <h2>Posts</h2>
+      <p class="lead"><i class="fa fa-plus"></i> To add new post</p>
+      <a class="btn btn-info" href="{% url 'posts:add_post' %}">Add</a>
+    </div>
+
+    <div class="col-sm-10 offset-md-1">
+      <br />
+      {% if posts %}
+      <table class="table">
+
+        <thead class="thead-dark">
+          <tr style="border-radius: 6px">
+            <th scope="col">Title</th>
+
+            <th scope="col">Slug</th>
+            <th scope="col">Created At</th>
+            <th scope="col">
+
+              ###
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for post in posts %}
+          <tr>
+            <th scope="row">
+
+              <a href="{{post.get_absolute_url}}">
+                {{post.title|capfirst}}
+              </a>
+            </th>
+
+            <td>{{post.slug}}</td>
+            <td>{{post.timestamp}}</td>
+            <td class="">
+              <a href="{% url 'posts:edit_post' post_slug=post.slug %}" class='btn'>
+                Edit
+              </a>
+
+              <a href="{% url 'posts:delete_post' post_slug=post.slug %}" class='btn'>
+                Delete
+              </a>
+            </td>
+          </tr>
+          {% endfor %}
+
+        </tbody>
+      </table>
+      {% else %}
+      <p class="das-par text-center"> There are No Posts for you</p>
+      {% endif %}
+
+    </div>
+
+  </div>
+</div>
+{% endblock %}

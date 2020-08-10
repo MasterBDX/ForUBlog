@@ -1,12 +1,12 @@
 from django.urls import path
 
-from .views import (post_detail, category_post_view, authors_post_view,
+from .views import (post_detail,posts_list_view, category_post_view, authors_post_view,
                     AddPostView, AddCategoryView, EditCategoryView, EditPostView, DeletePostView,
-                    Dashboard)
+                    )
 
 app_name = 'posts'
 urlpatterns = [
-    path('dashboard/', Dashboard.as_view(), name='dashboard'),
+    path('', posts_list_view, name='list'),
     path('add-post/', AddCategoryView.as_view(), name='add_category'),
     path('edit-category/<slug:slug>/',
          EditCategoryView.as_view(), name='edit_category'),

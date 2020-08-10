@@ -41,12 +41,12 @@
             <li> <a href="{% url 'account:login'  %}">Login</a></li>
             <li> <a href="{% url 'account:register' %}">Register</a></li>
             {% endif %}
-            <li> <a href="{% url 'contact_me' %}"> Contact Us </a></li>
+            <li> <a href="{% url 'main:contact_us' %}"> Contact Us </a></li>
           </ul>
           <ul class="list-unstyled">
-            <li> <a href="{% url 'about_blog' %}"> About Blog </a></li>
-            <li> <a href="{% url 'about_me' %}"> About Me </a></li>
-            <li> <a href="{% url 'privacy_policy' %}"> Privacy &amp; Policy </a></li>
+            <li> <a href="{% url 'main:about_blog' %}"> About Blog </a></li>
+            <li> <a href="{% url 'main:about_me' %}"> About Me </a></li>
+            <li> <a href="{% url 'main:privacy_policy' %}"> Privacy &amp; Policy </a></li>
           </ul>
         </div>
       </div>

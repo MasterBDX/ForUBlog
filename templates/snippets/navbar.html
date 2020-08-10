@@ -2,7 +2,9 @@
 <nav class="navbar navbar-expand-lg">
   <div class="search-area">
     <div class="search-area-inner d-flex align-items-center justify-content-center">
-      <div class="close-btn"><i class="icon-close"></i></div>
+      <div class="close-btn">
+        <i class="icon-close"></i>
+      </div>
       <div class="row d-flex justify-content-center">
         <div class="col-md-8">
           <form action="{% url 'search:posts' %}">
@@ -19,7 +21,7 @@
     <!-- Navbar Brand -->
     <div class="navbar-header d-flex align-items-center justify-content-between">
       <!-- Navbar Brand -->
-      <a href="{% url 'home' %}" class="navbar-brand">MasterBDX Blog</a>
+      <a href="{% url 'main:home' %}" class="navbar-brand">MasterBDX Blog</a>
       <!-- Toggle Button-->
       <button type="button" data-toggle="collapse" data-target="#navbarcollapse" aria-controls="navbarcollapse"
         aria-expanded="false" aria-label="Toggle navigation"
@@ -28,51 +30,72 @@
     <!-- Navbar Menu -->
     <div id="navbarcollapse" class="collapse navbar-collapse">
       <ul class="navbar-nav ml-auto">
-        <li class="nav-item"><a href="{% url 'home' %}" class="nav-link ">Home</a>
+        <li class="nav-item"><a href="{% url 'main:home' %}" class="nav-link ">Home</a>
         </li>
-        <li class="nav-item"><a href="{% url 'blog' %}" class="nav-link ">Blog</a>
+        <li class="nav-item"><a href="{% url 'posts:list' %}" class="nav-link ">Blog</a>
         </li>
-        <li class="nav-item"><a href="{% url 'contact_me' %}" class="nav-link ">Contact</a>
-        </li>
-
-        {% if request.user.is_authenticated %}
-        {% if request.user.is_author  %}
-        <li class="nav-item"><a href="{% url 'posts:dashboard' %}" class="nav-link ">Dashboard</a>
+        <li class="nav-item"><a href="{% url 'main:contact_us' %}" class="nav-link ">Contact</a>
         </li>
 
-
+        {% if request.user.is_authenticated %}    
+           
+        <!-------------------- Admin Dropdown ------------------>
+        {% if request.user.is_admin %}
+        <li class="nav-item dropdown">
+          
+          <a class="nav-link" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
+          aria-expanded="false">
+          
+          Admin     
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="{% url 'main:info-dashboard' %}">
+            Info
+          </a>
+          <a class="dropdown-item" href="{% url 'main:authors_admin' %}">Authors Dashboard</a>
+          <a class="dropdown-item" href="/admin/">Ultimate Dashboard</a>
+          </div>
+        </li>
         {% endif %}
 
+  <!-------------- Dashboard Dropdown -------------- -->
+    {% if request.user.is_author  %}    
         <li class="nav-item dropdown">
 
           <a class="nav-link" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
             aria-expanded="false">
-
-            {{request.user.username|capfirst}}
-
-
+            Dashboard
           </a>
-
-
-
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="{% url 'main:categories-dashboard' %}">
+              Categories
+            </a>
+            <a class="dropdown-item" href="{% url 'main:posts-dashboard' %}">
+              Posts
+            </a>
 
-            <a class="dropdown-item" href="{% url 'account:profile' user_slug=request.user.slug %}">
-              Profile</a>
 
-            <a class="dropdown-item" href="{% url 'account:logout' %}">Logout</a>
-
-            {% if request.user.is_admin %}
-
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="{% url 'myadmin:authors_admin' %}">Authors Dashboard</a>
-            <a class="dropdown-item" href="/admin/">Ultimate Dashboard</a>
           </div>
-          {% endif %}
+
         </li>
+    {% endif %}
+  <!-- -------------------------------------------------------------- -->
+        
+    <li class="nav-item dropdown">
+      <a class="nav-link" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
+          aria-expanded="false">
+      {{request.user.username|capfirst}}
+      <!-- <div class="profile-img">
 
-
-        {% else %}
+      </div>      -->
+    </a>
+    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+      <a class="dropdown-item" href="{% url 'account:profile' user_slug=request.user.slug %}">
+        Profile</a>
+        <a class="dropdown-item" href="{% url 'account:logout' %}">Logout</a>
+    </li>
+   
+  {% else %}
         <li class="nav-item"><a href="{% url 'account:login' %}" class="nav-link ">Login</a>
         </li>
         <li class="nav-item"><a href="{% url 'account:register' %}" class="nav-link ">Register</a>

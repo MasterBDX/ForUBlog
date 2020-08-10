@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% block title %}Catgories Dashboard{% endblock %}
+{% block  content %}
+{% load static %}
+
+<div class="container dash-board">
+  <div class="row">
+    <div class="col-sm-10 offset-md-1 text-center">
+      <h1 class="display-4"><br>Catgories Dashboard<br>
+        <hr>
+      </h1>
+    </div>
+
+    <div class="col-sm-10 offset-md-1">
+      <h2>Categories</h2>
+      <p class=""><i class="fa fa-plus"></i> To add new Category</p>
+      <a class="btn btn-info" href="{% url 'posts:add_category' %}">Add</a>
+    </div>
+    <div class="col-sm-10 offset-md-1">
+      <br />
+      {% if cates %}
+      <table class="table">
+
+        <thead class="thead-dark">
+          <tr style="border-radius: 6px">
+            <th scope="col">Title</th>
+            <th scope="col">Created At</th>
+            <th scope="col">
+
+              ###
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for cate in cates %}
+          <tr>
+            <th scope="row">{{cate.title|capfirst}}</th>
+            <td>{{cate.timestamp}}</td>
+            <td class="">
+              <a href="{% url 'posts:edit_category' slug=cate.slug %}" class='btn'>
+                Edit
+              </a>
+
+            </td>
+          </tr>
+          {% endfor %}
+
+        </tbody>
+      </table>
+      {% else %}
+      <p class="das-par text-center"> There are No Categories</p>
+      {% endif %}
+
+    </div>
+
+  </div>
+</div>
+{% endblock %}

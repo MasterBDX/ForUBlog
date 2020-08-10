@@ -34,11 +34,12 @@ INSTALLED_APPS = [
 
 
     # my apps
+    'main',
     'accounts',
     'marketing',
-    'myadmin',
     'posts',
     'comments',
+    'search',
 ]
 
 MIDDLEWARE = [
