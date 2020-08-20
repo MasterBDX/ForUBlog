@@ -88,7 +88,7 @@ class MyPasswordResetView(PasswordResetView):
 class UserLoginView(LoginView):
     authentication_form = LoginForm
     template_name = 'authentication/login.html'
-    success_url = reverse_lazy('home')
+    success_url = reverse_lazy('main:home')
 
     def form_valid(self, form):
         remember_me = form.cleaned_data.get('remember_me', None)
@@ -109,7 +109,7 @@ class UserLogoutView(LogoutView):
 
 class DeleteUserView(LoginRequiredMixin, DeleteView):
     model = User
-    success_url = reverse_lazy('home')
+    success_url = reverse_lazy('main:home')
     slug_url_kwarg = 'user_slug'
     template_name = 'authentication/user_confirm_delete.html'
 

@@ -24,13 +24,15 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # third party packs
-
+    'rest_framework',
+    'rest_framework.authtoken',
     'tinymce',
     'crispy_forms',
     'storages',
     'django_social_share',
     'django.contrib.sitemaps',
     'debug_toolbar',
+    'django_hosts',
 
 
     # my apps
@@ -43,6 +45,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    # 'django_hosts.middleware.HostsRequestMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -50,13 +53,17 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # 'django_hosts.middleware.HostsResponseMiddleware' 
 ]
 
 ROOT_URLCONF = 'blog.urls'
+ROOT_HOSTCONF = 'blog.hosts'
+
+
 
 AUTH_USER_MODEL = 'accounts.User'
 
-LOGIN_REDIRECT_URL = 'home'
+LOGIN_REDIRECT_URL = 'main:home'
 LOGIN_URL = '/account/login/'
 
 # crispy pack we use to style forms

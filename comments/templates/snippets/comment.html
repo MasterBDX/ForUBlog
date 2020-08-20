@@ -1,9 +1,11 @@
 {% load static %}
 <div class="add-comment">
   <header>
-    <h4>Leave a comment</h4>
+    <h4>
+      Leave a comment
+    </h4>
   </header>
-
+  
   <form action="{% url 'comments:add' post_slug=obj.slug %}" method='post' id="commentsForm" class="commenting-form">
     <div class="row">
       <div class="form-group col-md-12">
@@ -11,7 +13,7 @@
         {{form}}
       </div>
       <div class="form-group col-md-12">
-        <button type="submit" class="btn btn-dark">Add Comment</button>
+        <button type="submit" class="my-button">Add</button>
       </div>
     </div>
   </form>
@@ -47,6 +49,7 @@
     <h4 id='postComments'>Post Comments<span class="no-of-comments">({{obj.comments_count}})</span></h3>
   </header>
   <!-- ---- -->
+  
   {% for comment in obj.all_comments %}
   <div class="comment" id="{{comment.id}}">
     <div class="comment-header d-flex justify-content-between">
@@ -91,20 +94,20 @@
       <!-- ================================================================ -->
 
       <!-- Comment Options Dev Section -->
-      {% if user == comment.user %}
-      <!-- Edit Div -->
-      <div class="editDiv" id='editDiv-{{comment.id}}'>
-        <br>
-        <form action="{% url 'comments:edit' post_slug=comment.post.slug comment_pk=comment.id %}" method="post"
-          id="editForm-{{comment.id}}">
-          {% csrf_token %}
-          {{editform}}
-          <br />
-          <button type="submit" class="btn btn-dark">Edit</button>
+        {% if user == comment.user %}
+        <!-- Edit Div -->
+        <div class="editDiv" id='editDiv-{{comment.id}}'>
+          <br>
+          <form action="{% url 'comments:edit' post_slug=comment.post.slug comment_pk=comment.id %}" method="post"
+            id="editForm-{{comment.id}}">
+            {% csrf_token %}
+            {{editform}}
+            <br />
+            <button type="submit" class="btn btn-dark">Edit</button>
 
-        </form>
-      </div>
-      <!-- ============================================ -->
+          </form>
+        </div>
+        <!-- ============================================ -->
 
       <!-- Delete Div -->
 

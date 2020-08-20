@@ -13,7 +13,7 @@ from comments.models import Comment, Reply
 
 COMMENT_MESSAGE = ''' 
     <p>
-            Sorry You have to be logged in to be able comment please login
+            Sorry You have to be logged in to be able to add comment please login
     </p>  
 
     '''

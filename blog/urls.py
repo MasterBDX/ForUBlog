@@ -25,6 +25,8 @@ urlpatterns = [
     path('mailchimp/', include('marketing.urls', namespace='mailchimp')),
     path('<slug:post_slug>/comments/',
          include('comments.urls', namespace='comments')),
+    path('post-<slug:slug>/comments-api/',
+         include('comments.api.urls', namespace='comments-api')),
     path('posts/', include('posts.urls', namespace='posts')),
         path('', include('main.urls', namespace='main')),
     path('account/', include('accounts.urls', namespace='account')),

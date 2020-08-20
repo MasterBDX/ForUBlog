@@ -23,7 +23,9 @@ EMAIL_USE_TLS = True
 BASE_URL = 'https://masterbdx-blog.herokuapp.com'
 
 
+
 MIDDLEWARE = [
+    # 'django_hosts.middleware.HostsRequestMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
@@ -33,6 +35,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # 'django_hosts.middleware.HostsResponseMiddleware' 
 ]
 
 

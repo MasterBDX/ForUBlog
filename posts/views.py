@@ -4,7 +4,7 @@ from django.shortcuts import (render,
 
 from django.views import generic
 from django.db.models import Q
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy,reverse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import Http404
 
@@ -39,6 +39,7 @@ def posts_list_view(request):
 
 
 def post_detail(request, slug):
+    comments_list_url = reverse('comments-api:list',kwargs={'slug':slug})
     qs = Post.objects.filter(slug=slug).select_related(
         'author__user__profileimage').prefetch_related('comments', 'categories')
     user = request.user
@@ -63,6 +64,7 @@ def post_detail(request, slug):
                 next_post = None
 
         context = {'obj': post, 'recent_posts': recent_posts,
+                   'comments_list_url':comments_list_url,
                    'form': form, 'cates_num': cates_num,
                    'previous': previous_post, 'next': next_post,
                    'share_str': share_str, 'editform': EditCommentForm(),

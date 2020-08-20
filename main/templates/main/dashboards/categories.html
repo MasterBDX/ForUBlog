@@ -5,18 +5,17 @@
 
 <div class="container dash-board">
   <div class="row">
-    <div class="col-sm-10 offset-md-1 text-center">
-      <h1 class="display-4"><br>Catgories Dashboard<br>
+    <div class="col-md-7 m-auto text-center">
+      <h1 class=""><br>Categories Dashboard<br>
         <hr>
       </h1>
     </div>
 
-    <div class="col-sm-10 offset-md-1">
-      <h2>Categories</h2>
+    <div class="col-md-10 m-auto">
       <p class=""><i class="fa fa-plus"></i> To add new Category</p>
-      <a class="btn btn-info" href="{% url 'posts:add_category' %}">Add</a>
+      <a class="my-button" href="{% url 'posts:add_category' %}">Add</a>
     </div>
-    <div class="col-sm-10 offset-md-1">
+    <div class="col-md-10 m-auto">
       <br />
       {% if cates %}
       <table class="table">
