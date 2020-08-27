@@ -17,6 +17,8 @@ class Comment(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
+    class Meta:
+        ordering = ['-timestamp']
     def __str__(self):
         return str(self.user.username)
 
