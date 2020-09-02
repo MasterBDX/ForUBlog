@@ -10,8 +10,9 @@ from django.shortcuts import get_object_or_404
 
 from .permissions import IsOwnerOrAdmin,SameCommentPost
 from .pagination import CommentsPagination
-from .serializers import CommentSerialzer,CommentAddSerialzer
-from comments.models import Comment
+from .serializers import (CommentSerialzer,CommentAddSerialzer,
+                          ReplyAddSerialzer,ReplySerializer)
+from comments.models import Comment,Reply
 from posts.models import Post
 
 class CommentListAPIView(ListAPIView):
@@ -50,3 +51,25 @@ class DeleteCommentAPIView(DestroyAPIView):
     permission_classes = [permissions.IsAuthenticated,
                           IsOwnerOrAdmin,
                           SameCommentPost]
+
+
+class AddReplyAPIView(APIView):
+    def post(self,request,*args,**kwargs):
+        content = request.data.get('content')
+        post = get_object_or_404(Post,slug=self.kwargs.get('slug'))
+        user = request.user
+        comment = get_object_or_404(Comment,pk=self.kwargs.get('pk'))
+        reply = ReplyAddSerialzer(data={'content':content})
+        if reply.is_valid() :
+            obj = reply.save(comment=comment,post=post,user=user)
+        return Response(ReplySerializer(obj).data)
+
+
+class ReplyListAPIView(ListAPIView):
+    serializer_class = ReplySerializer
+    pagination_class = CommentsPagination
+    
+    def get_queryset(self):
+        comment_id = self.kwargs.get('pk')
+        qs = Reply.objects.filter(comment__id=comment_id)
+        return qs

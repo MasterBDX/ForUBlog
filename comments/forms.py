@@ -3,8 +3,9 @@ from .models import Comment,Reply
 
 
 class CommentForm(forms.ModelForm):
-    content = forms.CharField(required=False,widget=forms.Textarea(attrs={
+    content = forms.CharField(required=True,widget=forms.Textarea(attrs={
     'name':"usercomment",
+
      'id':"usercomment",
      'placeholder':"Type your comment",
      'class':"form-control",

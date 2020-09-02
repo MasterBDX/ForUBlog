@@ -7,13 +7,99 @@ $(function(){
                      <i class="fas fa-spinner fa-2x fa-pulse"></i>
                   </div>
                `
-   // =================================================
-
+   
    // ================ get one Comment  ==================
 
    function getComment(data){
+      const name = 'comment'
+   
+         // ===========   Add Reply Form ====================
+
+         const replyAddForm = `
+               
+                  <form 
+                     method="post" id="replyAddForm"
+                     action="${data.add_reply_url}" 
+                     class="commenting-form">
+                     <div class="row">
+                        <div class="form-group col-md-12">
+                           <label for="usercomment">Content:</label>
+                           <textarea name="content" cols="40" rows="4" 
+                                    id="usercomment" placeholder="Type your reply" 
+                                    class="form-control"></textarea>
+                        </div>     
+                           <div class="form-group col-md-12">
+                              <button  class="my-button" type="submit" >
+                                    Add
+                              </button>
+                           </div>
+                     </div>
+            </form> `
+
+      let repliesStuff = ''
+      if (!data.hasOwnProperty('parent')){
+         repliesStuff = `
+                  <div class="col-md-12">
+                     <button id="add-reply-btn" 
+                           class="btn btn-link"
+                           comment-id=${data.id}
+                           >
+                        Add Reply
+                     </button>
+                     <button id="replies-list-btn"
+                             replies-url="${data.replies_url}" 
+                             class="btn btn-link">
+                        replies (0)
+                     </button>
+                  </div>
+               
+               <div style="display:none" 
+                  id="reply-form-container-${data.id}" 
+                  class="col-md-12">
+                  <br />
+               
+                  ${replyAddForm}
+               </div>
+               <div style="display:none" 
+                  id="replies-container-${data.id}" 
+                  class="col-md-12">
+                 <div class="replies">
+
+                 </div>
+                 <div class="text-center">
+                     <hr />
+                  <button id='load-more-comments-btn' class="btn btn-link">
+                     Load more
+                  </button>
+               </div>
+               
+               
+               </div>
+
+                     `   
+      }
+      let dropdownMenu = ''
+
+      if (data.owner){
+         
+         dropdownMenu = `
+                     <div class="btn-group">     
+                     <button type="button" class="btn btn-sm btn-danger dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                     <span class="sr-only">Toggle Dropdown</span>
+                     </button>
+                     <div class="dropdown-menu">
+                        <a class="dropdown-item ${name}-edit edit-${data.id}" id="${data.id}"  href="#">Edit</a>
+                        <a class="dropdown-item ${name}-delete delete-${data.id}" 
+                           delete-url="${data.delete_url}"
+                           id="${data.id}" href="#">Delete</a>
+               
+               
+                     </div>
+                  </div>
+         ` 
+      }
       const comment = `
-         <div class="comment" id="comment-${data.id}">
+         <div class="comment" id="${name}-${data.id}">
          
          <div class="comment-header d-flex justify-content-between">
          <div class="user d-flex align-items-center">
@@ -28,28 +114,22 @@ $(function(){
 
          <div class="comment-body">
          <div class="row">
-            <div class="col-md-10">
+            <div class="col-sm-10">
                <p edit-url="${data.edit_url}" 
-                  id="comment-content-${data.id}">
+                  id="${name}-content-${data.id}"
+                  style="display: inline-block;
+                         align-content: ;
+                         width: 90%;
+                  "
+                  >
                   ${data.content}
+                  
                </p>
-            </div>
-            <div class="col-md-2">
-               <div class="btn-group">
-            
-               <button type="button" class="btn btn-sm btn-danger dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-               <span class="sr-only">Toggle Dropdown</span>
-               </button>
-               <div class="dropdown-menu">
-               <a class="dropdown-item comment-edit edit-${data.id}" id="${data.id}"  href="#">Edit</a>
-               <a class="dropdown-item comment-delete delete-${data.id}" 
-                  delete-url="${data.delete_url}"
-                     id="${data.id}" href="#">Delete</a>
+               ${dropdownMenu}
               
-              
-               </div>
             </div>
-            </div>
+            ${repliesStuff}
+          
          </div>
          </div>
       </div>
@@ -70,7 +150,6 @@ $(function(){
       return Number(strNum)
    }
 
-   // ======================================================
 
    // ================ get Comments List  ==================
 
@@ -120,7 +199,8 @@ $(function(){
                $('#comments-container-id .comments-loading').remove()
                commentsContainer.prepend(getComment(data))
                const Num = checkNum(commentsCount.text()) 
-               commentsCount.text(Num + 1) 
+               commentsCount.text(Num + 1)
+               $(this).trigger("reset"); 
             }
                ,2000)
             
@@ -145,8 +225,10 @@ $(function(){
       
       const commentContentSelector = $('#comment-content-' + commentId);   
       
-      const commentContent = commentContentSelector.text()
-      
+      const commentContent = commentContentSelector.text().split(' ').filter((letter)=>{
+         return letter !== '' && letter !== '\n'
+      }).join(' ')
+      console.log(commentContent)
       const editUrl = commentContentSelector.attr('edit-url')
       
       const commentForm = `
@@ -159,12 +241,9 @@ $(function(){
                      <div class="row">
                         <div class="form-group col-md-12">
                            <label for="usercomment">Content:</label>
-                           <textarea name="content" cols="40" rows="4" 
+                           <textarea required=True name="content" cols="40" rows="4" 
                                   id="usercomment" placeholder="Type your comment" 
-                                  class="form-control"
-                                  >
-                                  ${commentContent}
-                           </textarea>
+                                  class="form-control">${commentContent}</textarea>
                         </div>     
                         <div class="form-group col-md-12">
                            <button  class="my-button" 
@@ -238,12 +317,15 @@ $(function(){
                <form id="delete-comment-form"
                      comment-id = ${commentId} 
                      method='post' action="${action}">
-                  <button type='submit' 
-                     
+                  <button style="" type='submit'    
                      class="btn btn-danger">
-                     delete
+                     Delete
+                  </button>
+                  <button type="button" id="cancel-btn" class="btn btn-link">
+                     Cancel
                   </button>
                </form>
+             
             </p> 
          </div>
       `
@@ -253,7 +335,7 @@ $(function(){
    // ==============================================================
    
    // ========== Submit Delete Form to delete the comment ==========
-   
+
    $(document.body).on('submit','#delete-comment-form',function(e){
       e.preventDefault();
       const commentId = $(this).attr('comment-id')
@@ -265,7 +347,11 @@ $(function(){
          success:(data)=>{
             const comment = $('#comment-' + commentId)
             comment.html(loadingDiv)
-            setTimeout(()=>{comment.remove()},1000)
+            setTimeout(()=>{
+               comment.remove()
+               const Num = checkNum(commentsCount.text()) 
+               commentsCount.text(Num - 1) 
+            },1000)
             
       
          },
@@ -275,6 +361,14 @@ $(function(){
       })
 
    })
+   // =============== Remove Delete Msg ===================
+      $(document.body).on('click','#cancel-btn',function(e){
+         e.preventDefault();
+         
+         $(this).parent().parent().parent().remove()
+      })
+
+   // =====================================================
    //  ============= Commetns Load More Btn ================
       $('#load-more-comments-btn').on('click',function(e){
             e.preventDefault();
@@ -288,4 +382,82 @@ $(function(){
 
    // ======================================================
    getCommentsList()
+
+
+
+   // ================== Replies Section ===================
+   
+   //====== Add Reply btn to show add reply form =======
+
+   $(document.body).on('click','#add-reply-btn',function(){
+         const commentId = $(this).attr('comment-id')
+         $(`#reply-form-container-${commentId}`).slideToggle();
+   })
+   // ======================================================
+
+
+   // ================== Get Replies List ==================
+   
+   // let nextRepliesUrl;
+   // function getCommentsList(appended){
+   //    let url = nextRepliesUrl ; 
+   //    if (!nextUrl){
+   //       url = commentsFetcheUrl
+   //    } 
+   //       $.ajax({
+   //          url:url,
+   //          success:(data) =>{              
+   //             if (data.next){
+   //                nextUrl = data.next;
+   //             }else{
+   //                $('#load-more-comments-btn').css({'display':'none'})
+   //             }
+   //             let commentsArr = data.results.map((obj)=>{
+   //                   return getComment(obj)
+   //                })
+   //                if (appended){
+   //                   commentsContainer.append(commentsArr.join(' '))    
+   //                }else{
+   //                  commentsContainer.html(commentsArr.join(' '))
+   //                }
+   //             }
+   //             ,error:(error) =>{
+   //             console.log(error.status)
+   //          }
+   //       })
+         
+   // }
+   
+   // ======================================================
+   // ================== Replies List Btn ==================
+   $(document.body).on('click','#replies-list-btn',function(e){
+      e.preventDefault();
+      const repliesUrl = $(this).attr('replies-url');
+      console.log(repliesUrl)
+   })
+   // ======================================================
+   // ================== Submit to add new reply ===========
+   $(document.body).on('submit','#replyAddForm',function(e){
+      e.preventDefault();
+      const endpoint = $(this).attr('action')
+      const formData = new FormData(event.target);
+      console.log(event.target)
+      const replyContent = formData.get('content')
+      $.ajax({
+         url:endpoint,
+         data:{'content':replyContent},
+         method:'post',
+         success:(data)=>{
+            console.log(data)
+            $(this).trigger("reset"); 
+         },
+         error:(error)=>{
+            console.log(error.status)
+         }
+      })
+
+
+   })
+
+   // ======================================================
 })
