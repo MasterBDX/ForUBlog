@@ -1,7 +1,8 @@
 from django.urls import path
 
 from .views import (CommentListAPIView,AddCommentAPIView,EditCommentAPIView,
-					DeleteCommentAPIView,AddReplyAPIView,ReplyListAPIView)
+					DeleteCommentAPIView,AddReplyAPIView,EditReplyAPIView,
+					DeleteReplyAPIView)
 
 app_name = 'comments_api'
 
@@ -11,6 +12,8 @@ urlpatterns = [
 	path('<int:pk>/edit/',EditCommentAPIView.as_view() ,name='edit'),
 	path('<int:pk>/delete/',DeleteCommentAPIView.as_view() ,name='delete'),
 	path('comment-<int:pk>/reply/add/',AddReplyAPIView.as_view() ,name='reply-add'),
-	path('comment-<int:pk>/replies/list/',ReplyListAPIView.as_view(),name='reply-list'),
+	path('comment-<int:pk>/reply/<int:reply_id>/edit/',EditReplyAPIView.as_view() ,name='reply-edit'),
+	path('comment-<int:pk>/reply/<int:reply_id>/delete/',DeleteReplyAPIView.as_view() ,name='reply-delete'),
+	
 
 ]

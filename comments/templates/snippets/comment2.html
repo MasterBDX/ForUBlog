@@ -5,7 +5,10 @@
       Leave a comment from API
     </h4>
   </header>
-  
+  <div style="display:none;" 
+       id ="comment-error-message">
+              
+  </div>  
   <form action="{% url 'comments-api:add' slug=obj.slug %}" 
         method='post' id="commentsForm" 
         class="commenting-form">

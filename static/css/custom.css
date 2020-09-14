@@ -275,7 +275,6 @@ section.featured-posts .image img{
 
 .editDiv,
 .deleteDiv,
-.replies,
 .addReply{
   display: none;
 }
@@ -808,6 +807,17 @@ footer.main-footer .contact-details .social-menu a:hover::after{ left: 0; }
 
 
 /* Global Styels  */
+.btn-link{
+  color:#888;
+  text-decoration: none !important;
+}
+.btn-link:hover{
+  color: #555;
+}
+.btn-link:focus{
+  box-shadow: none;
+}
+
 .my-button{
   background-color: transparent;
   border: none;

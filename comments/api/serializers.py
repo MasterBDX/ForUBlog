@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from rest_framework.serializers import SerializerMethodField
 
+from django.utils.translation import ugettext as _
 from django.utils.timesince import timesince
 from django.urls import reverse
 
@@ -43,13 +44,15 @@ class ReplySerializer(serializers.ModelSerializer):
         return image
     
     def get_edit_url(self,obj):
-        url = 'google '#reverse('comments-api:edit',kwargs={'slug':obj.post.slug,
-              #                                      'pk':obj.pk})
+        url = reverse('comments-api:reply-edit',kwargs={'slug':obj.post.slug,
+                                                   'pk':obj.comment.id,
+                                                   'reply_id':obj.id})
         return url
     
     def get_delete_url(self,obj):
-        url = 'faccebook'#reverse('comments-api:delete',kwargs={'slug':obj.post.slug,
-               #                                     'pk':obj.pk})
+        url = reverse('comments-api:reply-delete',kwargs={'slug':obj.post.slug,
+                                                   'pk':obj.comment.id,
+                                                   'reply_id':obj.id})
         return url
 
 
@@ -61,16 +64,16 @@ class CommentSerialzer(serializers.ModelSerializer):
     image_url = SerializerMethodField()
     edit_url = SerializerMethodField()
     delete_url = SerializerMethodField()
-    replies_info = SerializerMethodField()
     add_reply_url = SerializerMethodField()
+    replies = SerializerMethodField()
     
     class Meta:
         model = Comment
         fields = [
                   'id','post','content','username',
                   'owner','timesince','image_url',
-                  'edit_url','delete_url','replies_info',
-                  'add_reply_url',
+                  'edit_url','delete_url',
+                  'replies','add_reply_url',
                 ]
     
     def get_owner(self,obj):
@@ -99,19 +102,21 @@ class CommentSerialzer(serializers.ModelSerializer):
                                                     'pk':obj.pk})
         return url
     
-    def get_replies_info(self,obj):
-        return {,'url':reverse('comments-api:reply-list',kwargs={
-                    'slug':obj.post.slug,
-                    'pk':obj.id})}
-
-
+    def get_replies(self,obj):
+        return ReplySerializer(obj.replies.all(),many=True).data
+    
     def get_add_reply_url(self,obj):
-        url = reverse('comments-api:reply-add',kwargs={'slug':obj.post.slug,
-                                             'pk':obj.id})
-        return url
+        return reverse('comments-api:reply-add',
+                        kwargs={'slug':obj.post.slug,'pk':obj.id})
 
 
 class CommentAddSerialzer(serializers.ModelSerializer):
+
+
+    def validate_content(self,value):
+        if not value.strip():
+            raise serializers.ValidationError(_('This field should not be left blank'))
+        return value
 
     class Meta:
         model = Comment
@@ -120,6 +125,10 @@ class CommentAddSerialzer(serializers.ModelSerializer):
 
 class ReplyAddSerialzer(serializers.ModelSerializer):
 
+    def validate_content(self,value):
+        if not value.strip():
+            raise serializers.ValidationError(_('This field should not be left blank'))
+        return value
     class Meta:
         model = Reply
         fields = ['content']

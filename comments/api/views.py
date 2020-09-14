@@ -5,10 +5,14 @@ from rest_framework import permissions
 from rest_framework.response import Response
 from rest_framework import mixins
 from rest_framework import generics
+from rest_framework import status
+
 from django.shortcuts import get_object_or_404
 
 
-from .permissions import IsOwnerOrAdmin,SameCommentPost
+from .permissions import (IsOwner,IsOwnerOrAdmin,
+                          SameCommentPost,
+                          SameCommentAndPost)
 from .pagination import CommentsPagination
 from .serializers import (CommentSerialzer,CommentAddSerialzer,
                           ReplyAddSerialzer,ReplySerializer)
@@ -32,10 +36,9 @@ class AddCommentAPIView(APIView):
         user = request.user
         comment = CommentAddSerialzer(data={'content':content})
         if comment.is_valid() :
-            obj = comment.save(post=post,user=user)
-            
-        return Response(CommentSerialzer(obj).data)
-    
+            obj = comment.save(post=post,user=user)            
+            return Response(CommentSerialzer(obj).data)
+        return Response('This field should not be left blank',status=status.HTTP_400_BAD_REQUEST)
 
 
 class EditCommentAPIView(UpdateAPIView):
@@ -62,14 +65,25 @@ class AddReplyAPIView(APIView):
         reply = ReplyAddSerialzer(data={'content':content})
         if reply.is_valid() :
             obj = reply.save(comment=comment,post=post,user=user)
-        return Response(ReplySerializer(obj).data)
+            return Response(ReplySerializer(obj).data)
+        return Response('This field should not be left blank',status=status.HTTP_400_BAD_REQUEST)
 
 
-class ReplyListAPIView(ListAPIView):
-    serializer_class = ReplySerializer
-    pagination_class = CommentsPagination
+
+class EditReplyAPIView(UpdateAPIView):
+    queryset = Reply.objects.all()
+    serializer_class = ReplyAddSerialzer
+    permission_classes = [permissions.IsAuthenticated,
+                          IsOwner,
+                          SameCommentAndPost]
+    lookup_url_kwarg = 'reply_id'
+
+
+class DeleteReplyAPIView(DestroyAPIView):
+    queryset = Reply.objects.all()
+    permission_classes = [permissions.IsAuthenticated,
+                          IsOwnerOrAdmin,
+                          SameCommentAndPost]
+    lookup_url_kwarg = 'reply_id'
+
     
-    def get_queryset(self):
-        comment_id = self.kwargs.get('pk')
-        qs = Reply.objects.filter(comment__id=comment_id)
-        return qs

@@ -1,30 +1,70 @@
 $(function(){
+   // ===========  Styels Section ====================
+    
+    const displayNone = {display:'none'}
+    const displayBlock = {display:'block'}
 
 
    // ================ Loading Icon ==================
    const loadingDiv = `
                   <div class="comments-loading">
-                     <i class="fas fa-spinner fa-2x fa-pulse"></i>
+                    <div>
+                        <br />
+                           <i class="fas fa-spinner fa-2x fa-pulse"></i>
+                        <br />
+                     </div>
                   </div>
                `
    
-   // ================ get one Comment  ==================
+   // ================ Error Message Container ===========
+   let errorMessage = ` 
+      <div class="alert alert-danger alert-dismissible fade show" role="alert"
+                  width: 80%;
+                  "
+         >
+         <p style="font-weight: 500 !important;" 
+               class="text-center">
+         </p>
+            
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+         <span aria-hidden="true">&times;</span>
+      </button>
+      </div>
+      `
+      
+   // ================                 ==================
+   function getErrorMessage(container,message){
+      container.html(errorMessage)
+      container.find('p').text(message)
+      container.css(displayBlock)
+   }
 
-   function getComment(data){
-      const name = 'comment'
-   
-         // ===========   Add Reply Form ====================
-
+   function getComment(data,type){
+      
+      let name = 'comment'
+      if(type){
+         name = type
+      }
+      let repliesStuff = ''
+      
+      // ===========   Add Reply Form ====================
+      
+      if (!data.hasOwnProperty('parent')){
          const replyAddForm = `
-               
+
+            <div style="display:none;" id ="reply-error-message-${data.id}">     
+            </div>
                   <form 
-                     method="post" id="replyAddForm"
+                     method="post" 
+                     id="replyAddForm"
+                     comment-id="${data.id}"
                      action="${data.add_reply_url}" 
                      class="commenting-form">
                      <div class="row">
                         <div class="form-group col-md-12">
                            <label for="usercomment">Content:</label>
-                           <textarea name="content" cols="40" rows="4" 
+                           <textarea style="width: 80%;" 
+                                    name="content" cols="40" rows="4" 
                                     id="usercomment" placeholder="Type your reply" 
                                     class="form-control"></textarea>
                         </div>     
@@ -35,21 +75,26 @@ $(function(){
                            </div>
                      </div>
             </form> `
-
-      let repliesStuff = ''
-      if (!data.hasOwnProperty('parent')){
+      
+         let replies = data.replies.map((obj)=>{
+               return getComment(obj,'reply')
+            }).join(' ')
+         const repliesCount = data.replies.length
          repliesStuff = `
                   <div class="col-md-12">
                      <button id="add-reply-btn" 
                            class="btn btn-link"
                            comment-id=${data.id}
                            >
-                        Add Reply
+                           <i class="fas fa-plus fa-md"></i> 
+                           
+                           Reply
                      </button>
                      <button id="replies-list-btn"
-                             replies-url="${data.replies_url}" 
+                             replies-url="${repliesCount}" 
+                             comment-id="${data.id}"
                              class="btn btn-link">
-                        replies (0)
+                        Replies (<span id="replies-count-${data.id}">${repliesCount}</span>)
                      </button>
                   </div>
                
@@ -60,36 +105,25 @@ $(function(){
                
                   ${replyAddForm}
                </div>
-               <div style="display:none" 
+               <div style="display:none;padding: 33px 60px 0px 24px;" 
                   id="replies-container-${data.id}" 
                   class="col-md-12">
-                 <div class="replies">
-
-                 </div>
-                 <div class="text-center">
-                     <hr />
-                  <button id='load-more-comments-btn' class="btn btn-link">
-                     Load more
-                  </button>
+                 ${replies}      
                </div>
-               
-               
-               </div>
-
-                     `   
+               `   
       }
       let dropdownMenu = ''
 
-      if (data.owner){
-         
+      if (data.owner){ 
          dropdownMenu = `
                      <div class="btn-group">     
-                     <button type="button" class="btn btn-sm btn-danger dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                     <button type="button" class="btn btn-sm  dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                      <span class="sr-only">Toggle Dropdown</span>
+                     <i class="fas fa-ellipsis-v fa-lg"></i>
                      </button>
                      <div class="dropdown-menu">
-                        <a class="dropdown-item ${name}-edit edit-${data.id}" id="${data.id}"  href="#">Edit</a>
-                        <a class="dropdown-item ${name}-delete delete-${data.id}" 
+                        <a class="dropdown-item ${name}-edit ${name}-edit-${data.id}" id="${data.id}"  href="#">Edit</a>
+                        <a class="dropdown-item ${name}-delete ${name}-delete-${data.id}" 
                            delete-url="${data.delete_url}"
                            id="${data.id}" href="#">Delete</a>
                
@@ -110,6 +144,7 @@ $(function(){
                <span class="date">${data.timesince} ago</span>
             </div>
          </div>
+         ${dropdownMenu}
          </div>
 
          <div class="comment-body">
@@ -119,37 +154,40 @@ $(function(){
                   id="${name}-content-${data.id}"
                   style="display: inline-block;
                          align-content: ;
-                         width: 90%;
+                         width: 80%;
                   "
                   >
                   ${data.content}
                   
                </p>
-               ${dropdownMenu}
+               
               
+            </div>
+            <div style="display:none; margin: auto;" class='deletion-con-${name}-${data.id}'>
             </div>
             ${repliesStuff}
           
          </div>
          </div>
+         
       </div>
       `
       return comment
    }
 
-   // =================================================
-
-
    // ==============  Global Vars & funcs ====================
+   
    let nextUrl;
+   
    let commentsContainer = $('#comments-container-id');
+   
    let commentsCount = $("#comments-count");
+   
    const commentsFetcheUrl = commentsContainer.attr('comments-list-url')
 
    function checkNum (strNum){
       return Number(strNum)
    }
-
 
    // ================ get Comments List  ==================
 
@@ -164,7 +202,7 @@ $(function(){
                if (data.next){
                   nextUrl = data.next;
                }else{
-                  $('#load-more-comments-btn').css({'display':'none'})
+                  $('#load-more-comments-btn').css(displayNone)
                }
                let commentsArr = data.results.map((obj)=>{
                      return getComment(obj)
@@ -203,24 +241,19 @@ $(function(){
                $(this).trigger("reset"); 
             }
                ,2000)
-            
-            
-            
-            
+                        
          },
          error:(error)=>{
-            console.log(error.status)
+            getErrorMessage($('#comment-error-message'),error.responseJSON)
          }
       })
    })
-
-   // ===================================================
    
    // === Click on Edit dropdown btn to show edit form  ==
    
    $(document.body).on('click','.comment-edit',function(e){
       e.preventDefault();
-      $(this).css({'display':'none'})
+      $(this).css(displayNone)
       const commentId = $(this).attr('id')
       
       const commentContentSelector = $('#comment-content-' + commentId);   
@@ -234,6 +267,7 @@ $(function(){
       const commentForm = `
                <form 
                      method="post"
+                     type="comment"
                      comment-id="${commentId}" 
                      id="commentsEditForm" 
                      action="${editUrl}"
@@ -268,15 +302,14 @@ $(function(){
      1000)
       
    })
-
-   // ======================================================
-   
+ 
   // ===== Submit Comment Edit Form to edit comment ========
 
    $(document.body).on('submit', '#commentsEditForm', function(e){
          e.preventDefault();
          const commentId = $(this).attr('comment-id')
          const endpoint = $(this).attr('action')
+         const type = $(this).attr('type')
          const formData = new FormData(event.target);
          const commentContent = formData.get('content')
          $.ajax({
@@ -285,7 +318,7 @@ $(function(){
             data:{'content':commentContent},
             success:(data)=>{                
               $(this).parent().html(commentContent)
-              $(`.edit-${commentId}`).css({'display':'inline'})
+              $(`.${type}-edit-${commentId}`).css({'display':'inline'})
             },
             error:(error)=>{
                console.log(error.status)
@@ -293,7 +326,6 @@ $(function(){
          })
    })
    
-   // ======================================================
 
    // =========== Click on delete dropdown btn to show msg ====================
 
@@ -303,6 +335,8 @@ $(function(){
       const commentId = $(this).attr('id')
       const action = $(this).attr('delete-url')
       const comment = $('#comment-' + commentId)
+      
+      
       const deleteComment = `
          <div class="text-center">
             <p style="
@@ -316,12 +350,14 @@ $(function(){
                &nbsp;
                <form id="delete-comment-form"
                      comment-id = ${commentId} 
-                     method='post' action="${action}">
+                     method='post' action="${action}"
+                     type="comment"
+                     >
                   <button style="" type='submit'    
-                     class="btn btn-danger">
+                     class="btn btn-link">
                      Delete
                   </button>
-                  <button type="button" id="cancel-btn" class="btn btn-link">
+                  <button type="button" dropdwon-btn="comment-delete-${commentId}" id="cancel-btn" class="btn btn-link">
                      Cancel
                   </button>
                </form>
@@ -330,22 +366,23 @@ $(function(){
          </div>
       `
       $(this).css({display:'none'})
-      comment.append(deleteComment);
+      let container = comment.find(`.deletion-con-comment-${commentId}`)    
+      container.append(deleteComment).slideDown(1000);
    })
-   // ==============================================================
-   
+    
    // ========== Submit Delete Form to delete the comment ==========
 
    $(document.body).on('submit','#delete-comment-form',function(e){
       e.preventDefault();
       const commentId = $(this).attr('comment-id')
       const endpoint = $(this).attr('action')
-      // $(`.delete-${commentId}`).css({display:'inline'})
+      const type = $(this).attr('type')
+      $(`.delete-${commentId}`).css({display:'inline'})
       $.ajax({
          url:endpoint,
          method:'DELETE',
          success:(data)=>{
-            const comment = $('#comment-' + commentId)
+            const comment = $(`#${type}-${commentId}` )
             comment.html(loadingDiv)
             setTimeout(()=>{
                comment.remove()
@@ -362,14 +399,20 @@ $(function(){
 
    })
    // =============== Remove Delete Msg ===================
+   
       $(document.body).on('click','#cancel-btn',function(e){
          e.preventDefault();
          
-         $(this).parent().parent().parent().remove()
+         $(this).parent().parent().parent().hide()
+         $(this).parent().parent().remove()
+         const dropdownBtn = $(this).attr('dropdwon-btn')
+         console.log(dropdownBtn)
+         $(`.${dropdownBtn}`).css(displayBlock);
+         
       })
 
-   // =====================================================
    //  ============= Commetns Load More Btn ================
+
       $('#load-more-comments-btn').on('click',function(e){
             e.preventDefault();
             $(this).html(loadingDiv);
@@ -383,81 +426,179 @@ $(function(){
    // ======================================================
    getCommentsList()
 
-
-
    // ================== Replies Section ===================
    
    //====== Add Reply btn to show add reply form =======
 
    $(document.body).on('click','#add-reply-btn',function(){
          const commentId = $(this).attr('comment-id')
-         $(`#reply-form-container-${commentId}`).slideToggle();
+         $(`#reply-form-container-${commentId}`).slideToggle('slow');
    })
-   // ======================================================
-
-
-   // ================== Get Replies List ==================
-   
-   // let nextRepliesUrl;
-   // function getCommentsList(appended){
-   //    let url = nextRepliesUrl ; 
-   //    if (!nextUrl){
-   //       url = commentsFetcheUrl
-   //    } 
-   //       $.ajax({
-   //          url:url,
-   //          success:(data) =>{              
-   //             if (data.next){
-   //                nextUrl = data.next;
-   //             }else{
-   //                $('#load-more-comments-btn').css({'display':'none'})
-   //             }
-   //             let commentsArr = data.results.map((obj)=>{
-   //                   return getComment(obj)
-   //                })
-   //                if (appended){
-   //                   commentsContainer.append(commentsArr.join(' '))    
-   //                }else{
-   //                  commentsContainer.html(commentsArr.join(' '))
-   //                }
-   //             }
-   //             ,error:(error) =>{
-   //             console.log(error.status)
+    
+   // ================== Get Replies List  ==================
+   // let nextRepliesUrl ;
+   // function getReplies(url,id,appended){
+   //          if (nextRepliesUrl){
+   //             url = nextRepliesUrl
+   //    }
+   //    $.ajax({
+   //       url:url,
+   //       success:(data)=>{
+   //          console.log('yeah we did it')
+   //          nextRepliesUrl = data.next
+   //          let repliesContainerParent = $(`#replies-container-${id}`)
+   //          let repliesContainerChild = repliesContainerParent.find('.replies')
+   //          let repliesArr = data.results.map((obj)=>{
+   //             return getComment(obj)
+   //          })
+   //          if (appended){
+   //             repliesContainerChild.append(repliesArr.join(' '))    
+   //          }else{
+   //             repliesContainerChild.html(repliesArr.join(' '))
    //          }
-   //       })
-         
+
+            
+          
+   //       },
+   //       error:(error)=>{
+   //          console.log(error.status)
+   //       }
+   //    })
+
    // }
-   
-   // ======================================================
    // ================== Replies List Btn ==================
+   
    $(document.body).on('click','#replies-list-btn',function(e){
       e.preventDefault();
+      const commentId = $(this).attr('comment-id');
       const repliesUrl = $(this).attr('replies-url');
-      console.log(repliesUrl)
+      let repliesContainerParent = $(`#replies-container-${commentId}`)
+      repliesContainerParent.toggle('slow')
+
    })
-   // ======================================================
+
    // ================== Submit to add new reply ===========
    $(document.body).on('submit','#replyAddForm',function(e){
       e.preventDefault();
+      const commentId = $(this).attr('comment-id')
+      $(`#replies-container-${commentId}`).prepend(loadingDiv)
+
       const endpoint = $(this).attr('action')
       const formData = new FormData(event.target);
-      console.log(event.target)
       const replyContent = formData.get('content')
       $.ajax({
          url:endpoint,
          data:{'content':replyContent},
          method:'post',
          success:(data)=>{
-            console.log(data)
-            $(this).trigger("reset"); 
+            
+            setTimeout(()=>{
+               $(`#replies-container-${commentId}`).find('.comments-loading').remove()
+               $(`#replies-container-${commentId}`).prepend(getComment(data,'reply'))
+               $(this).trigger("reset");
+               let repliesCount = $(`#replies-count-${commentId}`)
+               repliesCount.text(Number(repliesCount.text()) + 1)
+            },1000)
          },
          error:(error)=>{
-            console.log(error.status)
+            if (error.status === 400){
+               $(`#replies-container-${commentId}`).find('.comments-loading').remove()
+               let errorMessageContainer = $(`#reply-error-message-${commentId}`)
+               getErrorMessage(errorMessageContainer,error.responseJSON)
+            }
+
          }
       })
 
 
    })
+   
+   // ============== After click on reply dropdown edit btn ==================
+   
+      $(document.body).on('click','.reply-edit',function(e){
+         e.preventDefault();
+         $(this).css(displayNone)
+         const replyId = $(this).attr('id')
+         const replyContentSelector = $('#reply-content-' + replyId);   
+         const replyContent = replyContentSelector.text().split(' ').filter((letter)=>{
+            return letter !== '' && letter !== '\n'
+         }).join(' ')
+         
+         const editUrl = replyContentSelector.attr('edit-url')
+         const replyForm = `
+                  <form 
+                        method="post"
+                        
+                        type="reply"
+                        comment-id="${replyId}" 
+                        id="commentsEditForm" 
+                        action="${editUrl}"
+                        class="commenting-form">
+                        <div class="row">
+                           <div class="form-group col-md-12">
+                              <label for="usercomment">Content:</label>
+                              <textarea required=True name="content" cols="40" rows="4" 
+                                    id="usercomment" placeholder="Type your comment" 
+                                    class="form-control">${replyContent}</textarea>
+                           </div>     
+                           <div class="form-group col-md-12">
+                              <button  class="my-button" 
+                                       type="submit"         
+                                       comment-id="${replyId}" 
+                                       id="commentEdit-btn-id"
+                                       >
+                                       Edit
+                              </button>
+                           </div>
+                     </div>
+               </form>
 
-   // ======================================================
+         `
+
+      replyContentSelector.html(loadingDiv)
+         setTimeout(()=>{   
+            replyContentSelector.html(replyForm)
+         },
+      1000)
+      })
+   
+   // ============== Click on delete dropdown btn ===============
+  
+    $(document.body).on('click','.reply-delete',function(e){
+         e.preventDefault();
+         
+         const replytId = $(this).attr('id')
+         const action = $(this).attr('delete-url')
+         const reply = $('#reply-' + replytId)
+         
+         const deleteComment = `
+            <div class="text-center">
+               <p style="
+                        display:inline-block;
+                        border:1px solid #555;
+                        border-radius:10px;
+                        padding:17px;
+                        margin-bottom:20px;
+                     ">
+                  Are you sure you want to delete this comment ?
+                  &nbsp;
+                  <form id="delete-comment-form"
+                        comment-id = ${replytId} 
+                        method='post' action="${action}"
+                        type="reply">
+                     <button style="" type='submit'    
+                        class="btn btn-link">
+                        Delete
+                     </button>
+                     <button type="button" dropdwon-btn="reply-delete-${replytId}" id="cancel-btn" class="btn btn-link">
+                        Cancel
+                     </button>
+                  </form>
+               </p> 
+            </div>
+         `
+         $(this).css({display:'none'})
+         let container = reply.find(`.deletion-con-reply-${replytId}`)    
+         container.append(deleteComment).slideDown(1000);
+      })
 })
