@@ -10,6 +10,7 @@ from rest_framework import status
 from django.shortcuts import get_object_or_404
 
 
+from .mixins import CommentContextMixin
 from .permissions import (IsOwner,IsOwnerOrAdmin,
                           SameCommentPost,
                           SameCommentAndPost)
@@ -19,14 +20,20 @@ from .serializers import (CommentSerialzer,CommentAddSerialzer,
 from comments.models import Comment,Reply
 from posts.models import Post
 
+
 class CommentListAPIView(ListAPIView):
     serializer_class = CommentSerialzer
     pagination_class = CommentsPagination
+
     def get_queryset(self):
         slug = self.kwargs.get('slug')
-        qs = Comment.objects.filter(post__slug=slug)
-        
-        return qs        
+        qs = Comment.objects.filter(post__slug=slug)     
+        return qs
+
+    def get_serializer_context(self):
+        context = super().get_serializer_context()
+        context.update({"request": self.request})
+        return context        
     
 
 class AddCommentAPIView(APIView):

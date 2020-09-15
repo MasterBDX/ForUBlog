@@ -25,10 +25,15 @@ class ReplySerializer(serializers.ModelSerializer):
                 ]
     
     def get_parent(self,obj):
+        print(self.context)
         return obj.comment.id
 
     def get_owner(self,obj):
-        return True
+        user = self.context.get('request').user
+        if user.is_authenticated:
+            if obj.user == user:
+                return True
+        return False
     
     def get_username(self,obj):
         return obj.user.username
@@ -77,7 +82,11 @@ class CommentSerialzer(serializers.ModelSerializer):
                 ]
     
     def get_owner(self,obj):
-        return True
+        user = self.context.get('request').user
+        if user.is_authenticated:
+            if obj.user == user:
+                return True
+        return False
     
     def get_username(self,obj):
         return obj.user.username
@@ -103,7 +112,9 @@ class CommentSerialzer(serializers.ModelSerializer):
         return url
     
     def get_replies(self,obj):
-        return ReplySerializer(obj.replies.all(),many=True).data
+        context = self.context
+        return ReplySerializer(obj.replies.all(),many=True,
+                                context=context).data
     
     def get_add_reply_url(self,obj):
         return reverse('comments-api:reply-add',

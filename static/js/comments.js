@@ -3,6 +3,12 @@ $(function(){
     
     const displayNone = {display:'none'}
     const displayBlock = {display:'block'}
+    const disabled = {pointerEvents: 'none',
+                      opacity: 0.5,
+                     }
+   const abled = {pointerEvents: 'auto',
+                  opacity: 1
+                  }
 
 
    // ================ Loading Icon ==================
@@ -38,6 +44,44 @@ $(function(){
       container.find('p').text(message)
       container.css(displayBlock)
    }
+
+   // ================ get Delete Form ===================
+   function getDeleteForm(type, btn){
+      const id = btn.attr('id')
+      const action = btn.attr('delete-url')
+      const container = $(`#${type}-${id}`)
+      
+      const deleteComment = `
+         <div class="text-center">
+            <p style="
+                     display:inline-block;
+                     padding:17px;
+                     padding-bottom: 0px;
+                     color:#e81d1d;
+                  ">
+               Are you sure ?
+               &nbsp;
+               <form id="delete-comment-form"
+                     comment-id = ${id} 
+                     method='post' action="${action}"
+                     type="${type}">
+                  <button style="" type='submit'    
+                     class="btn btn-link">
+                     Delete
+                  </button>
+                  <button type="button" dropdwon-btn="${type}-delete-${id}" id="cancel-btn" class="btn btn-link">
+                     Cancel
+                  </button>
+               </form>
+            </p> 
+         </div>
+      `
+      btn.css(disabled)
+      let containerChild = container.find(`.deletion-con-${type}-${id}`)    
+      containerChild.append(deleteComment).slideDown(1000);
+      return true
+}
+   // ================ get one Comment  ==================
 
    function getComment(data,type){
       
@@ -117,12 +161,16 @@ $(function(){
       if (data.owner){ 
          dropdownMenu = `
                      <div class="btn-group">     
-                     <button type="button" class="btn btn-sm  dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                     <span class="sr-only">Toggle Dropdown</span>
-                     <i class="fas fa-ellipsis-v fa-lg"></i>
+                        <button type="button" class="btn btn-link btn-sm  dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span class="sr-only">Toggle Dropdown</span>
+                        <i class="fas fa-ellipsis-v fa-lg"></i>
                      </button>
-                     <div class="dropdown-menu">
-                        <a class="dropdown-item ${name}-edit ${name}-edit-${data.id}" id="${data.id}"  href="#">Edit</a>
+                     <div class="dropdown-menu"
+                           style="
+                           width: auto !important;
+                           "
+                     >
+                        <a  class="dropdown-item ${name}-edit ${name}-edit-${data.id}" id="${data.id}"  href="#">Edit</a>
                         <a class="dropdown-item ${name}-delete ${name}-delete-${data.id}" 
                            delete-url="${data.delete_url}"
                            id="${data.id}" href="#">Delete</a>
@@ -253,7 +301,7 @@ $(function(){
    
    $(document.body).on('click','.comment-edit',function(e){
       e.preventDefault();
-      $(this).css(displayNone)
+      $(this).css(disabled)
       const commentId = $(this).attr('id')
       
       const commentContentSelector = $('#comment-content-' + commentId);   
@@ -261,7 +309,7 @@ $(function(){
       const commentContent = commentContentSelector.text().split(' ').filter((letter)=>{
          return letter !== '' && letter !== '\n'
       }).join(' ')
-      console.log(commentContent)
+      
       const editUrl = commentContentSelector.attr('edit-url')
       
       const commentForm = `
@@ -318,7 +366,7 @@ $(function(){
             data:{'content':commentContent},
             success:(data)=>{                
               $(this).parent().html(commentContent)
-              $(`.${type}-edit-${commentId}`).css({'display':'inline'})
+              $(`.${type}-edit-${commentId}`).css(abled)
             },
             error:(error)=>{
                console.log(error.status)
@@ -331,43 +379,7 @@ $(function(){
 
    $(document.body).on('click','.comment-delete',function(e){
       e.preventDefault();
-      
-      const commentId = $(this).attr('id')
-      const action = $(this).attr('delete-url')
-      const comment = $('#comment-' + commentId)
-      
-      
-      const deleteComment = `
-         <div class="text-center">
-            <p style="
-                     display:inline-block;
-                     border:1px solid #555;
-                     border-radius:10px;
-                     padding:17px;
-                     margin-bottom:20px;
-                  ">
-               Are you sure you want to delete this comment ?
-               &nbsp;
-               <form id="delete-comment-form"
-                     comment-id = ${commentId} 
-                     method='post' action="${action}"
-                     type="comment"
-                     >
-                  <button style="" type='submit'    
-                     class="btn btn-link">
-                     Delete
-                  </button>
-                  <button type="button" dropdwon-btn="comment-delete-${commentId}" id="cancel-btn" class="btn btn-link">
-                     Cancel
-                  </button>
-               </form>
-             
-            </p> 
-         </div>
-      `
-      $(this).css({display:'none'})
-      let container = comment.find(`.deletion-con-comment-${commentId}`)    
-      container.append(deleteComment).slideDown(1000);
+      getDeleteForm('comment',$(this))      
    })
     
    // ========== Submit Delete Form to delete the comment ==========
@@ -407,7 +419,7 @@ $(function(){
          $(this).parent().parent().remove()
          const dropdownBtn = $(this).attr('dropdwon-btn')
          console.log(dropdownBtn)
-         $(`.${dropdownBtn}`).css(displayBlock);
+         $(`.${dropdownBtn}`).css(abled);
          
       })
 
@@ -435,37 +447,7 @@ $(function(){
          $(`#reply-form-container-${commentId}`).slideToggle('slow');
    })
     
-   // ================== Get Replies List  ==================
-   // let nextRepliesUrl ;
-   // function getReplies(url,id,appended){
-   //          if (nextRepliesUrl){
-   //             url = nextRepliesUrl
-   //    }
-   //    $.ajax({
-   //       url:url,
-   //       success:(data)=>{
-   //          console.log('yeah we did it')
-   //          nextRepliesUrl = data.next
-   //          let repliesContainerParent = $(`#replies-container-${id}`)
-   //          let repliesContainerChild = repliesContainerParent.find('.replies')
-   //          let repliesArr = data.results.map((obj)=>{
-   //             return getComment(obj)
-   //          })
-   //          if (appended){
-   //             repliesContainerChild.append(repliesArr.join(' '))    
-   //          }else{
-   //             repliesContainerChild.html(repliesArr.join(' '))
-   //          }
-
-            
-          
-   //       },
-   //       error:(error)=>{
-   //          console.log(error.status)
-   //       }
-   //    })
-
-   // }
+ 
    // ================== Replies List Btn ==================
    
    $(document.body).on('click','#replies-list-btn',function(e){
@@ -478,6 +460,7 @@ $(function(){
    })
 
    // ================== Submit to add new reply ===========
+
    $(document.body).on('submit','#replyAddForm',function(e){
       e.preventDefault();
       const commentId = $(this).attr('comment-id')
@@ -517,7 +500,7 @@ $(function(){
    
       $(document.body).on('click','.reply-edit',function(e){
          e.preventDefault();
-         $(this).css(displayNone)
+         $(this).css(disabled)
          const replyId = $(this).attr('id')
          const replyContentSelector = $('#reply-content-' + replyId);   
          const replyContent = replyContentSelector.text().split(' ').filter((letter)=>{
@@ -566,39 +549,7 @@ $(function(){
   
     $(document.body).on('click','.reply-delete',function(e){
          e.preventDefault();
-         
-         const replytId = $(this).attr('id')
-         const action = $(this).attr('delete-url')
-         const reply = $('#reply-' + replytId)
-         
-         const deleteComment = `
-            <div class="text-center">
-               <p style="
-                        display:inline-block;
-                        border:1px solid #555;
-                        border-radius:10px;
-                        padding:17px;
-                        margin-bottom:20px;
-                     ">
-                  Are you sure you want to delete this comment ?
-                  &nbsp;
-                  <form id="delete-comment-form"
-                        comment-id = ${replytId} 
-                        method='post' action="${action}"
-                        type="reply">
-                     <button style="" type='submit'    
-                        class="btn btn-link">
-                        Delete
-                     </button>
-                     <button type="button" dropdwon-btn="reply-delete-${replytId}" id="cancel-btn" class="btn btn-link">
-                        Cancel
-                     </button>
-                  </form>
-               </p> 
-            </div>
-         `
-         $(this).css({display:'none'})
-         let container = reply.find(`.deletion-con-reply-${replytId}`)    
-         container.append(deleteComment).slideDown(1000);
+         getDeleteForm('reply',$(this))         
+ 
       })
 })
