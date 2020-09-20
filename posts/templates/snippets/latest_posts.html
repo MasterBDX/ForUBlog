@@ -1,8 +1,8 @@
 {% if recent_posts %}
-
+{% load i18n %}
 <div class="widget latest-posts">
   <header>
-    <h3 class="h6">Latest Posts</h3>
+    <h3 class="h6">{% trans 'Latest Posts' %}</h3>
   </header>
   <div class="blog-posts">
     {% for post in recent_posts %}

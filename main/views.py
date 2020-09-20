@@ -36,7 +36,7 @@ def home_page_view(request):
     main_obj = MianImage.objects.last()
     featured_posts = Post.objects.featured()[:3].select_related('author__user',
                                                                 'author__user__profileimage')
-    latest_posts = Post.objects.latest().prefetch_related('categories',)
+    latest_posts = Post.objects.all().prefetch_related('categories',)[:3]
     context = {'featured_posts': featured_posts,
                'latest_posts': latest_posts,
                'obj':main_obj

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-19 12:28+0000\n"
+"POT-Creation-Date: 2020-09-20 17:06+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -41,13 +41,25 @@ msgstr ""
 msgid "This field should not be left blank"
 msgstr ""
 
-#: main/templates/main/home.html:41
+#: main/templates/main/home.html:42
 msgid "Featured Posts"
 msgstr "مميزنا"
 
-#: main/templates/main/home.html:116
+#: main/templates/main/home.html:117
 msgid "Latest posts from the blog"
 msgstr "جديدنا"
+
+#: posts/templates/snippets/latest_posts.html:5
+msgid "Latest Posts"
+msgstr "أخر المنشورات"
+
+#: search/templates/snippets/search_bar_widget.html:4
+msgid "Search the blog"
+msgstr "للبحث عن منشور"
+
+#: search/templates/snippets/search_bar_widget.html:8
+msgid "What are you looking for ?"
+msgstr "ما الذي يثير إهتمامك ؟"
 
 #: templates/snippets/footer.html:19
 msgid "Email"

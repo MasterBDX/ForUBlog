@@ -874,7 +874,7 @@ section.latest-posts header {
   height: 40px;
   overflow: hidden;
   border-radius: 50%;
-  margin-right: 10px;
+  margin-left: 10px;
 }
 
 .post .title,
@@ -890,7 +890,7 @@ section.latest-posts header {
 .post .date i,
 .post .comments i,
 .post .views i {
-  margin-right: 5px;
+  margin-left: 5px;
   font-size: 1.1em;
 }
 
@@ -1231,7 +1231,7 @@ main.posts-listing .post-footer {
   max-width: 60px;
   height: 60px;
   overflow: hidden;
-  margin-right: 20px;
+  margin-left: 20px;
 }
 
 .widget.latest-posts .item {
@@ -1254,7 +1254,7 @@ main.posts-listing .post-footer {
 
 .widget.latest-posts .views i,
 .widget.latest-posts .comments i {
-  margin-right: 5px;
+  margin-left: 5px;
 }
 
 .widget.latest-posts .views::after,

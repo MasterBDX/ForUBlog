@@ -61,7 +61,7 @@ class PostManger(models.Manager):
         return qs
 
     def latest(self):
-        qs = self.all_active()[:3]
+        qs = self.all_active()[:4]
         return qs
 
     def qs_paginator(self, page=1, filters=None):

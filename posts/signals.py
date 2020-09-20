@@ -16,12 +16,12 @@ def get_cat_slug(instance, sender, **kwargs):
         instance.slug = slugify(instance.title.lower())
 
 
-@receiver(pre_save, sender=Post)
-def send_notification(sender, instance, **kwargs):
-    if instance.active and not instance.notification:
-        instance.notification = True
-        users = User.objects.filter(subscribed=True).exclude(is_admin=True)
-        for user in users:
-            if not user.is_author:
-                user.notification(settings.BASE_URL +
-                                  instance.get_absolute_url())
+# @receiver(pre_save, sender=Post)
+# def send_notification(sender, instance, **kwargs):
+#     if instance.active and not instance.notification:
+#         instance.notification = True
+#         users = User.objects.filter(subscribed=True).exclude(is_admin=True)
+#         for user in users:
+#             if not user.is_author:
+#                 user.notification(settings.BASE_URL +
+#                                   instance.get_absolute_url())
