@@ -1,9 +1,11 @@
 {% load static %}
 
 
-/* *{
+*{
   direction: rtl !important;
-} */
+  text-align: right;
+
+}
 
 h1{
   color: #444;
@@ -64,6 +66,7 @@ form > input{
 
 .widget{
   border: 1px solid #dfdfdf;
+  border-radius: 5px;
 }
 
 .widget header h3{
@@ -180,7 +183,16 @@ form > input{
   line-height: 3;
 }
 
+.navbar .navbar-nav a.nav-link i{
+  margin-left: 3px;
+}
+
 /* Featured Post in (Home) page */
+
+
+.featured-posts{
+  padding:30px 0;
+}
 
 section.featured-posts .image img{
   width: 100%;
@@ -408,6 +420,11 @@ section.featured-posts .image img{
   padding-left: 30px;
 }
 
+.navbar-expand-lg .navbar-nav .dropdown-menu{
+  text-align: right;
+  right: 0%;
+}
+
   /* End Home-[Navbar] */
 
   /* Start Home-[Hero-section] */
@@ -441,6 +458,11 @@ section.hero{
 
 section.hero .container .row h1 i{
   color: #ff4646;
+}
+
+div.divider {
+  height: 20px;
+  background-color: #0e0e0e0d;
 }
 
 section.divider .container .row h2
@@ -721,9 +743,9 @@ footer.main-footer .contact-details p{
 
 footer.main-footer .contact-details p span{
   font-weight: 100;
-  border-right: 2px solid #444;
-  padding: 0px 8px 0px 0;
-  margin-right: 8px;
+  border-left: 2px solid #444;
+  padding: 0px 0px 0px 8px;
+  margin-left: 8px;
 }
 
 footer.main-footer .contact-details p a{
@@ -744,6 +766,10 @@ footer.main-footer .list-unstyled li a:hover{
   text-decoration: none;
   color: #fff;
   text-shadow: 0 0 0px #fff;
+}
+
+.cat-heading{
+padding-right:9px;
 }
 
 footer.main-footer .cat{
@@ -777,6 +803,9 @@ footer.main-footer .contact-details .social-menu a{
   position: relative;
   padding: 0px 1px 3px 1px;
   overflow: hidden;
+  /* border: 1px solid;
+  padding: 3px 8px;
+  border-radius: 5px; */
 }
 
 footer.main-footer .contact-details .social-menu a::after{
@@ -807,6 +836,7 @@ footer.main-footer .contact-details .social-menu a:hover::after{ left: 0; }
 
 
 /* Global Styels  */
+
 .btn-link{
   color:#888;
   text-decoration: none !important;
@@ -850,6 +880,15 @@ label .asteriskField{
   outline: none;
 }
 
-
+header.main-header{
+  text-align: center;
+}
+header.main-header h2{
+  display: inline-block;
+  text-align: center;
+  color: #444;
+  padding: 20px 50px;
+  border-bottom: 2px solid #D5D3D3;
+}
 
 /* -------------------------- */

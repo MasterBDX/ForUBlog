@@ -22,7 +22,7 @@ from django.db.models import Q
 from .forms import ContactForm
 
 from posts.models import Post, Author, Category
-from .models import AboutMe, AboutBlog, PrivacyPolicy
+from .models import AboutMe, AboutBlog, PrivacyPolicy,MianImage
 from .mixins import AuthorRequiredMixin, AuthorCheckMixin,AdminRequiredMixin
 from blog.decorators import super_user_only
 
@@ -33,13 +33,14 @@ import string
 User = get_user_model()
 
 def home_page_view(request):
-    about_blog = AboutBlog.objects.all().last()
+    main_obj = MianImage.objects.last()
     featured_posts = Post.objects.featured()[:3].select_related('author__user',
                                                                 'author__user__profileimage')
     latest_posts = Post.objects.latest().prefetch_related('categories',)
     context = {'featured_posts': featured_posts,
                'latest_posts': latest_posts,
-               'about_blog': about_blog,
+               'obj':main_obj
+               
                }
     return render(request, 'main/home.html', context)
 
@@ -111,21 +112,23 @@ class PostsDashboard(LoginRequiredMixin, AuthorRequiredMixin, generic.ListView):
         qs = super().get_queryset().filter(author=author).order_by('slug')
         return qs
 
+
 class CategoriesDashboard(LoginRequiredMixin,generic.ListView):
     template_name = 'main/dashboards/categories.html'
     model = Post
     context_object_name = 'cates'
 
-class InfoDashboard(LoginRequiredMixin,AdminRequiredMixin,generic.ListView):
-    template_name = 'main/dashboards/info.html'
-    model = AboutBlog
-    context_object_name = 'about_me'
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['about_me'] = AboutMe.objects.all()
-        context['privacy_policy'] = PrivacyPolicy.objects.all()
-        return context
+# class InfoDashboard(LoginRequiredMixin,AdminRequiredMixin,generic.ListView):
+#     template_name = 'main/dashboards/info.html'
+#     model = AboutBlog
+#     context_object_name = 'about_me'
+
+#     def get_context_data(self, **kwargs):
+#         context = super().get_context_data(**kwargs)
+#         context['about_me'] = AboutMe.objects.all()
+#         context['privacy_policy'] = PrivacyPolicy.objects.all()
+#         return context
 
 
 @login_required
@@ -171,109 +174,3 @@ def confirm_author_view(request, slug):
     return render(request, 'main/confirm_author.html', {"status": status, 'username': username})
 
 
-class AddAboutmeView(AdminRequiredMixin, CreateView):
-    form_class = AboutMeForm
-    template_name = 'main/info.html'
-    success_url = reverse_lazy('posts:dashboard')
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['title'] = 'About Me'
-        context['process'] = 'Add'
-        return context
-
-
-class AddAboutblogView(AdminRequiredMixin, CreateView):
-    form_class = AboutBlogForm
-    template_name = 'main/info.html'
-    success_url = reverse_lazy('posts:dashboard')
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['title'] = 'About Blog'
-        context['process'] = 'Add'
-        return context
-
-
-class AddPrvacyPolicyView(AdminRequiredMixin, CreateView):
-    form_class = PrivacyPolicyForm
-    template_name = 'main/info.html'
-    success_url = reverse_lazy('posts:dashboard')
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['title'] = 'Privacy & Policy'
-        context['process'] = 'Add'
-        return context
-
-
-class EditAboutmeView(AdminRequiredMixin, UpdateView):
-    queryset = AboutMe.objects.all()
-    form_class = AboutMeForm
-    template_name = 'main/info.html'
-    success_url = reverse_lazy('posts:dashboard')
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['title'] = 'About Me'
-        context['process'] = 'Edit'
-        return context
-
-
-class EditAboutblogView(AdminRequiredMixin, UpdateView):
-    queryset = AboutBlog.objects.all()
-    form_class = AboutBlogForm
-    template_name = 'main/info.html'
-    success_url = reverse_lazy('posts:dashboard')
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['title'] = 'About Blog'
-        context['process'] = 'Edit'
-        return context
-
-
-class EditPrvacyPolicyView(AdminRequiredMixin, UpdateView):
-    queryset = PrivacyPolicy.objects.all()
-    form_class = PrivacyPolicyForm
-    template_name = 'main/info.html'
-    success_url = reverse_lazy('posts:dashboard')
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['title'] = 'Privacy & Policy'
-        context['process'] = 'Edit'
-        return context
-
-
-class DeleteAboutmeView(AdminRequiredMixin, DeleteView):
-    queryset = AboutMe.objects.all()
-    template_name = 'main/delete_confirm.html'
-    success_url = reverse_lazy('posts:dashboard')
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['title'] = 'About Me'
-        return context
-
-
-class DeleteAboutblogView(AdminRequiredMixin, DeleteView):
-    queryset = AboutBlog.objects.all()
-    template_name = 'main/delete_confirm.html'
-    success_url = reverse_lazy('posts:dashboard')
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['title'] = 'About Blog'
-        return context
-
-
-class DeletePrvacyPolicyView(AdminRequiredMixin, DeleteView):
-    queryset = PrivacyPolicy.objects.all()
-    template_name = 'main/delete_confirm.html'
-    success_url = reverse_lazy('posts:dashboard')
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['title'] = 'Privacy & Policy'
-        return context

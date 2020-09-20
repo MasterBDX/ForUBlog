@@ -1,4 +1,5 @@
 {% load static %}
+{% load i18n %}
 <footer class="main-footer">
   <div class="container">
     <div class="row">
@@ -9,17 +10,39 @@
             col-md-4
           {% endif %}">
         <div class="logo">
-          <h6 class="text-white">Masterbdx Blog</h6>
+          <h6 class="text-white">{{info.name}}</h6>
         </div>
         <div class="contact-details">
 
-
-          <p><span>Email</span><a href="mailto:masterbdxteam@gmail.com">masterbdxteam@gmail.com</a></p>
+          {% if info.email %}
+            <p>
+              <span>{% trans 'Email' %}</span>
+              <a href="mailto:masterbdxteam@gmail.com">
+                masterbdxteam@gmail.com
+              </a>
+            </p>
+          {% endif %}
+          
           <ul class="social-menu">
-            <li class="list-inline-item"><a href="#"><i class="fab fa-facebook-f"></i></a></li>
-            <li class="list-inline-item"><a href="#"><i class="fab fa-twitter"></i></a></li>
-            <li class="list-inline-item"><a href="#">
-                <i class="fab fa-instagram"></i></a></li>
+            {% if info.facebook %}
+            <li class="list-inline-item">
+              <a href="{{info.facebook}}"><i class="fab fa-facebook-f "></i></a>
+            </li>
+            {% endif %}
+            {% if info.twitter %}
+            <li class="list-inline-item">
+              <a href="{{info.twitter}}">
+                <i class="fab fa-twitter fa-w"></i>
+              </a>
+            </li>
+            {% endif %}
+            {% if info.instagram %}
+              <li class="list-inline-item ">
+                <a href="{{info.instagram}}">
+                  <i class="fab fa-instagram "></i>
+                </a>
+              </li>
+            {% endif %}
             <!-- <li class="list-inline-item"><a href="#"><i class="fa fa-behance"></i></a></li> -->
             <!-- <li class="list-inline-item"><a href="#"><i class="fa fa-pinterest"></i></a></li> -->
           </ul>
@@ -36,17 +59,37 @@
         <div class="menus d-flex">
           <ul class="list-unstyled">
             {% if request.user.is_authenticated %}
-            <li> <a href="{% url 'account:profile' user_slug=request.user.slug %}">My Account</a></li>
+            <li> 
+              <a href="{% url 'account:profile' user_slug=request.user.slug %}">
+                {% trans 'My Account' %}
+              </a>
+            </li>
             {% else %}
-            <li> <a href="{% url 'account:login'  %}">Login</a></li>
-            <li> <a href="{% url 'account:register' %}">Register</a></li>
+            <li> <a href="{% url 'account:login'  %}">
+              {% trans 'Login' %}
+              </a>
+            </li>
+            <li> 
+              <a href="{% url 'account:register' %}">
+                {% trans 'Register' %}
+              </a>
+            </li>
             {% endif %}
-            <li> <a href="{% url 'main:contact_us' %}"> Contact Us </a></li>
+            <li> <a href="{% url 'main:contact_us' %}"> 
+              {% trans 'Contact Us' %} </a>
+            </li>
           </ul>
           <ul class="list-unstyled">
-            <li> <a href="{% url 'main:about_blog' %}"> About Blog </a></li>
-            <li> <a href="{% url 'main:about_me' %}"> About Me </a></li>
-            <li> <a href="{% url 'main:privacy_policy' %}"> Privacy &amp; Policy </a></li>
+            <li> <a href="{% url 'main:about_blog' %}"> 
+              {% trans 'About Blog' %} 
+            </a></li>
+            <li> 
+                <a href="{% url 'main:about_me' %}"> 
+                  {% trans 'About Me' %} 
+                </a>
+              </li>
+            <li> <a href="{% url 'main:privacy_policy' %}"> 
+              {% trans 'Privacy & Policy' %} </a></li>
           </ul>
         </div>
       </div>
@@ -54,7 +97,7 @@
       <div class="col-md-4 ">
         <div class="footer-cats">
           <div class="cat-heading">
-            <h6>Categories</h6>
+            <h6>{% trans 'Categories' %}</h6>
           </div>
           {% for cat in categories %}
 
@@ -75,7 +118,10 @@
     <div class="container">
       <div class="row">
         <div class="col-md-6">
-          <p>&copy; 2019. All rights reserved for Masterbdx team</p>
+          <p>
+          {% trans '2019. All rights reserved for Masterbdx team' %}
+          &copy;
+          </p>
         </div>
         <div class="col-md-6 text-right">
           <p>Template By <a href="https://bootstrapious.com/p/bootstrap-carousel" class="text-white">Bootstrapious</a>

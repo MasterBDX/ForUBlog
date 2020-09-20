@@ -2,18 +2,28 @@
 {% block title %}Home{% endblock %}
 {% block content %}
 {% load static %}
+{% load i18n %}
 
 <!-- Hero Section-->
-<section style="background: url({% static 'img/blog.png'%}); background-size: cover; background-position: center center"
+<section style="
+    background: url({% if obj %}
+                    {{obj.image.url}}
+                    {% else %}
+                    {% static 'img/blog.png'%}
+                    {% endif %}); background-size: cover; background-position: center center"
   class="hero">
+
   <div class="overlay"></div>
   <div class="container">
     <div class="row">
-      <div class="col-lg-7">
-        <h1 class="home-heading">This awesome blog was made with <i class="fa fa-heart"></i> by <span>MasterBDX</span>
+      <div class="col-lg-8 m-auto">
+        {% if obj.content %}
+        <h1 class="home-heading" style="">
+        {{obj.safe_content}}
         </h1>
-        <a href="{% url 'posts:list' %}" class="hero-link">
-          Take a look</a>
+        {% endif %}
+        <!-- <a href="{% url 'posts:list' %}" class="hero-link">
+          Take a look</a> -->
       </div>
     </div>
 
@@ -25,30 +35,15 @@
   </div>
 </section>
 
-<!-- Intro Section-->
 
-<!-- <section class="intro wow fadeInLeft">
-  {% if about_blog.overview %}
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-8" id="about-blog">
-        <h3 class="">About Blog
-          <hr>
-        </h3>
-        <p class="lead">
-          {{about_blog.overview}}
-          {% if about_blog.content %}
-          <a href="{% url 'about_blog' %}">read more</a>
-          {% endif %}
-        </p>
-      </div>
-    </div>
-  </div>
-  {% endif %}
-</section> -->
 <section class="featured-posts">
   <div class="container ">
-
+    <header class="main-header">
+      <h2>{% trans 'Featured Posts' %} </h2>
+      <br />
+      <br />
+      <br /><br />
+    </header>
     <!-- Post-->
     {% for object in featured_posts %}
     <div class="row d-flex align-items-stretch wow zoomIn">
@@ -109,26 +104,17 @@
 </section>
 
 <!-- Divider Section-->
-<section
-  style="background: url({% static 'img/peace.jpg'%}); background-size: cover; background-position: center bottom"
-  class=" python-cover wow zoomIn divider">
-  <div class="overlay"></div>
-  <div class="container">
-    <div class="row">
-      <div class="col-md-7">
-        <p>Lord, make me an instrument of thy peace. Where there is hatred, let me sow love.</p>
-        <a href="{% url 'posts:list' %}" class="hero-link">View More</a>
-      </div>
-    </div>
-  </div>
-</section>
+
+<div class="divider">
+
+</div>
 {% if latest_posts %}
 
 <!-- Latest Posts -->
-<section class="latest-posts ">
+<section style="padding:50px 0" class="latest-posts ">
   <div class="container">
-    <header>
-      <h2>Latest posts from the blog </h2>
+    <header class="main-header">
+      <h2>{% trans 'Latest posts from the blog' %} </h2>
 
     </header>
     <div class="row">

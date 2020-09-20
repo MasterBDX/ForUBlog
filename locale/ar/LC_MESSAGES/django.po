@@ -1,0 +1,130 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-09-19 12:28+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
+"&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
+
+#: accounts/templates/registration/password_reset_email.html:2
+#, python-format
+msgid ""
+"\n"
+"Hello, \n"
+"\n"
+"Reset your password on %(domain)s for %(user)s \n"
+msgstr ""
+
+#: accounts/templates/registration/password_reset_email.txt:2
+#, python-format
+msgid ""
+"\n"
+"Hello, \n"
+"\n"
+"Reset your password on %(domain)s for %(user)s:\n"
+msgstr ""
+
+#: comments/api/serializers.py:129 comments/api/serializers.py:141
+msgid "This field should not be left blank"
+msgstr ""
+
+#: main/templates/main/home.html:41
+msgid "Featured Posts"
+msgstr "مميزنا"
+
+#: main/templates/main/home.html:116
+msgid "Latest posts from the blog"
+msgstr "جديدنا"
+
+#: templates/snippets/footer.html:19
+msgid "Email"
+msgstr "البريد الإلكتروني"
+
+#: templates/snippets/footer.html:64
+msgid "My Account"
+msgstr "حسابي"
+
+#: templates/snippets/footer.html:69 templates/snippets/navbar.html:126
+msgid "Login"
+msgstr "تسجيل الدخول"
+
+#: templates/snippets/footer.html:74 templates/snippets/navbar.html:130
+msgid "Register"
+msgstr "التسجيل"
+
+#: templates/snippets/footer.html:79
+msgid "Contact Us"
+msgstr "تواصل معنا"
+
+#: templates/snippets/footer.html:84
+msgid "About Blog"
+msgstr "حول المدونة"
+
+#: templates/snippets/footer.html:88
+msgid "About Me"
+msgstr "من نكون"
+
+#: templates/snippets/footer.html:92
+msgid "Privacy & Policy"
+msgstr "سياسة الخصوصية"
+
+#: templates/snippets/footer.html:100 templates/snippets/navbar.html:92
+msgid "Categories"
+msgstr "التصنيفات"
+
+#: templates/snippets/footer.html:122
+msgid "2019. All rights reserved for Masterbdx team"
+msgstr "جميع الحقوق محفوظة لفريق MasterBDX ( 2019 )"
+
+#: templates/snippets/navbar.html:41
+msgid "Home"
+msgstr "الرئيسية"
+
+#: templates/snippets/navbar.html:46
+msgid "Blog"
+msgstr "المدونة"
+
+#: templates/snippets/navbar.html:51
+msgid "Contact"
+msgstr "تواصل معنا"
+
+#: templates/snippets/navbar.html:64
+msgid "Admin"
+msgstr "المشرف"
+
+#: templates/snippets/navbar.html:71
+msgid "Authors Dashboard"
+msgstr "التحكم بالمؤلَفين"
+
+#: templates/snippets/navbar.html:74
+msgid "Ultimate Dashboard"
+msgstr "لوحة التحكم الرئيسية"
+
+#: templates/snippets/navbar.html:86
+msgid "Dashboard"
+msgstr "لوحة التحكم"
+
+#: templates/snippets/navbar.html:95
+msgid "Posts"
+msgstr "المنشورات"
+
+#: templates/snippets/navbar.html:117
+msgid "Profile"
+msgstr "الملف الشخصي"
+
+#: templates/snippets/navbar.html:120
+msgid "Logout"
+msgstr "تسجيل الخروج"

@@ -709,7 +709,7 @@ section.featured-posts .avatar {
   height: 40px;
   overflow: hidden;
   border-radius: 50%;
-  margin-right: 10px;
+  margin-left: 10px;
 }
 
 section.featured-posts .title,
@@ -723,7 +723,8 @@ section.featured-posts .comments {
 section.featured-posts .title i,
 section.featured-posts .date i,
 section.featured-posts .comments i {
-  margin-right: 5px;
+  margin-left: 5px;
+  
 }
 
 section.featured-posts .title::after,
@@ -1212,7 +1213,7 @@ main.posts-listing .post-footer {
   font-size: 0.9em;
   position: absolute;
   top: 0;
-  right: 0;
+  left: 0;
 }
 
 .widget.latest-posts a {

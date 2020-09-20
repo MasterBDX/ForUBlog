@@ -36,7 +36,7 @@ def search_posts_view(request):
 
 
 class SearchUserView(ListView):
-    template_name = 'my_admin/authors_admin.html'
+    template_name = 'main/authors_admin.html'
     paginate_by = 2
     page_kwarg = 'page'
 
