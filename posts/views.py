@@ -11,7 +11,7 @@ from django.http import Http404
 from .forms import AddPostForm
 from .models import Post, Author, Category
 
-from comments.forms import CommentForm, EditCommentForm, ReplyForm
+from comments.forms import CommentForm
 
 from main.mixins import AuthorRequiredMixin, AuthorCheckMixin
 from main.models import (AboutBlog, AboutMe, PrivacyPolicy)
@@ -67,8 +67,7 @@ def post_detail(request, slug):
                    'comments_list_url':comments_list_url,
                    'form': form, 'cates_num': cates_num,
                    'previous': previous_post, 'next': next_post,
-                   'share_str': share_str, 'editform': EditCommentForm(),
-                   'share_title': share_title, 'replyform': ReplyForm()}
+                   'share_str': share_str, 'share_title': share_title,}
 
         return render(request, 'posts/detail.html', context)
 

@@ -1,5 +1,6 @@
 
 $(function () {
+
   /* SCRIPT TO OPEN THE MODAL WITH THE PREVIEW */
   $('.scrollDown').click((e) => {
     e.preventDefault()
@@ -62,72 +63,72 @@ $(function () {
     // $("#formUpload").submit();
   })
 
-  $('.EditCommentBtn').on('click', function (event) {
-    event.preventDefault()
-    const editBtn = $(this)
-    const commentId = editBtn.attr('id').split('-')[1]
+  // $('.EditCommentBtn').on('click', function (event) {
+  //   event.preventDefault()
+  //   const editBtn = $(this)
+  //   const commentId = editBtn.attr('id').split('-')[1]
 
-    const content = $('#comment-content-' + commentId).text()
-    $('#edit-form-field').val(content)
-    $('#editForm-' + commentId + ' textarea').val(content)
+  //   const content = $('#comment-content-' + commentId).text()
+  //   $('#edit-form-field').val(content)
+  //   $('#editForm-' + commentId + ' textarea').val(content)
 
-    $('#editDiv-' + commentId).slideToggle()
-    $('#deleteDiv-' + commentId).slideUp()
-    $('#repliesDiv-' + commentId).slideUp()
-    $('#addReplyDiv-' + commentId).slideUp()
-  })
+  //   $('#editDiv-' + commentId).slideToggle()
+  //   $('#deleteDiv-' + commentId).slideUp()
+  //   $('#repliesDiv-' + commentId).slideUp()
+  //   $('#addReplyDiv-' + commentId).slideUp()
+  // })
 
-  $('.DeleteCommentBtn').on('click', function (event) {
-    event.preventDefault()
-    const deleteBtn = $(this)
-    const commentId = deleteBtn.attr('id').split('-')[1]
+  // $('.DeleteCommentBtn').on('click', function (event) {
+  //   event.preventDefault()
+  //   const deleteBtn = $(this)
+  //   const commentId = deleteBtn.attr('id').split('-')[1]
 
-    $('#deleteDiv-' + commentId).slideToggle()
-    $('#editDiv-' + commentId).slideUp()
-    $('#repliesDiv-' + commentId).slideUp()
-    $('#addReplyDiv-' + commentId).slideUp()
-  })
+  //   $('#deleteDiv-' + commentId).slideToggle()
+  //   $('#editDiv-' + commentId).slideUp()
+  //   $('#repliesDiv-' + commentId).slideUp()
+  //   $('#addReplyDiv-' + commentId).slideUp()
+  // })
 
-  $('.repliesBtn').on('click', function (event) {
-    event.preventDefault()
-    const repliesBtn = $(this)
-    const commentId = repliesBtn.attr('id').split('-')[1]
-    $('#repliesDiv-' + commentId).slideToggle()
-    $('#editDiv-' + commentId).slideUp()
-    $('#deleteDiv-' + commentId).slideUp()
-    $('#addReplyDiv-' + commentId).slideUp()
-  })
-  $('.addReplyBtn').on('click', function (event) {
-    event.preventDefault()
-    const deleteBtn = $(this)
-    const commentId = deleteBtn.attr('id').split('-')[2]
+  // $('.repliesBtn').on('click', function (event) {
+  //   event.preventDefault()
+  //   const repliesBtn = $(this)
+  //   const commentId = repliesBtn.attr('id').split('-')[1]
+  //   $('#repliesDiv-' + commentId).slideToggle()
+  //   $('#editDiv-' + commentId).slideUp()
+  //   $('#deleteDiv-' + commentId).slideUp()
+  //   $('#addReplyDiv-' + commentId).slideUp()
+  // })
+  // $('.addReplyBtn').on('click', function (event) {
+  //   event.preventDefault()
+  //   const deleteBtn = $(this)
+  //   const commentId = deleteBtn.attr('id').split('-')[2]
 
-    $('#addReplyDiv-' + commentId).slideToggle()
-    $('#editDiv-' + commentId).slideUp()
-    $('#deleteDiv-' + commentId).slideUp()
-    $('#repliesDiv-' + commentId).slideUp()
-  })
+  //   $('#addReplyDiv-' + commentId).slideToggle()
+  //   $('#editDiv-' + commentId).slideUp()
+  //   $('#deleteDiv-' + commentId).slideUp()
+  //   $('#repliesDiv-' + commentId).slideUp()
+  // })
 
-  $('.replyEditCommentBtn').on('click', function (event) {
-    event.preventDefault()
-    const editBtn = $(this)
-    const commentId = editBtn.attr('id').split('-')[2]
+  // $('.replyEditCommentBtn').on('click', function (event) {
+  //   event.preventDefault()
+  //   const editBtn = $(this)
+  //   const commentId = editBtn.attr('id').split('-')[2]
 
-    const content = $('#reply-content-' + commentId).text()
+  //   const content = $('#reply-content-' + commentId).text()
 
-    $('#reply-editForm-' + commentId + ' textarea').val(content)
+  //   $('#reply-editForm-' + commentId + ' textarea').val(content)
 
-    $('#reply-editDiv-' + commentId).slideToggle()
-    $('#reply-deleteDiv-' + commentId).slideUp()
-  })
+  //   $('#reply-editDiv-' + commentId).slideToggle()
+  //   $('#reply-deleteDiv-' + commentId).slideUp()
+  // })
 
-  $('.replyDeleteCommentBtn').on('click', function (event) {
-    event.preventDefault()
-    const deleteBtn = $(this)
-    const commentId = deleteBtn.attr('id').split('-')[2]
+  // $('.replyDeleteCommentBtn').on('click', function (event) {
+  //   event.preventDefault()
+  //   const deleteBtn = $(this)
+  //   const commentId = deleteBtn.attr('id').split('-')[2]
 
-    $('#reply-deleteDiv-' + commentId).slideToggle()
-    // $('#editDiv-'+ commentId ).slideUp();
+  //   $('#reply-deleteDiv-' + commentId).slideToggle()
+  //   // $('#editDiv-'+ commentId ).slideUp();
   })
 
 

@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block  content %}
 {% load static %}
-
+{% load i18n %}
 <div class="container">
   <div class="row">
 
@@ -54,30 +54,36 @@
                 <div class="post-body">
                   <p class="lead">{{obj.overview}}</p>
                 <p>{{obj.content|safe}}</p>
-                </div>
-                <div class="social-btns text-center">
-                  <hr>
-                  <p class="lead"> share it on</p>
-        <a  href="https://www.facebook.com/sharer/sharer.php?u={{request.build_absolute_uri}}">
-            <i class="fab fa-facebook-square fa-fw fa-2x"></i>
-          
-        </a>
-         <a  
-            href="https://twitter.com/intent/tweet?url={{request.build_absolute_uri}}&text={{share_str}}&
-            original_referer=https://twitter.com/share?url={{request.build_absolute_uri}}&text={{share_str}}"            
-            >
-            <i class="fab fa-twitter-square fa-fw fa-2x"></i>
-            
-        </a>
-        <a  href="http://www.reddit.com/submit?url={{request.build_absolute_uri}}&title={{share_title}}">
-            
-            <i class="fab fa-reddit-square fa-fw fa-2x"></i>
+                <hr>  
+              </div>
+        
+        <!-- Social Media Sharing Btns  -->
+        <div class="row social-btns text-center" >
+          <div class='col-md-3 pb-2 m-auto text-center'>
+            <span> {% trans 'share it on' %}</span>
+          </div>
+          <div class="w-100"></div>
+          <div class='col-md-3 m-auto text-center'>
+              <a  href="https://www.facebook.com/sharer/sharer.php?u={{request.build_absolute_uri}}">
+                <i class="fab fa-facebook-square fa-fw fa-2x"></i>
+              
             </a>
-            
-
-            
-                </div>
-
+            <a  
+                href="https://twitter.com/intent/tweet?url={{request.build_absolute_uri}}&text={{share_str}}&
+                original_referer=https://twitter.com/share?url={{request.build_absolute_uri}}&text={{share_str}}"            
+                >
+                <i class="fab fa-twitter-square fa-fw fa-2x"></i>
+                
+            </a>
+            <a  href="http://www.reddit.com/submit?url={{request.build_absolute_uri}}&title={{share_title}}">
+                
+                <i class="fab fa-reddit-square fa-fw fa-2x"></i>
+                </a>
+          </div>
+        </div>
+        
+    
+        <!-- ========================================================== -->
 
                 <div class="post-tags">
                   {% for cat in obj.categories.all %}
@@ -89,10 +95,10 @@
                   {% if previous %}
                       <a href="{%  url 'posts:detail' slug=previous.slug %}" class="prev-post text-left d-flex align-items-center">
                         <div class="icon prev">
-                          <i class="fa fa-angle-left"></i>
+                          <i class="fa fa-angle-right"></i>
                         </div>
                         <div class="text">
-                          <strong class="text-primary">Previous Post </strong>
+                          <strong class="text-primary">{% trans 'Previous Post' %} </strong>
                           <h6>{{previous.title}}</h6>
                         </div>
                       </a>
@@ -108,11 +114,11 @@
                   <a href="{%  url 'posts:detail' slug=next.slug %}" class="next-post text-right d-flex align-items-center justify-content-end">
                       <div class="text">
 
-                        <strong class="text-primary">Next Post </strong>
+                        <strong class="text-primary">{% trans 'Next Post' %} </strong>
                         <h6>{{next.title}}</h6>
                       </div>
                       <div class="icon next">
-                        <i class="fa fa-angle-right"></i>
+                        <i class="fa fa-angle-left"></i>
                     </div>
                   </a>
                   {% endif %}
@@ -122,24 +128,20 @@
                 <div class='col-lg-12'>
 
                     <a href="{% url 'posts:edit_post' post_slug=obj.slug %}" class='btn btn-dark mr-4'>
-                      Edit
+                      {% trans 'Edit' %}
                     </a>
 
                     <a href="{% url 'posts:delete_post' post_slug=obj.slug %}" class='btn btn-dark'>
-                      Delete
+                      {% trans 'Delete' %}
                     </a>
                 </div>
                 {% endif %}
                 
                 <!-- ############################################## -->
-                 
+                
 
-
-                <!-- <br />
-                <br />
-                <br />
-                <br /> -->
                 {% include 'snippets/comment2.html' %}
+              
               </div>
             </div>
           </div>

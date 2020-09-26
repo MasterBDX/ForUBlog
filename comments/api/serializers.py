@@ -29,10 +29,12 @@ class ReplySerializer(serializers.ModelSerializer):
         return obj.comment.id
 
     def get_owner(self,obj):
-        user = self.context.get('request').user
-        if user.is_authenticated:
-            if obj.user == user:
-                return True
+        request = self.context.get('request')
+        if request:
+            user = request.user
+            if user.is_authenticated:
+                if obj.user == user:
+                    return True
         return False
     
     def get_username(self,obj):
@@ -82,10 +84,12 @@ class CommentSerialzer(serializers.ModelSerializer):
                 ]
     
     def get_owner(self,obj):
-        user = self.context.get('request').user
-        if user.is_authenticated:
-            if obj.user == user:
-                return True
+        request = self.context.get('request')
+        if request:
+            user = request.user
+            if user.is_authenticated:
+                if obj.user == user:
+                    return True
         return False
     
     def get_username(self,obj):

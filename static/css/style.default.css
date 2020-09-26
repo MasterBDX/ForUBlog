@@ -1402,11 +1402,11 @@ main.posts-listing .post-footer {
 }
 
 .blog-post .icon.prev {
-  margin-right: 20px;
+  margin-left: 20px;
 }
 
 .blog-post .icon.next {
-  margin-left: 20px;
+  margin-right: 20px;
 }
 
 .blog-post .post-comments {
@@ -1429,7 +1429,7 @@ main.posts-listing .post-footer {
 }
 
 .blog-post .post-comments .image {
-  margin-right: 15px;
+  margin-left: 15px;
 }
 
 .blog-post .post-comments .title::after {

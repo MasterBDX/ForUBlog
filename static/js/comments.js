@@ -67,10 +67,10 @@ $(function(){
                      type="${type}">
                   <button style="" type='submit'    
                      class="btn btn-link">
-                     Delete
+                     حذف
                   </button>
                   <button type="button" dropdwon-btn="${type}-delete-${id}" id="cancel-btn" class="btn btn-link">
-                     Cancel
+                     إلغاء
                   </button>
                </form>
             </p> 
@@ -167,13 +167,21 @@ $(function(){
                      </button>
                      <div class="dropdown-menu"
                            style="
+                           right: -28px;
+                           text-align:center;
                            width: auto !important;
+                           min-width: 6rem;
                            "
                      >
-                        <a  class="dropdown-item ${name}-edit ${name}-edit-${data.id}" id="${data.id}"  href="#">Edit</a>
+                        <a  class="dropdown-item ${name}-edit ${name}-edit-${data.id}" 
+                            id="${data.id}"  href="#">
+                            تعديل
+                        </a>
                         <a class="dropdown-item ${name}-delete ${name}-delete-${data.id}" 
                            delete-url="${data.delete_url}"
-                           id="${data.id}" href="#">Delete</a>
+                           id="${data.id}" href="#">
+                           حذف
+                        </a>
                
                
                      </div>
@@ -189,7 +197,7 @@ $(function(){
                <img src="${data.image_url}" alt="..." class="img-fluid rounded-circle"></div>
             <div class="title">
                <strong>${data.username}</strong>
-               <span class="date">${data.timesince} ago</span>
+               <span class="date">${data.timesince} مضت</span>
             </div>
          </div>
          ${dropdownMenu}
@@ -292,6 +300,7 @@ $(function(){
                         
          },
          error:(error)=>{
+            console.log(error.status)
             getErrorMessage($('#comment-error-message'),error.responseJSON)
          }
       })

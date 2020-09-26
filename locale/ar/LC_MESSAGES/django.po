@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-20 17:06+0000\n"
+"POT-Creation-Date: 2020-09-26 16:14+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -37,9 +37,42 @@ msgid ""
 "Reset your password on %(domain)s for %(user)s:\n"
 msgstr ""
 
-#: comments/api/serializers.py:129 comments/api/serializers.py:141
+#: comments/api/serializers.py:133 comments/api/serializers.py:145
+#: comments/api/views.py:50 comments/api/views.py:80
 msgid "This field should not be left blank"
 msgstr ""
+
+#: comments/api/views.py:51
+msgid "You have to be loged in to add comment"
+msgstr "يجب تسجيل دخولك ﻹضافة تعليق"
+
+#: comments/api/views.py:81
+msgid "You have to be loged in to add reply"
+msgstr "يجب تسجيل دخولك ﻹضافة رد"
+
+#: comments/forms.py:8
+msgid "Content"
+msgstr " المحتوى "
+
+#: comments/forms.py:13
+msgid " Type your comment "
+msgstr " يرجى إدخال تعليقك "
+
+#: comments/templates/snippets/comment2.html:6
+msgid "Leave a comment"
+msgstr "ﻹضافة تعليق"
+
+#: comments/templates/snippets/comment2.html:23
+msgid "Add"
+msgstr "أضف"
+
+#: comments/templates/snippets/comment2.html:57
+msgid "Comments"
+msgstr "التعليقات"
+
+#: comments/templates/snippets/comment2.html:71
+msgid "Load more"
+msgstr "المزيد"
 
 #: main/templates/main/home.html:42
 msgid "Featured Posts"
@@ -48,6 +81,30 @@ msgstr "مميزنا"
 #: main/templates/main/home.html:117
 msgid "Latest posts from the blog"
 msgstr "جديدنا"
+
+#: posts/templates/posts/detail.html:63
+msgid "share it on"
+msgstr "للمشاركة على"
+
+#: posts/templates/posts/detail.html:87
+msgid "share it on :"
+msgstr "للمشاركة على :"
+
+#: posts/templates/posts/detail.html:120
+msgid "Previous Post"
+msgstr "السابق"
+
+#: posts/templates/posts/detail.html:136
+msgid "Next Post"
+msgstr "التالي"
+
+#: posts/templates/posts/detail.html:150
+msgid "Edit"
+msgstr "تعديل"
+
+#: posts/templates/posts/detail.html:154
+msgid "Delete"
+msgstr "حذف"
 
 #: posts/templates/snippets/latest_posts.html:5
 msgid "Latest Posts"

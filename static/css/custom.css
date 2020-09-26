@@ -266,6 +266,12 @@ section.featured-posts .image img{
 
 /* Social media styels */
 
+.social-btns span
+{
+  color:#777777;
+  font-size: 1.1em;
+}
+
 .fa-facebook-square{
   color: #5677BF;
 }
@@ -357,7 +363,7 @@ section.featured-posts .image img{
 }
 
 .post-single .post-details .social-btns a i{
-  color: #555;
+  /* color: #555; */
   transition: all 0.3s ease;
   -webkit-transition: all 0.3s ease;
   -moz-transition: all 0.3s ease;
@@ -365,7 +371,7 @@ section.featured-posts .image img{
 }
 
 .post-single .post-details .social-btns a i:hover{
-  color: #222;
+  color: #555;
 }
 
 .post-single .post-details a.btn-dark{

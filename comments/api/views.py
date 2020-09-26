@@ -7,10 +7,11 @@ from rest_framework import mixins
 from rest_framework import generics
 from rest_framework import status
 
+
 from django.shortcuts import get_object_or_404
+from django.utils.translation import ugettext as _
 
-
-from .mixins import CommentContextMixin
+# from .mixins import CommentContextMixin
 from .permissions import (IsOwner,IsOwnerOrAdmin,
                           SameCommentPost,
                           SameCommentAndPost)
@@ -41,11 +42,13 @@ class AddCommentAPIView(APIView):
         content = request.data.get('content')
         post = get_object_or_404(Post,slug=self.kwargs.get('slug'))
         user = request.user
-        comment = CommentAddSerialzer(data={'content':content})
-        if comment.is_valid() :
-            obj = comment.save(post=post,user=user)            
-            return Response(CommentSerialzer(obj).data)
-        return Response('This field should not be left blank',status=status.HTTP_400_BAD_REQUEST)
+        if user.is_authenticated:
+            comment = CommentAddSerialzer(data={'content':content})
+            if comment.is_valid() :
+                obj = comment.save(post=post,user=user)            
+                return Response(CommentSerialzer(obj,).data)
+            return Response(_('This field should not be left blank'),status=status.HTTP_400_BAD_REQUEST)
+        return Response(_('You have to be loged in to add comment'),status=status.HTTP_403_FORBIDDEN)
 
 
 class EditCommentAPIView(UpdateAPIView):
@@ -68,12 +71,14 @@ class AddReplyAPIView(APIView):
         content = request.data.get('content')
         post = get_object_or_404(Post,slug=self.kwargs.get('slug'))
         user = request.user
-        comment = get_object_or_404(Comment,pk=self.kwargs.get('pk'))
-        reply = ReplyAddSerialzer(data={'content':content})
-        if reply.is_valid() :
-            obj = reply.save(comment=comment,post=post,user=user)
-            return Response(ReplySerializer(obj).data)
-        return Response('This field should not be left blank',status=status.HTTP_400_BAD_REQUEST)
+        if user.is_authenticated:
+            comment = get_object_or_404(Comment,pk=self.kwargs.get('pk'))
+            reply = ReplyAddSerialzer(data={'content':content})
+            if reply.is_valid() :
+                obj = reply.save(comment=comment,post=post,user=user)
+                return Response(ReplySerializer(obj).data)
+            return Response(_('This field should not be left blank'),status=status.HTTP_400_BAD_REQUEST)
+        return Response(_('You have to be loged in to add reply'),status=status.HTTP_403_FORBIDDEN)
 
 
 

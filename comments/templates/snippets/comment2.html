@@ -1,8 +1,9 @@
 {% load static %}
+{% load i18n %}
 <div class="add-comment">
   <header>
     <h4>
-      Leave a comment 
+      {% trans 'Leave a comment' %} 
     </h4>
   </header>
   <div style="display:none;" 
@@ -18,7 +19,9 @@
         {{form}}
       </div>
       <div class="form-group col-md-12">
-        <button type="submit" class="my-button">Add</button>
+        <button type="submit" class="my-button">
+          {% trans 'Add' %}
+        </button>
       </div>
     </div>
   </form>
@@ -51,7 +54,7 @@
     {% endif %}
 
     <h4 id='postComments'>
-         Comments
+         {% trans 'Comments' %}
         <span class="no-of-comments">
           (<span id="comments-count">{{obj.comments_count}}</span>)
         </span>
@@ -65,10 +68,10 @@
       <div class="col-md-12 text-center">
         <br />
         <button id='load-more-comments-btn' class="btn btn-link">
-          Load more
+          {% trans 'Load more' %}
         </button>
       </div>
     </div>
   <!-- ================================================= -->
-  <!-- --- -->
+  
 </div>
