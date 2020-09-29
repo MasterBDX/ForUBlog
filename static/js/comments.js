@@ -316,7 +316,6 @@ $(function(){
                         
          },
          error:(error)=>{
-            console.log(error.status)
             getErrorMessage($('#comment-error-message'),error.responseJSON)
          }
       })
@@ -517,11 +516,11 @@ $(function(){
             },1000)
          },
          error:(error)=>{
-            if (error.status === 400){
+            
                container.find('.comments-loading').remove()
                let errorMessageContainer = $(`#reply-error-message-${commentId}`)
                getErrorMessage(errorMessageContainer,error.responseJSON)
-            }
+            
 
          }
       })
