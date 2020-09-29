@@ -25,7 +25,6 @@ class ReplySerializer(serializers.ModelSerializer):
                 ]
     
     def get_parent(self,obj):
-        print(self.context)
         return obj.comment.id
 
     def get_owner(self,obj):

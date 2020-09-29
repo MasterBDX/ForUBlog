@@ -13,11 +13,12 @@ $(function(){
 
    // ================ Loading Icon ==================
    const loadingDiv = `
-                  <div class="comments-loading">
+                  <div style="margin:27px 5px;" 
+                       class="comments-loading">
                     <div>
-                        <br />
+      
                            <i class="fas fa-spinner fa-2x fa-pulse"></i>
-                        <br />
+                       
                      </div>
                   </div>
                `
@@ -46,7 +47,7 @@ $(function(){
    }
 
    // ================ get Delete Form ===================
-   function getDeleteForm(type, btn){
+   function getDeleteForm(type, btn, parent){
       const id = btn.attr('id')
       const action = btn.attr('delete-url')
       const container = $(`#${type}-${id}`)
@@ -59,12 +60,14 @@ $(function(){
                      padding-bottom: 0px;
                      color:#e81d1d;
                   ">
-               Are you sure ?
+               يرجى التأكيد !!
                &nbsp;
                <form id="delete-comment-form"
                      comment-id = ${id} 
                      method='post' action="${action}"
-                     type="${type}">
+                     type="${type}"
+                     parent-id=${parent}
+                     >
                   <button style="" type='submit'    
                      class="btn btn-link">
                      حذف
@@ -78,7 +81,7 @@ $(function(){
       `
       btn.css(disabled)
       let containerChild = container.find(`.deletion-con-${type}-${id}`)    
-      containerChild.append(deleteComment).slideDown(1000);
+      containerChild.append(deleteComment).slideDown(500);
       return true
 }
    // ================ get one Comment  ==================
@@ -89,7 +92,7 @@ $(function(){
       if(type){
          name = type
       }
-      let repliesStuff = ''
+      let repliesStuff = '';
       
       // ===========   Add Reply Form ====================
       
@@ -106,15 +109,15 @@ $(function(){
                      class="commenting-form">
                      <div class="row">
                         <div class="form-group col-md-12">
-                           <label for="usercomment">Content:</label>
-                           <textarea style="width: 80%;" 
-                                    name="content" cols="40" rows="4" 
-                                    id="usercomment" placeholder="Type your reply" 
+                           <label for="usercomment">المحتوى :</label>
+                           <textarea style="width: 100%;" 
+                                    name="content" cols="40" rows="5" 
+                                    id="usercomment" placeholder="يرجى إدخال ردك" 
                                     class="form-control"></textarea>
                         </div>     
                            <div class="form-group col-md-12">
                               <button  class="my-button" type="submit" >
-                                    Add
+                                    أضف
                               </button>
                            </div>
                      </div>
@@ -124,21 +127,20 @@ $(function(){
                return getComment(obj,'reply')
             }).join(' ')
          const repliesCount = data.replies.length
+         
          repliesStuff = `
                   <div class="col-md-12">
                      <button id="add-reply-btn" 
                            class="btn btn-link"
-                           comment-id=${data.id}
-                           >
-                           <i class="fas fa-plus fa-md"></i> 
-                           
-                           Reply
+                           comment-id="${data.id}">
+                           <i class="fas fa-plus fa-md"></i>       
+                           رد
                      </button>
                      <button id="replies-list-btn"
                              replies-url="${repliesCount}" 
                              comment-id="${data.id}"
                              class="btn btn-link">
-                        Replies (<span id="replies-count-${data.id}">${repliesCount}</span>)
+                        الردود (<span id="replies-count-${data.id}">${repliesCount}</span>)
                      </button>
                   </div>
                
@@ -179,6 +181,7 @@ $(function(){
                         </a>
                         <a class="dropdown-item ${name}-delete ${name}-delete-${data.id}" 
                            delete-url="${data.delete_url}"
+                           parent-id="${data.parent}"
                            id="${data.id}" href="#">
                            حذف
                         </a>
@@ -237,12 +240,25 @@ $(function(){
    
    let commentsContainer = $('#comments-container-id');
    
-   let commentsCount = $("#comments-count");
+   
    
    const commentsFetcheUrl = commentsContainer.attr('comments-list-url')
 
-   function checkNum (strNum){
-      return Number(strNum)
+   const numConv = (container,ope,hideable)=>{ 
+      const numContainer = $(`${container}`)
+      let Num = Number(numContainer.text()) 
+      if (ope === '+'){
+         numContainer.text(Num + 1)
+         Num += 1;
+      }else{
+         numContainer.text(Num - 1)
+         Num -= 1;
+      }
+      if (Num === 0 && hideable){
+         let repliesContainer = $(container.replace('count','container'))
+         repliesContainer.hide(400);
+      }
+      return true
    }
 
    // ================ get Comments List  ==================
@@ -292,8 +308,8 @@ $(function(){
             setTimeout(()=>{
                $('#comments-container-id .comments-loading').remove()
                commentsContainer.prepend(getComment(data))
-               const Num = checkNum(commentsCount.text()) 
-               commentsCount.text(Num + 1)
+              
+               numConv('#comments-count','+')
                $(this).trigger("reset"); 
             }
                ,2000)
@@ -331,9 +347,9 @@ $(function(){
                      class="commenting-form">
                      <div class="row">
                         <div class="form-group col-md-12">
-                           <label for="usercomment">Content:</label>
+                           <label for="usercomment">المحتوى :</label>
                            <textarea required=True name="content" cols="40" rows="4" 
-                                  id="usercomment" placeholder="Type your comment" 
+                                  id="usercomment" placeholder="يرجى إدخال تعليقك" 
                                   class="form-control">${commentContent}</textarea>
                         </div>     
                         <div class="form-group col-md-12">
@@ -342,7 +358,7 @@ $(function(){
                                     comment-id="${commentId}" 
                                     id="commentEdit-btn-id"
                                     >
-                                    Edit
+                                    تعديل
                            </button>
                         </div>
                   </div>
@@ -397,7 +413,8 @@ $(function(){
       e.preventDefault();
       const commentId = $(this).attr('comment-id')
       const endpoint = $(this).attr('action')
-      const type = $(this).attr('type')
+      const parentId = $(this).attr('parent-id')
+      let type = $(this).attr('type')
       $(`.delete-${commentId}`).css({display:'inline'})
       $.ajax({
          url:endpoint,
@@ -407,8 +424,16 @@ $(function(){
             comment.html(loadingDiv)
             setTimeout(()=>{
                comment.remove()
-               const Num = checkNum(commentsCount.text()) 
-               commentsCount.text(Num - 1) 
+               let container = 'comments-count';
+               let hideable = false
+               if (type === 'reply'){
+                  hideable = true;
+                  container = `replies-count-${parentId}`;
+               }
+               
+               numConv(`#${container}`,'-',hideable)        
+
+           
             },1000)
             
       
@@ -424,10 +449,9 @@ $(function(){
       $(document.body).on('click','#cancel-btn',function(e){
          e.preventDefault();
          
-         $(this).parent().parent().parent().hide()
+         $(this).parent().parent().parent().hide(400)
          $(this).parent().parent().remove()
          const dropdownBtn = $(this).attr('dropdwon-btn')
-         console.log(dropdownBtn)
          $(`.${dropdownBtn}`).css(abled);
          
       })
@@ -473,8 +497,9 @@ $(function(){
    $(document.body).on('submit','#replyAddForm',function(e){
       e.preventDefault();
       const commentId = $(this).attr('comment-id')
-      $(`#replies-container-${commentId}`).prepend(loadingDiv)
-
+      const container = $(`#replies-container-${commentId}`)
+      container.prepend(loadingDiv)
+      container.show(400)
       const endpoint = $(this).attr('action')
       const formData = new FormData(event.target);
       const replyContent = formData.get('content')
@@ -483,18 +508,17 @@ $(function(){
          data:{'content':replyContent},
          method:'post',
          success:(data)=>{
-            
+           
             setTimeout(()=>{
-               $(`#replies-container-${commentId}`).find('.comments-loading').remove()
-               $(`#replies-container-${commentId}`).prepend(getComment(data,'reply'))
+               container.find('.comments-loading').remove()
+               container.prepend(getComment(data,'reply'))
                $(this).trigger("reset");
-               let repliesCount = $(`#replies-count-${commentId}`)
-               repliesCount.text(Number(repliesCount.text()) + 1)
+               numConv(`#replies-count-${commentId}`,'+')
             },1000)
          },
          error:(error)=>{
             if (error.status === 400){
-               $(`#replies-container-${commentId}`).find('.comments-loading').remove()
+               container.find('.comments-loading').remove()
                let errorMessageContainer = $(`#reply-error-message-${commentId}`)
                getErrorMessage(errorMessageContainer,error.responseJSON)
             }
@@ -528,9 +552,9 @@ $(function(){
                         class="commenting-form">
                         <div class="row">
                            <div class="form-group col-md-12">
-                              <label for="usercomment">Content:</label>
+                              <label for="usercomment">المحتوى : </label>
                               <textarea required=True name="content" cols="40" rows="4" 
-                                    id="usercomment" placeholder="Type your comment" 
+                                    id="usercomment" placeholder="يرجى إدخال ردك" 
                                     class="form-control">${replyContent}</textarea>
                            </div>     
                            <div class="form-group col-md-12">
@@ -539,7 +563,7 @@ $(function(){
                                        comment-id="${replyId}" 
                                        id="commentEdit-btn-id"
                                        >
-                                       Edit
+                                       تعديل
                               </button>
                            </div>
                      </div>
@@ -558,7 +582,8 @@ $(function(){
   
     $(document.body).on('click','.reply-delete',function(e){
          e.preventDefault();
-         getDeleteForm('reply',$(this))         
+         const parent = $(this).attr('parent-id')
+         getDeleteForm('reply',$(this),parent)         
  
       })
 })

@@ -38,6 +38,7 @@ class CommentListAPIView(ListAPIView):
     
 
 class AddCommentAPIView(APIView):
+
     def post(self,request,*args,**kwargs):
         content = request.data.get('content')
         post = get_object_or_404(Post,slug=self.kwargs.get('slug'))
@@ -46,7 +47,7 @@ class AddCommentAPIView(APIView):
             comment = CommentAddSerialzer(data={'content':content})
             if comment.is_valid() :
                 obj = comment.save(post=post,user=user)            
-                return Response(CommentSerialzer(obj,).data)
+                return Response(CommentSerialzer(obj,context={'request':request}).data)
             return Response(_('This field should not be left blank'),status=status.HTTP_400_BAD_REQUEST)
         return Response(_('You have to be loged in to add comment'),status=status.HTTP_403_FORBIDDEN)
 
@@ -76,7 +77,7 @@ class AddReplyAPIView(APIView):
             reply = ReplyAddSerialzer(data={'content':content})
             if reply.is_valid() :
                 obj = reply.save(comment=comment,post=post,user=user)
-                return Response(ReplySerializer(obj).data)
+                return Response(ReplySerializer(obj,context={'request':request}).data)
             return Response(_('This field should not be left blank'),status=status.HTTP_400_BAD_REQUEST)
         return Response(_('You have to be loged in to add reply'),status=status.HTTP_403_FORBIDDEN)
 
