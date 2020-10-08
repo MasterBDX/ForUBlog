@@ -1,19 +1,28 @@
 {% extends 'base.html' %}
-{% block title %}Catgories Dashboard{% endblock %}
+{% load i18n %}
+{% block title %}
+  {% trans 'Categories Dashboard' %}
+{% endblock %}
 {% block  content %}
 {% load static %}
 
 <div class="container dash-board">
   <div class="row">
-    <div class="col-md-7 m-auto text-center">
-      <h1 class=""><br>Categories Dashboard<br>
-        <hr>
-      </h1>
+    <div class="col-md-7 m-auto auth text-center ">
+      <h2 class="mt-4 mb-4 pb-3">
+        {% trans 'Categories Dashboard' %}
+        
+      </h2>
     </div>
 
     <div class="col-md-10 m-auto">
-      <p class=""><i class="fa fa-plus"></i> To add new Category</p>
-      <a class="my-button" href="{% url 'posts:add_category' %}">Add</a>
+      
+      <p class="table-add-new">
+           <a class="btn btn-link" href="{% url 'posts:add_category' %}">
+            {% trans 'To add new Category' %}  
+            <i class="fa fa-plus"></i>
+          </a>
+      </p>
     </div>
     <div class="col-md-10 m-auto">
       <br />
@@ -22,8 +31,9 @@
 
         <thead class="thead-dark">
           <tr style="border-radius: 6px">
-            <th scope="col">Title</th>
-            <th scope="col">Created At</th>
+            <th scope="col">{% trans 'Title' %}</th>
+            <th scope="col">{% trans 'Slug' %}</th>
+            <th scope="col">{% trans 'Created At' %}</th>
             <th scope="col">
 
               ###
@@ -34,10 +44,11 @@
           {% for cate in cates %}
           <tr>
             <th scope="row">{{cate.title|capfirst}}</th>
+            <th scope="row">{{cate.slug}}</th>
             <td>{{cate.timestamp}}</td>
             <td class="">
               <a href="{% url 'posts:edit_category' slug=cate.slug %}" class='btn'>
-                Edit
+                {% trans 'Edit' %}
               </a>
 
             </td>
@@ -47,7 +58,9 @@
         </tbody>
       </table>
       {% else %}
-      <p class="das-par text-center"> There are No Categories</p>
+      <p class="das-par text-center"> 
+         {% trans ' There are no categories' %}
+      </p>
       {% endif %}
 
     </div>

@@ -1,12 +1,15 @@
 from django import forms
+from django.utils.translation import ugettext_lazy as _
+
 from .models import AboutMe, AboutBlog, PrivacyPolicy
 
 class ContactForm(forms.Form):
-    name = forms.CharField(widget=forms.TextInput())
-    email = forms.EmailField(widget=forms.TextInput())
-    subject = forms.CharField(widget=forms.TextInput())
-    message = forms.CharField(widget=forms.Textarea())
+    name = forms.CharField(label=_('name'),widget=forms.TextInput())
+    email = forms.EmailField(label=_('email'),widget=forms.TextInput())
+    subject = forms.CharField(label=_('subject'),widget=forms.TextInput())
+    message = forms.CharField(label=_('message'),widget=forms.Textarea())
 
+    
 
 class AboutMeForm(forms.ModelForm):
     class Meta:

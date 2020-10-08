@@ -1,19 +1,20 @@
 {% extends 'base.html' %}
-{% block title %}About Me{% endblock %}
+{% load i18n %}
+{% block title %}{% trans 'About Me' %}{% endblock %}
 {% block content %}
 {% load static %}
 
 <div class="container about-me">
 	<div class="row ">
-		<div class="col-md-12">
-			<h1 class="text-center">
-				<br />
-				About Me
-				<hr />
-			</h1>
+		<div class="col-md-6 m-auto auth text-center">
+			<h2 class="mt-5 mb-4 pb-3">
+				{% trans 'About Me' %}
+			</h2>
 		</div>
+
 		{% if privacy %}
-		<div class="col-lg-12">
+		
+		<div class="col-md-8 m-auto">
 			<p class="lead">
 				{{privacy.overview}}
 			</p>
@@ -22,10 +23,9 @@
 		{% else %}
 
 		<div class="col-md-12">
-			<h1 class="text-center no-content">
-				There is no About Me description
-				<br />
-			</h1>
+			<h4 class="text-center no-content">
+				{% trans 'There is no About Me description' %}
+			</h4>
 		</div>
 		{% endif %}
 

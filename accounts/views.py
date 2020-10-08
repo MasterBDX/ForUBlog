@@ -14,6 +14,7 @@ from django.views.generic.edit import FormMixin
 from django.http import Http404
 from django.utils.safestring import mark_safe
 from django.urls import reverse_lazy, reverse
+from django.utils.translation import ugettext_lazy as _
 
 from .models import User, EmailActivation, ProfileImage
 
@@ -26,11 +27,12 @@ class UserRegistrerView(SuccessMessageMixin, CreateView):
     form_class = RegistrationForm
     template_name = 'authentication/register.html'
     success_url = reverse_lazy('account:login')
-    success_message = "We sent you the activation link please check your email ."
+    success_message = _("We sent you the activation link please check your email .")
 
 
-class EmailActivationView(FormMixin, View):
+class EmailActivationView(SuccessMessageMixin,FormMixin, View):
     success_url = reverse_lazy('account:login')
+    success_message = _("We sent you the activation link please check your email .")
     form_class = EmailReActivationForm
 
     def get(self, request, *args, key=None, **kwargs):
@@ -42,17 +44,15 @@ class EmailActivationView(FormMixin, View):
                 obj = confirm_qs.first()
                 obj.activate()
                 messages.success(
-                    request, 'Your account has been confirmed ; Please login')
+                    request, _('Your account has been confirmed ; Please login'))
                 return redirect('account:login')
 
             else:
                 activated_qs = qs.filter(activated=True)
                 if activated_qs.exists():
                     reset_link = reverse('password_reset')
-                    msg = """ your email has already been confirmed
-                            Do you want to <a href="{link}"> reset your password </a> ?
-
-                    """.format(link=reset_link)
+                    msg = _(""" your email has already been confirmed
+                            Do you want to <a href="{link}"> reset your password </a> ?""").format(link=reset_link)
                     messages.success(request, mark_safe(msg))
                     return redirect('account:login')
         context = {'form': self.get_form(), 'key': key}
@@ -77,7 +77,11 @@ class EmailActivationView(FormMixin, View):
 
     def form_invalid(self, form):
         request = self.request
-        context = {'form': form, 'key': self.key}
+        try :
+            key = self.key
+        except:
+            key = None
+        context = {'form': form, 'key': key}
         return render(request, 'registration/activation-error.html', context)
 
 

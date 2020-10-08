@@ -5,6 +5,7 @@ from django.contrib.auth.forms import (
 from django.contrib.auth.forms import PasswordResetForm
 from django.urls import reverse
 from django.utils.safestring import mark_safe
+from django.utils.translation import ugettext_lazy as _
 
 from .models import EmailActivation, ProfileImage
 from django.core.files.uploadedfile import InMemoryUploadedFile
@@ -22,16 +23,25 @@ class UsernameField(forms.CharField):
 
 class LoginForm(AuthenticationForm):
     username = forms.CharField(
-        label="Email ", widget=forms.TextInput(attrs={'autofocus': True}))
+        label=_("Email "), widget=forms.TextInput(attrs={'autofocus': True,
+                                                         'placeholder':_('Please type the email address')}))
     password = forms.CharField(
-        label=("Password "),
+        label=(_("Password ")), 
         strip=False,
-        widget=forms.PasswordInput,
+        widget=forms.PasswordInput({'placeholder':_('Please type the password')}),
     )
-    remember_me = forms.BooleanField(required=False, label='Remember me')
+    remember_me = forms.BooleanField(required=False, label=_('Remember me'))
+
+    error_messages = {
+        'invalid_login': _(
+            "Please enter a correct email and password. Note that both "
+            "fields may be case-sensitive."
+        ),
+        'inactive': _("This account is inactive."),
+    }
 
     def clean(self):
-        email = self.cleaned_data['username']
+        email = self.cleaned_data.get('username')
 
         qs = User.objects.filter(email=email)
         if qs.exists():
@@ -42,20 +52,21 @@ class LoginForm(AuthenticationForm):
                 email_exists = EmailActivation.objects.email_exists(email)
                 if confimable_email:
                     path_link = reverse('account:email-resend-activation')
-                    msg1 = '''your account is inactive, Please check your email to activate your account !
-                            <br>
-                          to <a href="{link}"> resend 
-                                     activation email</a> '''.format(link=path_link)
+                    msg1 = _(''' your account is inactive, Please check your email to activate your account !
+                              <br>
+                              to <a href="{link}">
+                              resend activation email
+                              </a> ''').format(link=path_link)
                     raise forms.ValidationError(mark_safe(msg1))
 
                 elif email_exists:
                     path_link = reverse('account:email-resend-activation')
-                    msg2 = ''' your account is still inactive.<br>
+                    msg2 = _(''' your account is still inactive.<br>
                              do you want to <a href="{link}"> resend 
-                             activation link to your email ? </a> '''.format(link=path_link)
+                             activation link to your email ? </a> ''').format(link=path_link)
                     raise forms.ValidationError(mark_safe(msg2))
 
-                raise forms.ValidationError('This user is inactive')
+                raise forms.ValidationError(self.error_messages.get('inactive'))
 
         super().clean()
 
@@ -70,32 +81,35 @@ class MyPasswordResetForm(PasswordResetForm):
 
 
 class EmailReActivationForm(forms.Form):
-    email = forms.EmailField()
+    email = forms.EmailField(label=_('email'))
 
-    def clean_email(self):
+    def clean(self):
         email = self.cleaned_data.get('email')
         qs = EmailActivation.objects.email_exists(email)
         if not qs.exists():
             register_link = reverse('account:register')
-            msg = ''' Your Email Does not exists,
+            msg = _(''' Your Email Does not exists,
                        would you like to <a href="{link}">
-                       register </a>'''.format(link=register_link)
+                       register </a>''').format(link=register_link)
             raise forms.ValidationError(mark_safe(msg))
         else:
             if qs.first().user.is_active:
                 raise forms.ValidationError(
-                    'your email has already been confirmed')
-        return email
+                    _('your email has already been confirmed'))
+        return self.cleaned_data
 
 
 class RegistrationForm(forms.ModelForm):
-    password1 = forms.CharField(label='Password', widget=forms.PasswordInput)
-    password2 = forms.CharField(
-        label='Password Confirmation', widget=forms.PasswordInput)
+    password1 = forms.CharField(label=_('Password'),widget=forms.PasswordInput)
+    password2 = forms.CharField(label=_('Password Confirmation'),widget=forms.PasswordInput)
     subscribed = forms.BooleanField(
-        label='Subscribe to Newsletter', initial=True, required=False)
+        label=_('Subscribe to Newsletter'), initial=True, required=False)
 
     class Meta:
+        labels = {
+                  'email':_('email'),
+                  'username':_('username')
+                  }
         model = User
         fields = ['email', 'username']
 
@@ -104,14 +118,14 @@ class RegistrationForm(forms.ModelForm):
         password1 = data.get('password1')
         password2 = data.get('password2')
         if password1 != password2:
-            raise forms.ValidationError(" Passwords don't match ")
+            raise forms.ValidationError(_("Passwords don't match "))
         return password2
 
     def clean_email(self):
         email = self.cleaned_data['email']
         qs = User.objects.filter(email=email)
         if qs.exists():
-            raise forms.ValidationError('email is already used')
+            raise forms.ValidationError(_('email is already used'))
         return email
 
     def save(self, commit=True):

@@ -41,6 +41,7 @@ class Category(models.Model):
     updated = models.DateField(auto_now=True)
 
     class Meta:
+        ordering = ['timestamp']
         verbose_name_plural = 'Categories'
 
     def __str__(self):
@@ -127,9 +128,4 @@ class Post(models.Model):
         return self.comments.order_by('-timestamp').count()
 
 
-def slug_conf_receiver(sender, instance, *args, **kwargs):
-    if not instance.slug:
-        instance.slug = unique_slug_generator(instance)
 
-
-pre_save.connect(slug_conf_receiver, sender=Post)

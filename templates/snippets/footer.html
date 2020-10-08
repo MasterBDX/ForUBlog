@@ -102,7 +102,7 @@
           {% for cat in categories %}
 
           <div class="cat">
-            <a href="#"> {{cat.title|capfirst}} </a>
+            <a href="{% url 'posts:category_posts' cat_slug=cat.slug %}"> {{cat.title|capfirst}} </a>
           </div>
           {% endfor %}
 

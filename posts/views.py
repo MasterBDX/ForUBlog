@@ -8,7 +8,7 @@ from django.urls import reverse_lazy,reverse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import Http404
 
-from .forms import AddPostForm
+from .forms import AddPostForm,AddCategoryForm
 from .models import Post, Author, Category
 
 from comments.forms import CommentForm
@@ -78,11 +78,14 @@ def category_post_view(request, cat_slug):
     page = request.GET.get('page', 1)
     page_var = 'page'
     filter = Q(categories__slug__icontains=cat_slug)
+    cat = get_object_or_404(Category,slug=cat_slug)
     cat_posts = Post.objects.qs_paginator(page=page, filters=filter)
+    
 
     context = {
         'page_obj': cat_posts,
         'page_var': page_var,
+        'cat_name':cat.title
 
     }
 
@@ -132,14 +135,14 @@ class DeletePostView(LoginRequiredMixin, AuthorRequiredMixin, AuthorCheckMixin, 
 
 
 class AddCategoryView(LoginRequiredMixin, AuthorRequiredMixin, generic.CreateView):
+    queryset = Category.objects.all()
+    form_class = AddCategoryForm
     template_name = 'posts/create_category.html'
-    model = Category
-    fields = ['title']
-    success_url = reverse_lazy('posts:dashboard')
+    success_url = reverse_lazy('main:categories-dashboard')
 
 
 class EditCategoryView(LoginRequiredMixin, AuthorRequiredMixin, generic.UpdateView):
+    queryset = Category.objects.all()
+    form_class = AddCategoryForm
     template_name = 'posts/create_category.html'
-    model = Category
-    fields = ['title']
-    success_url = reverse_lazy('posts:dashboard')
+    success_url = reverse_lazy('main:categories-dashboard')

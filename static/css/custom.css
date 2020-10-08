@@ -107,6 +107,11 @@ form > input{
   margin: 0 6px 0 1px;
 }
 
+#div_id_remember_me #id_remember_me{
+  right: 62px;
+}
+
+
 /* Start (About-Me), (About-Blog), (Privacy & Policy) Pages */
 
 .about-me h1,
@@ -244,6 +249,15 @@ section.featured-posts .image img{
 /* End Cropper plugin Style */
 
 /* Alert Style */
+
+#login-form .alert-block {
+  margin: 15px 0px 30px 0px;
+}
+
+#login-form .alert-block ul li a:hover{
+  text-decoration: none;
+}
+
 
 .alert ul li{
   list-style: none;
@@ -389,6 +403,9 @@ section.featured-posts .image img{
   background-color: #3c3c3c;
 }
 
+#post-form .form-group .checkboxinput{
+  right:60px;
+}
 
 /* End (Post) */
 
@@ -831,13 +848,18 @@ footer.main-footer .contact-details .social-menu a::after{
 .das-par
 {
   margin-bottom: 87px;
-  font-size: 2em !important;
+  font-size: 1.5em !important;
 }
 
 footer.main-footer .contact-details .social-menu a:hover::after{ left: 0; }
 
 /* End (Footer) */
 
+/* Register Page */
+ 
+#register-form #id_subscribed{
+  right: 219px;
+}
 
 
 
@@ -897,8 +919,13 @@ header.main-header h2{
   border-bottom: 2px solid #D5D3D3;
 }
 
+.mytitle h3{
+  line-height: 43px;
+}
 
-  
+.table-add-new a{
+  font-size: 1.2em;
+}  
 
 
 /* -------------------------- */

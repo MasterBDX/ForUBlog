@@ -1,11 +1,13 @@
 from django.db.models.signals import pre_save, post_save
 from django.dispatch import receiver
 from django.template.defaultfilters import slugify
-from .models import Category, Post
 from django.conf import settings
 from django.template.loader import get_template
 from django.contrib.auth import get_user_model
 from django.core.mail import send_mail
+
+from .models import Category, Post
+from .utils import unique_slug_generator
 
 User = get_user_model()
 
@@ -13,7 +15,15 @@ User = get_user_model()
 @receiver(pre_save, sender=Category)
 def get_cat_slug(instance, sender, **kwargs):
     if not instance.slug:
-        instance.slug = slugify(instance.title.lower())
+        instance.slug = unique_slug_generator(instance)
+
+
+@receiver(pre_save, sender=Post)
+def slug_conf_receiver(sender, instance, *args, **kwargs):
+    if not instance.slug:
+        instance.slug = unique_slug_generator(instance)
+
+
 
 
 # @receiver(pre_save, sender=Post)

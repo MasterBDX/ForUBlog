@@ -1,11 +1,11 @@
 {% autoescape off %}
-
-Name : {{name}}
+{% load i18n %}
+{% trans "name" %} : {{name}} 
+ <br>
+ <br>
+{% trans "email" %} : {{email}}
 <br>
 <br>
-Email : {{email}}
-<br>
-<br>
-Message : {{message}}
+{% trans "message" %} : {{message}}
 
 {% endautoescape %}

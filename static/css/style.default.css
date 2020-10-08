@@ -552,7 +552,7 @@ div[class*="-btn"] {
   background: none;
   border: none;
   position: absolute;
-  right: 10px;
+  left: 10px;
   bottom: 15px;
 }
 

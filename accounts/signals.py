@@ -9,6 +9,21 @@ from marketing.utils import MailChimp
 from posts.models import Author
 
 
+def get_subscribe_status(instance):
+    if instance.subscribed:
+        json, status_code = MailChimp().subscribe(email=instance.email)
+    else:
+        json, status_code = MailChimp().unsubscribe(email=instance.email)
+
+    obj, created = MarketingPrefrence.objects.get_or_create(user=instance)
+    obj.mailchimp_msg = json
+    obj.save()
+    
+    if status_code == 200:
+        instance.check_subscribe = instance.subscribed
+        instance.save()
+    return True
+
 @receiver(pre_save, sender=User)
 def get_user_slug(sender, instance, **kwargs):
     if not instance.slug:
@@ -33,30 +48,33 @@ def make_email_activation(sender, instance, created, **kwargs):
             obj = EmailActivation.objects.create(
                 user=instance, email=instance.email)
             obj.send_email_activate()
+        get_subscribe_status(instance)
 
-        if instance.subscribed:
-            json, status_code = MailChimp().subscribe(email=instance.email)
-        else:
-            json, status_code = MailChimp().unsubscribe(email=instance.email)
+        # if instance.subscribed:
+        #     json, status_code = MailChimp().subscribe(email=instance.email)
+        # else:
+        #     json, status_code = MailChimp().unsubscribe(email=instance.email)
 
-        obj, created = MarketingPrefrence.objects.get_or_create(user=instance)
-        obj.mailchimp_msg = json
-        obj.save()
-        instance.check_subscribe = instance.subscribed
-        instance.save()
+        # obj, created = MarketingPrefrence.objects.get_or_create(user=instance)
+        # obj.mailchimp_msg = json
+        # obj.save()
+        # instance.check_subscribe = instance.subscribed
+        # instance.save()
 
     else:
         if instance.subscribed != instance.check_subscribe:
-            if instance.subscribed:
-                json, status_code = MailChimp().subscribe(email=instance.email)
-            else:
-                json, status_code = MailChimp().unsubscribe(email=instance.email)
+            get_subscribe_status(instance)
 
-            if status_code == 200:
-                instance.check_subscribe = instance.subscribed
-                instance.save()
+            # if instance.subscribed:
+            #     json, status_code = MailChimp().subscribe(email=instance.email)
+            # else:
+            #     json, status_code = MailChimp().unsubscribe(email=instance.email)
 
-            obj, created = MarketingPrefrence.objects.get_or_create(
-                user=instance)
-            obj.mailchimp_msg = json
-            obj.save()
+            # if status_code == 200:
+            #     instance.check_subscribe = instance.subscribed
+            #     instance.save()
+
+            # obj, created = MarketingPrefrence.objects.get_or_create(
+            #     user=instance)
+            # obj.mailchimp_msg = json
+            # obj.save()

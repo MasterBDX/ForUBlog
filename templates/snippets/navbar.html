@@ -10,7 +10,8 @@
         <div class="col-md-8">
           <form action="{% url 'search:posts' %}">
             <div class="form-group">
-              <input type="search" name="q" id="search" placeholder="What are you looking for?">
+              <input type="search" name="q" id="search" 
+              placeholder="{% trans 'What are you looking for ?' %}">
               <button type="submit" class="submit"><i class="icon-search-1"></i></button>
             </div>
           </form>
@@ -47,7 +48,8 @@
         </a>
         </li>
         <li class="nav-item"><a href="{% url 'main:contact_us' %}" class="nav-link ">
-          <i class="fa fa-phone fa-lg"></i> 
+          
+          <i class="fas fa-envelope fa-lg"></i> 
          {% trans 'Contact' %}
         </a>
         </li>
@@ -122,11 +124,14 @@
     </li>
    
   {% else %}
-        <li class="nav-item"><a href="{% url 'account:login' %}" class="nav-link ">
+        <li class="nav-item">
+          <a href="{% url 'account:login' %}" class="nav-link ">
+            <i class="fas fa-sign-in-alt fa-lg"></i>
           {% trans 'Login' %}
         </a>
         </li>
         <li class="nav-item"><a href="{% url 'account:register' %}" class="nav-link ">
+          <i class="fas fa-user-plus fa-lg"></i>
           {% trans 'Register' %}
         </a>
         </li>

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-26 16:14+0000\n"
+"POT-Creation-Date: 2020-10-08 17:29+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,6 +18,137 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
 "&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
+
+#: accounts/forms.py:26
+msgid "Email "
+msgstr "البريد  الإلكتروني"
+
+#: accounts/forms.py:27
+msgid "Please type the email address"
+msgstr "يرجى إدخال البريد الإلكتروني"
+
+#: accounts/forms.py:29
+msgid "Password "
+msgstr "كلمة المرور "
+
+#: accounts/forms.py:31
+msgid "Please type the password"
+msgstr "يرجى إدخال كلمة المرور"
+
+#: accounts/forms.py:33
+msgid "Remember me"
+msgstr "تذكرني "
+
+#: accounts/forms.py:37
+msgid ""
+"Please enter a correct email and password. Note that both fields may be case-"
+"sensitive."
+msgstr "الرجاء إدخال البريد الإلكتروني و كلمة السر الصحيحين."
+
+#: accounts/forms.py:40
+msgid "This account is inactive."
+msgstr "هذا الحساب غير مفعل."
+
+#: accounts/forms.py:55
+#, python-brace-format
+msgid ""
+" your account is inactive, Please check your email to activate your "
+"account !\n"
+"                              <br>\n"
+"                              to <a href=\"{link}\">\n"
+"                              resend activation email\n"
+"                              </a> "
+msgstr ""
+"الحساب غير مفعل , يرجى تفقد البريدالإلكتروني لتفعيل الحساب ! <br>\n"
+"<a href=\"{link}\">\n"
+" لإعادة إرسال التفعيل\n"
+" </a> "
+
+#: accounts/forms.py:64
+#, python-brace-format
+msgid ""
+" your account is still inactive.<br>\n"
+"                             do you want to <a href=\"{link}\"> resend \n"
+"                             activation link to your email ? </a> "
+msgstr ""
+"الحساب مازال غير مفعل&nbsp;<a href=\"{link}\">لإعادة إرسال رابط التفعيل</a>"
+
+#: accounts/forms.py:84 accounts/forms.py:110 main/forms.py:8
+#: main/templates/snippets/html_message.html:6
+#: main/templates/snippets/message.txt:6
+msgid "email"
+msgstr "البريد الإلكتروني"
+
+#: accounts/forms.py:91
+#, python-brace-format
+msgid ""
+" Your Email Does not exists,\n"
+"                       would you like to <a href=\"{link}\">\n"
+"                       register </a>"
+msgstr "هذا البريد غير موجود<br /><a href=\"{link}\">للتسجيل</a>"
+
+#: accounts/forms.py:98
+msgid "your email has already been confirmed"
+msgstr "هذا البريد مفعل بالفعل !"
+
+#: accounts/forms.py:103
+msgid "Password"
+msgstr "كلمة المرور "
+
+#: accounts/forms.py:104
+msgid "Password Confirmation"
+msgstr "تاكيد كلمة المرور "
+
+#: accounts/forms.py:106
+msgid "Subscribe to Newsletter"
+msgstr "للإشتراك في القائمة البريدية"
+
+#: accounts/forms.py:111
+msgid "username"
+msgstr "اسم المستخدم"
+
+#: accounts/forms.py:121
+msgid "Passwords don't match "
+msgstr "كلمتي المرور غير متطابقتين !"
+
+#: accounts/forms.py:128
+msgid "email is already used"
+msgstr "هذا البريد مفعل بالفعل !"
+
+#: accounts/templates/authentication/login.html:3
+#: accounts/templates/authentication/login.html:25
+#: accounts/templates/authentication/login.html:33
+#: templates/snippets/footer.html:69 templates/snippets/navbar.html:130
+msgid "Login"
+msgstr "تسجيل الدخول"
+
+#: accounts/templates/authentication/login.html:38
+msgid "Forgot your password"
+msgstr "نسيت كلمة المرور"
+
+#: accounts/templates/authentication/register.html:3
+#: accounts/templates/authentication/register.html:9
+#: accounts/templates/authentication/register.html:15
+#: templates/snippets/footer.html:74 templates/snippets/navbar.html:135
+msgid "Register"
+msgstr "التسجيل"
+
+#: accounts/templates/registration/activation-error.html:3
+msgid "Activation Error"
+msgstr "خطأ في التفعيل"
+
+#: accounts/templates/registration/activation-error.html:11
+msgid "Activation Error. Please try again."
+msgstr "عفو لقد إنتهت صلاحية هذا الرابط"
+
+#: accounts/templates/registration/activation-error.html:16
+#: accounts/templates/registration/activation-error.html:22
+msgid "Resend Email Activation"
+msgstr "ﻹعادة إرسال رابط التفعيل"
+
+#: accounts/templates/registration/activation-error.html:33
+msgid "Resend Activation"
+msgstr "إعادة إرسال رابط التفعيل"
 
 #: accounts/templates/registration/password_reset_email.html:2
 #, python-format
@@ -37,16 +168,36 @@ msgid ""
 "Reset your password on %(domain)s for %(user)s:\n"
 msgstr ""
 
-#: comments/api/serializers.py:133 comments/api/serializers.py:145
-#: comments/api/views.py:50 comments/api/views.py:80
-msgid "This field should not be left blank"
+#: accounts/views.py:30 accounts/views.py:35
+msgid "We sent you the activation link please check your email ."
 msgstr ""
+"لقد قمنا بإرسال رابط التفعيل إلى البريد اﻹلكتروني , يرجى تفقد البريد "
+"الإلكتروني !"
 
-#: comments/api/views.py:51
+#: accounts/views.py:47
+msgid "Your account has been confirmed ; Please login"
+msgstr "تم تأكيد الحساب , يرجى تسجيل الدخول."
+
+#: accounts/views.py:54
+#, python-brace-format
+msgid ""
+" your email has already been confirmed\n"
+"                            Do you want to <a href=\"{link}\"> reset your "
+"password </a> ?"
+msgstr ""
+"هذا البريد مفعل بالفعل<br />هل تريد<a href=\"{link}\">إعادة تعيين كلمة "
+"المرور ؟</a>"
+
+#: comments/api/serializers.py:132 comments/api/serializers.py:144
+#: comments/api/views.py:51 comments/api/views.py:81
+msgid "This field should not be left blank"
+msgstr "لا يجب ترك هذا الحقل فارغ"
+
+#: comments/api/views.py:52
 msgid "You have to be loged in to add comment"
 msgstr "يجب تسجيل دخولك ﻹضافة تعليق"
 
-#: comments/api/views.py:81
+#: comments/api/views.py:82
 msgid "You have to be loged in to add reply"
 msgstr "يجب تسجيل دخولك ﻹضافة رد"
 
@@ -63,6 +214,8 @@ msgid "Leave a comment"
 msgstr "ﻹضافة تعليق"
 
 #: comments/templates/snippets/comment2.html:23
+#: posts/templates/posts/create.html:42
+#: posts/templates/posts/create_category.html:44
 msgid "Add"
 msgstr "أضف"
 
@@ -70,9 +223,162 @@ msgstr "أضف"
 msgid "Comments"
 msgstr "التعليقات"
 
-#: comments/templates/snippets/comment2.html:71
+#: comments/templates/snippets/comment2.html:72
 msgid "Load more"
 msgstr "المزيد"
+
+#: main/forms.py:7 main/templates/snippets/html_message.html:3
+#: main/templates/snippets/message.txt:3
+msgid "name"
+msgstr "اﻹسم"
+
+#: main/forms.py:9
+msgid "subject"
+msgstr "الموضوع"
+
+#: main/forms.py:10 main/templates/snippets/html_message.html:9
+#: main/templates/snippets/message.txt:9
+msgid "message"
+msgstr "المحتوى"
+
+#: main/templates/info/about_blog.html:3 main/templates/info/about_blog.html:11
+#: templates/snippets/footer.html:84
+msgid "About Blog"
+msgstr "حول المدونة"
+
+#: main/templates/info/about_blog.html:25
+msgid "There is no About Blog description"
+msgstr "لا يوجد وصف لهذه المدونة حتى اﻷن"
+
+#: main/templates/info/about_me.html:3 main/templates/info/about_me.html:11
+#: templates/snippets/footer.html:88
+msgid "About Me"
+msgstr "من نكون"
+
+#: main/templates/info/about_me.html:27
+msgid "There is no About Me description"
+msgstr "لا يوجد أي وصف عن أصحاب هذه المدونة بعد !"
+
+#: main/templates/info/contact_us.html:5 main/templates/info/contact_us.html:30
+#: templates/snippets/footer.html:79
+msgid "Contact Us"
+msgstr "للتواصل معنا"
+
+#: main/templates/info/contact_us.html:40
+msgid "Send"
+msgstr "إرسال"
+
+#: main/templates/info/privacy_policy.html:3
+#: main/templates/info/privacy_policy.html:12 templates/snippets/footer.html:92
+msgid "Privacy & Policy"
+msgstr "سياسة الخصوصية"
+
+#: main/templates/info/privacy_policy.html:26
+msgid "There is no privacy & policy yet"
+msgstr "لم يتم وضع أي سياسة للخصوصية بعد"
+
+#: main/templates/main/authors_admin.html:5
+#: main/templates/main/authors_admin.html:29 templates/snippets/navbar.html:73
+msgid "Authors Dashboard"
+msgstr "التحكم بالمؤلَفين"
+
+#: main/templates/main/authors_admin.html:40
+msgid "Id"
+msgstr "رقم التعريف"
+
+#: main/templates/main/authors_admin.html:41
+msgid "Username"
+msgstr "اسم المستخدم"
+
+#: main/templates/main/authors_admin.html:42
+#: main/templates/main/dashboards/categories.html:35
+#: main/templates/main/dashboards/posts.html:37
+msgid "Slug"
+msgstr "رمز التعريف"
+
+#: main/templates/main/authors_admin.html:43 templates/snippets/footer.html:19
+msgid "Email"
+msgstr "البريد الإلكتروني"
+
+#: main/templates/main/authors_admin.html:44
+msgid "Status"
+msgstr "الحالة"
+
+#: main/templates/main/authors_admin.html:60 main/views.py:161
+msgid "deleted"
+msgstr "إزالة"
+
+#: main/templates/main/authors_admin.html:62 main/views.py:164
+msgid "created"
+msgstr "إضافة"
+
+#: main/templates/main/authors_admin.html:67
+msgid "Remove Author"
+msgstr "إزالة كمؤلف"
+
+#: main/templates/main/authors_admin.html:69
+msgid "Add Author"
+msgstr "إضافة كمؤلف"
+
+#: main/templates/main/confirm_author.html:5
+#: main/templates/main/confirm_author.html:16
+msgid "Confirm Author"
+msgstr "تأكيد حالة المؤلف"
+
+#: main/templates/main/dashboards/categories.html:4
+#: main/templates/main/dashboards/categories.html:13
+msgid "Categories Dashboard"
+msgstr "لوحة تحكم التصنيفات"
+
+#: main/templates/main/dashboards/categories.html:22
+msgid "To add new Category"
+msgstr "ﻹضافة صنف جديد"
+
+#: main/templates/main/dashboards/categories.html:34
+#: main/templates/main/dashboards/posts.html:34
+msgid "Title"
+msgstr "العنوان"
+
+#: main/templates/main/dashboards/categories.html:36
+#: main/templates/main/dashboards/posts.html:38
+msgid "Created At"
+msgstr "صنع في"
+
+#: main/templates/main/dashboards/categories.html:51
+#: main/templates/main/dashboards/posts.html:58
+#: posts/templates/posts/create.html:5 posts/templates/posts/create.html:22
+#: posts/templates/posts/create.html:38
+#: posts/templates/posts/create_category.html:42
+#: posts/templates/posts/detail.html:136
+msgid "Edit"
+msgstr "تعديل"
+
+#: main/templates/main/dashboards/categories.html:62
+msgid " There are no categories"
+msgstr "لم يتم العثور على أي تصنيفات"
+
+#: main/templates/main/dashboards/posts.html:4
+#: main/templates/main/dashboards/posts.html:13
+msgid "Posts Dashboard"
+msgstr "التحكم بالمنشورات"
+
+#: main/templates/main/dashboards/posts.html:21
+msgid "To add new post"
+msgstr "ﻹضافة منشور جديد"
+
+#: main/templates/main/dashboards/posts.html:62
+#: posts/templates/posts/detail.html:140
+msgid "Delete"
+msgstr "حذف"
+
+#: main/templates/main/dashboards/posts.html:72
+#: posts/templates/posts/list.html:79
+msgid "There are no Posts"
+msgstr "لم يتم العثور على أي منشور"
+
+#: main/templates/main/home.html:3 templates/snippets/navbar.html:42
+msgid "Home"
+msgstr "الرئيسية"
 
 #: main/templates/main/home.html:42
 msgid "Featured Posts"
@@ -82,29 +388,79 @@ msgstr "مميزنا"
 msgid "Latest posts from the blog"
 msgstr "جديدنا"
 
-#: posts/templates/posts/detail.html:63
+#: main/views.py:102
+msgid "your message has been sent"
+msgstr "شكرا للتواصل معنا, سيتم إرسال الرد في أقرب وقت ممكن"
+
+#: main/views.py:154
+msgid "create"
+msgstr "إضافة"
+
+#: main/views.py:168
+msgid "You have successfuly {} Author for {} "
+msgstr "لقد قمت ب{} المؤلف للمستخدم {} بنجاح"
+
+#: posts/forms.py:19 posts/forms.py:30
+msgid "title"
+msgstr "العنوان"
+
+#: posts/forms.py:19
+msgid "overview"
+msgstr "المقدمة"
+
+#: posts/forms.py:20
+msgid "content"
+msgstr "المحتوى"
+
+#: posts/forms.py:20
+msgid "thumbnail"
+msgstr "الصورة الرئيسية"
+
+#: posts/forms.py:21
+msgid "categories"
+msgstr "التصنيفات"
+
+#: posts/forms.py:21
+msgid "active"
+msgstr "تنشيط"
+
+#: posts/forms.py:22
+msgid "featured"
+msgstr "مميز"
+
+#: posts/templates/posts/create.html:7 posts/templates/posts/create.html:24
+msgid "Add new post"
+msgstr "إضافة منشور جديد"
+
+#: posts/templates/posts/create_category.html:6
+#: posts/templates/posts/create_category.html:24
+msgid "Edit Category"
+msgstr "تعديل الصنف"
+
+#: posts/templates/posts/create_category.html:9
+#: posts/templates/posts/create_category.html:27
+msgid "Add Category"
+msgstr "إضافة صنف"
+
+#: posts/templates/posts/detail.html:68
 msgid "share it on"
 msgstr "للمشاركة على"
 
-#: posts/templates/posts/detail.html:87
-msgid "share it on :"
-msgstr "للمشاركة على :"
-
-#: posts/templates/posts/detail.html:120
+#: posts/templates/posts/detail.html:106
 msgid "Previous Post"
 msgstr "السابق"
 
-#: posts/templates/posts/detail.html:136
+#: posts/templates/posts/detail.html:122
 msgid "Next Post"
 msgstr "التالي"
 
-#: posts/templates/posts/detail.html:150
-msgid "Edit"
-msgstr "تعديل"
+#: posts/templates/posts/list.html:5 templates/snippets/navbar.html:47
+msgid "Blog"
+msgstr "المدونة"
 
-#: posts/templates/posts/detail.html:154
-msgid "Delete"
-msgstr "حذف"
+#: posts/templates/posts/list.html:74
+msgid "There are no results for"
+msgstr "لا يوجد أي نتائج لهذا البحث :"
 
 #: posts/templates/snippets/latest_posts.html:5
 msgid "Latest Posts"
@@ -115,42 +471,25 @@ msgid "Search the blog"
 msgstr "للبحث عن منشور"
 
 #: search/templates/snippets/search_bar_widget.html:8
+#: templates/snippets/navbar.html:14
 msgid "What are you looking for ?"
 msgstr "ما الذي يثير إهتمامك ؟"
 
-#: templates/snippets/footer.html:19
-msgid "Email"
-msgstr "البريد الإلكتروني"
+#: search/templates/snippets/search_users.html:4
+msgid "Search for Specific User"
+msgstr "البحث عن مستخدم معين"
+
+#: search/templates/snippets/search_users.html:9
+msgid "search by username, email, slug, id"
+msgstr ""
+"يمكنك البحث بإستخدام : البريد اﻹلكتروني أو اسم الشخص أو حتى رقم التعريف "
+"الخاص به"
 
 #: templates/snippets/footer.html:64
 msgid "My Account"
 msgstr "حسابي"
 
-#: templates/snippets/footer.html:69 templates/snippets/navbar.html:126
-msgid "Login"
-msgstr "تسجيل الدخول"
-
-#: templates/snippets/footer.html:74 templates/snippets/navbar.html:130
-msgid "Register"
-msgstr "التسجيل"
-
-#: templates/snippets/footer.html:79
-msgid "Contact Us"
-msgstr "تواصل معنا"
-
-#: templates/snippets/footer.html:84
-msgid "About Blog"
-msgstr "حول المدونة"
-
-#: templates/snippets/footer.html:88
-msgid "About Me"
-msgstr "من نكون"
-
-#: templates/snippets/footer.html:92
-msgid "Privacy & Policy"
-msgstr "سياسة الخصوصية"
-
-#: templates/snippets/footer.html:100 templates/snippets/navbar.html:92
+#: templates/snippets/footer.html:100 templates/snippets/navbar.html:94
 msgid "Categories"
 msgstr "التصنيفات"
 
@@ -158,42 +497,36 @@ msgstr "التصنيفات"
 msgid "2019. All rights reserved for Masterbdx team"
 msgstr "جميع الحقوق محفوظة لفريق MasterBDX ( 2019 )"
 
-#: templates/snippets/navbar.html:41
-msgid "Home"
-msgstr "الرئيسية"
-
-#: templates/snippets/navbar.html:46
-msgid "Blog"
-msgstr "المدونة"
-
-#: templates/snippets/navbar.html:51
+#: templates/snippets/navbar.html:53
 msgid "Contact"
 msgstr "تواصل معنا"
 
-#: templates/snippets/navbar.html:64
+#: templates/snippets/navbar.html:66
 msgid "Admin"
 msgstr "المشرف"
 
-#: templates/snippets/navbar.html:71
-msgid "Authors Dashboard"
-msgstr "التحكم بالمؤلَفين"
-
-#: templates/snippets/navbar.html:74
+#: templates/snippets/navbar.html:76
 msgid "Ultimate Dashboard"
 msgstr "لوحة التحكم الرئيسية"
 
-#: templates/snippets/navbar.html:86
+#: templates/snippets/navbar.html:88
 msgid "Dashboard"
 msgstr "لوحة التحكم"
 
-#: templates/snippets/navbar.html:95
+#: templates/snippets/navbar.html:97
 msgid "Posts"
 msgstr "المنشورات"
 
-#: templates/snippets/navbar.html:117
+#: templates/snippets/navbar.html:119
 msgid "Profile"
 msgstr "الملف الشخصي"
 
-#: templates/snippets/navbar.html:120
+#: templates/snippets/navbar.html:122
 msgid "Logout"
 msgstr "تسجيل الخروج"
+
+#~ msgid "are you sure you want to {{status}} author for {{username}} ?"
+#~ msgstr "يرجى التأكيد للقيام ب{{status}}المؤلف للمستخدم {{username}} ?"
+
+#~ msgid "share it on :"
+#~ msgstr "للمشاركة على :"

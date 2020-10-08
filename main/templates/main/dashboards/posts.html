@@ -1,35 +1,42 @@
 {% extends 'base.html' %}
-{% block title %}Posts Dashboard{% endblock %}
+{% load i18n %}
+{% block title %}
+  {% trans 'Posts Dashboard' %}
+{% endblock %}
 {% block  content %}
 {% load static %}
 
 <div class="container dash-board">
   <div class="row">
-   
-    <div class="col-md-7 m-auto text-center">
-      <h1 class=""><br> Posts Dashboard<br>
-        <hr>
-      </h1>
+    <div class="col-md-6 auth m-auto  text-center">
+      <h2 class="mt-3 mb-3 pb-3"> 
+        {% trans 'Posts Dashboard' %}
+      </h2>
     </div>
 
-    <div class="col-md-10 m-auto">
-      <p class="lead"><i class="fa fa-plus"></i> To add new post</p>
-      <a class="my-button" href="{% url 'posts:add_post' %}">Add</a>
+    <div class="col-md-8 m-auto">
+      <p class="lead table-add-new">
+        <a class="btn btn-link" href="{% url 'posts:add_post' %}">
+          <i class="fa fa-plus"></i> 
+          {% trans 'To add new post' %}  
+        </a>        
+      </p>
     </div>
 
     <div class="col-md-10 m-auto">
       <br />
-      {% if posts %}
+      {% if  posts %}
       <table class="table">
 
         <thead class="thead-dark">
           <tr style="border-radius: 6px">
-            <th scope="col">Title</th>
-
-            <th scope="col">Slug</th>
-            <th scope="col">Created At</th>
             <th scope="col">
+              {% trans 'Title' %}
+            </th>
 
+            <th scope="col">{% trans 'Slug' %}</th>
+            <th scope="col">{% trans 'Created At' %}</th>
+            <th scope="col">
               ###
             </th>
           </tr>
@@ -48,11 +55,11 @@
             <td>{{post.timestamp}}</td>
             <td class="">
               <a href="{% url 'posts:edit_post' post_slug=post.slug %}" class='btn'>
-                Edit
+                {% trans 'Edit' %}
               </a>
 
               <a href="{% url 'posts:delete_post' post_slug=post.slug %}" class='btn'>
-                Delete
+                {% trans 'Delete' %}
               </a>
             </td>
           </tr>
@@ -61,7 +68,9 @@
         </tbody>
       </table>
       {% else %}
-      <p class="das-par text-center"> There are No Posts for you</p>
+      <p class="das-par text-center"> 
+        {% trans 'There are no Posts' %} 
+      </p>
       {% endif %}
 
     </div>

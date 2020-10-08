@@ -18,37 +18,37 @@ class MarketingPrefrence(models.Model):
 
 # #{{{{============================= Signals ========================}}}
 
-def make_mark_pref_receiver(sender, instance, created,*args, **kwargs):
+# def make_mark_pref_receiver(sender, instance, created,*args, **kwargs):
 
-    ''' django check if the user is a new user or already
-        exist depending on that django will be make the mark pref  '''
+#     ''' django check if the user is a new user or already
+#         exist depending on that django will be make the mark pref  '''
 
-    if created:
+#     if created:
         
-        if instance.subscribed:
-            json , status_code = MailChimp().subscribe(email=instance.email)
-        else:
-            json , status_code = MailChimp().unsubscribe(email=instance.email)
-        MarketingPrefrence.objects.create(user=instance, mailchimp_msg=json)
-        instance.check_subscribe = instance.subscribed
+#         if instance.subscribed:
+#             json , status_code = MailChimp().subscribe(email=instance.email)
+#         else:
+#             json , status_code = MailChimp().unsubscribe(email=instance.email)
+#         MarketingPrefrence.objects.create(user=instance, mailchimp_msg=json)
+#         instance.check_subscribe = instance.subscribed
 
-    else:
-        if instance.subscribed != instance.check_subscribe:
-            if instance.subscribed:
-                json, status_code = MailChimp().subscribe(email=instance.email)
-            else:
-                json , status_code = MailChimp().unsubscribe(email=instance.email)
+#     else:
+#         if instance.subscribed != instance.check_subscribe:
+#             if instance.subscribed:
+#                 json, status_code = MailChimp().subscribe(email=instance.email)
+#             else:
+#                 json , status_code = MailChimp().unsubscribe(email=instance.email)
 
-            if status_code == 200:
-                instance.check_subscribe = instance.subscribed
-                instance.save()
+#             if status_code == 200:
+#                 instance.check_subscribe = instance.subscribed
+#                 instance.save()
 
-            obj,created = MarketingPrefrence.objects.get_or_create(user=instance)
-            obj.mailchimp_msg = json
-            obj.save()
+#             obj,created = MarketingPrefrence.objects.get_or_create(user=instance)
+#             obj.mailchimp_msg = json
+#             obj.save()
 
 
-post_save.connect(make_mark_pref_receiver, sender=settings.AUTH_USER_MODEL)
+# post_save.connect(make_mark_pref_receiver, sender=settings.AUTH_USER_MODEL)
 
 #===========================================================================
 

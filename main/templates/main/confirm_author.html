@@ -1,17 +1,29 @@
 {% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}
+  {% trans 'Confirm Author' %}
+{% endblock  %}
+  
 {% block content %}
 {% load static %}
 
 <div class='container'>
   <div class='row '>
-    <div class='col-lg-12 '>
+    <div class='text-center col-md-6 auth m-auto'>
 
-      <h1 class="text-center mt-5 display-4">
-        Confirm Author
-        <hr>
-      </h1>
+      <h2 class=" mt-5 ">
+        {% trans 'Confirm Author' %}
+        
+      </h2>
+    </div>
+      <div class="col-md-8 m-auto">
       <p class='text-center lead'>
-        are you sure you want to {{status}} author for {{username}} ?</p>
+        يرجى التأكيد للقيام ب
+        {{status}}
+        المؤلف للمستخدم 
+        {{username}}
+      </p>
       <form class='text-center' method='post'>
         {% csrf_token %}
         <input type="hidden" name='confirm' value='True' />

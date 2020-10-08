@@ -17,6 +17,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 
+from django.utils.translation import ugettext as _
 from django.db.models import Q
 
 from .forms import ContactForm
@@ -85,7 +86,7 @@ class ContactUsView(FormView):
         from_email = form.cleaned_data.get('email')
         to_email = getattr(settings, 'DEFAULT_FROM_EMAIL')
         message = form.cleaned_data.get('message')
-        context = {'name': subject, 'email': to_email, 'message': message, }
+        context = {'name': subject, 'email': from_email, 'message': message, }
         txt_ = get_template('snippets/message.txt').render(context)
         html_ = get_template(
             'snippets/html_message.html').render(context)
@@ -98,8 +99,8 @@ class ContactUsView(FormView):
             fail_silently=False
         )
         messages.add_message(self.request, messages.SUCCESS,
-                             'your message has been sent')
-        return redirect('contact_me')
+                             _('your message has been sent'))
+        return redirect('main:contact_us')
 
 
 class PostsDashboard(LoginRequiredMixin, AuthorRequiredMixin, generic.ListView):
@@ -115,7 +116,7 @@ class PostsDashboard(LoginRequiredMixin, AuthorRequiredMixin, generic.ListView):
 
 class CategoriesDashboard(LoginRequiredMixin,generic.ListView):
     template_name = 'main/dashboards/categories.html'
-    model = Post
+    model = Category
     context_object_name = 'cates'
 
 
@@ -136,17 +137,12 @@ class CategoriesDashboard(LoginRequiredMixin,generic.ListView):
 def authors_admin_view(request):
     page_var = 'page'
     page = request.GET.get(page_var, 1)
-    alpha = list(string.ascii_lowercase)
-    beta = request.GET.get('beta')
-    if beta:
-        filter = Q(username__istartswith=beta)
-        current_page = User.objects.qs_paginator(page=page, filter=filter)
-    else:
-        current_page = User.objects.qs_paginator(page=page)
+    
+    current_page = User.objects.qs_paginator(page=page)
 
     context = {'page_obj': current_page,
                'page_var': page_var,
-               'alpha': alpha}
+               }
 
     return render(request, 'main/authors_admin.html', context)
 
@@ -155,21 +151,21 @@ def authors_admin_view(request):
 @super_user_only
 def confirm_author_view(request, slug):
     confirm = request.POST.get('confirm')
-    status = request.POST.get('status', 'create')
+    status = request.POST.get('status', _('create'))
     username = User.objects.filter(slug=slug).values(
         'username').first()['username']
 
     if confirm:
         user = User.objects.filter(slug=slug).first()
         if user.is_author:
-            status = 'deleted'
+            status = _('deleted')
             author = Author.objects.filter(user__slug=slug).first().delete()
         else:
-            status = 'created'
+            status = _('created')
             author = Author.objects.create(user=user)
 
         messages.add_message(request, messages.SUCCESS,
-                             'You have successfuly {} Author for {} '.format(status, username).upper())
+                             _('You have successfuly {} Author for {} ').format(status, username).upper())
         return redirect('main:authors_admin')
     return render(request, 'main/confirm_author.html', {"status": status, 'username': username})
 
