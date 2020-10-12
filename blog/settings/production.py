@@ -13,6 +13,7 @@ DEBUG = False
 
 ALLOWED_HOSTS = ['masterbdx-blog.herokuapp.com']
 
+DEFAULT_HOST = 'masterbdx-blog.herokuapp.com'
 
 SENDGRID_API_KEY = os.environ.get('SENDGRID_API_KEY')
 EMAIL_HOST = 'smtp.sendgrid.net'
