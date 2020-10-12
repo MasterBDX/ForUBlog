@@ -1,0 +1,21 @@
+{% autoescape off %}
+{% load i18n %}
+{% trans 'hello' %} {{name}} 
+ <br>
+ <br>
+
+	{% trans 'please activate your account by clicking the link below' %}
+	<br>
+	<br>
+   {{path}} 
+ <br>
+ <br>
+{% trans 'Once you activate you can login' %} 
+<br>
+<br>
+{% trans 'Thank you' %} 
+<br>
+{% trans 'blog' %}
+{{blog_name}}.
+</p>
+{% endautoescape %}

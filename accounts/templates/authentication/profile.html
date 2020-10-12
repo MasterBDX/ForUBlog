@@ -1,43 +1,60 @@
 {% extends 'base.html' %}
-{% block title %}{% endblock %}
+{% load i18n %}
+{% block title %}
+{% trans 'Profile'%}
+{% endblock %}
 
 {% block content %}
 {% load crispy_forms_tags %}
 <div class="container mt-5 mb-5">
-
   <div class='row'>
-    {% if messages %}
-    <div class=" col-lg-8 offset-lg-2 alert alert-success messages text-center">
+  
+    <div class=" col-md-8 m-auto">
+      {% if messages %}
       {% for message in messages %}
-      <span {% if message.tags %} class="{{ message.tags }}" {% endif %}>
-        {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}Important: {% endif %}
-        {{ message }}
-      </span>
-      {% endfor %}
-    </div>
-    {% endif %}
-    <div class='col-lg-8 offset-lg-2'>
-      <h2 class=' text-center  myh2'> {{request.user.username}}
-        <span>Profile</span>
-      </h2>
+      <div class="alert alert-{{message.level_tag}} alert-dismissible fade show" role="alert">
+          <p{% if message.tags %} class="{{ message.tags }} text-center" {% endif %}>{{ message }}</p>
+              {% endfor %}
 
-      <form method="post" enctype="multipart/form-data" id="formUpload" class="profile-form">
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+              </button>
+
+      </div>
+      {% endif %}
+    </div>
+   
+    <div class='col-lg-6 m-auto text-center auth'>
+      <h2 class=' text-center'> 
+        <span>{% trans 'Profile' %}</span>
+      </h2>
+    </div>
+    <div class="w-100"></div>
+    <div class="col-lg-6 m-auto">
+      <form method="post" enctype="multipart/form-data" 
+            id="formUpload" class="profile-form">
 
         {% csrf_token %}
         {{profile_form|crispy}}
 
         {{image_form|crispy}}
-        <input type="submit" value="Update">
+        <button class="my-button mt-4 mb-4" type="submit">
+           {% trans 'Edit' %}
+        </button>
       </form>
       <!-- ================================================================== -->
 
       <!-- MODAL TO CROP THE IMAGE -->
-      <div class="modal" tabindex="-1" role="dialog" id="modalCrop">
+      <div class="modal" tabindex="-1" role="dialog" 
+            id="modalCrop">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title">Crop the photo</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <h5 class="modal-title">
+                {% trans 'Crop the photo' %}
+              </h5>
+              <button type="button" class="close" data-dismiss="modal" 
+                      aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
@@ -47,11 +64,16 @@
             <div class="modal-footer">
               <button type="button" class=" btn btn-dark js-zoom-out">
                 <i class="fas fa-search-minus"></i></button>
-
               <button type="button" class="mr-5 btn btn-dark js-zoom-in">
                 <i class="fas fa-search-plus"></i></button>
-              <button type="button" class="btn btn-primary js-crop-and-upload">Crop and upload</button>
-              <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+              <button type="button" 
+                      class="btn btn-primary js-crop-and-upload">
+                  {% trans 'Crop and upload' %}        
+              </button>
+              <button type="button" class="btn btn-primary" 
+                      data-dismiss="modal">
+                      {% trans 'Close' %}
+              </button>
             </div>
           </div>
         </div>
@@ -59,16 +81,20 @@
 
 
       <!-- =================================================================== -->
-
-      <p class="lead change-password-p">Change your password</p>
-      <a class="change-password-btn" href="{% url 'password_change' %}">Change</a>
-    </div>
-    <div class='delete-account col-lg-8 offset-lg-2'>
-
-      <p class='lead delete-account-p'> Delete your account from here
-        <a href="{% url 'accounts:delete' user_slug=user.slug %}" class='delete-account-btn'>Delete</a>
+      <hr />
+      <p class="lead change-password-p">
+        {% trans 'Change your password :' %}
       </p>
-
+      <a class="my-button" 
+      href="{% url 'password_change' %}">{% trans 'Change' %}
+    </a>
+     <br />
+      <p class='lead delete-account-p'> 
+        {% trans 'Delete your account from here :' %}
+   
+      </p>
+      <a href="{% url 'accounts:delete' user_slug=user.slug %}" 
+      class='my-button'>{% trans 'Delete' %}</a>
     </div>
   </div>
 </div>

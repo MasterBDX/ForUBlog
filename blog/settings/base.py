@@ -142,6 +142,15 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+AUTH_PASSWORD_VALIDATORS = [
+    {'NAME': 'accounts.passwords.validators.IsAsciiValidator'},
+    {'NAME': 'accounts.passwords.validators.MinimumLengthValidator'},
+    {'NAME': 'accounts.passwords.validators.NumberValidator'},
+    # {'NAME': 'accounts.passwords.validators.UppercaseValidator', },
+    # {'NAME': 'accounts.passwords.validators.LowercaseValidator', },
+    {'NAME': 'accounts.passwords.validators.SymbolValidator', },
+]
+
 
 SITE_ID = 1
 

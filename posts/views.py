@@ -3,10 +3,12 @@ from django.shortcuts import (render,
                               redirect)
 
 from django.views import generic
+from django.utils.translation import ugettext_lazy as _
 from django.db.models import Q
 from django.urls import reverse_lazy,reverse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import Http404
+from django.contrib.messages.views import SuccessMessageMixin
 
 from .forms import AddPostForm,AddCategoryForm
 from .models import Post, Author, Category
@@ -127,11 +129,12 @@ class EditPostView(LoginRequiredMixin, AuthorRequiredMixin, AuthorCheckMixin, ge
     slug_url_kwarg = 'post_slug'
 
 
-class DeletePostView(LoginRequiredMixin, AuthorRequiredMixin, AuthorCheckMixin, generic.DeleteView):
+class DeletePostView(SuccessMessageMixin,LoginRequiredMixin, AuthorRequiredMixin, AuthorCheckMixin, generic.DeleteView):
     template_name = 'posts/confirm_delete.html'
     model = Post
     slug_url_kwarg = 'post_slug'
-    success_url = reverse_lazy('blog')
+    success_message = _('The post has been deleted')
+    success_url = reverse_lazy('main:posts-dashboard')
 
 
 class AddCategoryView(LoginRequiredMixin, AuthorRequiredMixin, generic.CreateView):

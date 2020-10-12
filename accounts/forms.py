@@ -71,13 +71,7 @@ class LoginForm(AuthenticationForm):
         super().clean()
 
 
-class MyPasswordResetForm(PasswordResetForm):
-    def clean_email(self):
-        email = self.cleaned_data.get('email')
-        qs = User.objects.filter(email=email)
-        if not qs.exists():
-            raise forms.ValidationError('This email is not found ')
-        return email
+
 
 
 class EmailReActivationForm(forms.Form):
@@ -174,10 +168,11 @@ class UserAdminChangeForm(forms.ModelForm):
 
 
 class UserProfileForm(forms.ModelForm):
-    subscribed = forms.BooleanField(label='Subscribe to Newsletter',
+    subscribed = forms.BooleanField(label=_('Subscribe to Newsletter'),
                                     required=False)
 
     class Meta:
+        labels = {'username':_('username')}
         model = User
         fields = ['username', 'subscribed', ]
 
@@ -191,7 +186,7 @@ class ProfileImageForm(forms.ModelForm):
         required=False, widget=forms.HiddenInput(attrs={'id': 'id_height'}))
     height = forms.FloatField(
         required=False, widget=forms.HiddenInput(attrs={'id': 'id_width'}))
-    image = forms.ImageField(label='Profile Picture', required=False,
+    image = forms.ImageField(label=_('Profile Picture'), required=False,
                              widget=forms.ClearableFileInput(attrs={'id': 'id_file'}))
 
     class Meta:

@@ -4,7 +4,7 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import (
-    LoginView, LogoutView, PasswordResetView)
+    LoginView, LogoutView)
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.views.generic import (CreateView, UpdateView,
@@ -20,7 +20,7 @@ from .models import User, EmailActivation, ProfileImage
 
 from .forms import (LoginForm, RegistrationForm,
                     UserProfileForm, ProfileImageForm,
-                    MyPasswordResetForm, EmailReActivationForm)
+                    EmailReActivationForm)
 
 
 class UserRegistrerView(SuccessMessageMixin, CreateView):
@@ -32,7 +32,9 @@ class UserRegistrerView(SuccessMessageMixin, CreateView):
 
 class EmailActivationView(SuccessMessageMixin,FormMixin, View):
     success_url = reverse_lazy('account:login')
-    success_message = _("We sent you the activation link please check your email .")
+
+    success_message = _('''We sent you the activation link please check your email .
+                            ''')
     form_class = EmailReActivationForm
 
     def get(self, request, *args, key=None, **kwargs):
@@ -85,8 +87,7 @@ class EmailActivationView(SuccessMessageMixin,FormMixin, View):
         return render(request, 'registration/activation-error.html', context)
 
 
-class MyPasswordResetView(PasswordResetView):
-    form_class = MyPasswordResetForm
+
 
 
 class UserLoginView(LoginView):
@@ -136,6 +137,7 @@ def profile_view(request, user_slug):
             obj = profile_form.save()
             image_obj = profile_image_form
             image_obj.save()
+            messages.success(request,_('Your profile has been updated'))
             return redirect(user.get_absolute_url())
 
     context = {'profile_form': profile_form,

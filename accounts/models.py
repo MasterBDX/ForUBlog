@@ -7,7 +7,7 @@ from django.core.mail import send_mail
 from django.contrib.auth.models import (
     AbstractBaseUser, AbstractUser)
 
-
+from main.models import BlogInfo
 from .managers import (UserManager, EmailActivationManager)
 from .utils import (get_propic_name,
 
@@ -128,6 +128,13 @@ class EmailActivation(models.Model):
 
     def send_email_activate(self):
         if not self.activated and not self.forced_expired:
+
+            blog_info =BlogInfo.objects.last()
+            blog_name = None
+
+            if blog_info:
+                blog_name = blog_info.name 
+
             base_url = getattr(settings,
                                'BASE_URL',
                                'https://masterbdx-blog.herokuapp.com')
@@ -138,7 +145,8 @@ class EmailActivation(models.Model):
                                            k_path=key_path)
             context = {'path': path,
                        'email': self.email,
-                       'name': self.user.username}
+                       'name': self.user.username,
+                       'blog_name':blog_name}
             txt_ = get_template('registration/verify.txt').render(context)
             html_ = get_template('registration/verify.html').render(context)
             subject = '1-Clicl Email Verification'

@@ -8,8 +8,8 @@
     <div class="col-md-7 m-auto ">
       
       {% if messages %}
-      <div class="alert alert-{{message.level}} alert-dismissible fade show" role="alert">
-          {% for message in messages %}
+      {% for message in messages %}
+      <div class="alert alert-{{message.level_tag}} alert-dismissible fade show" role="alert">
           <p{% if message.tags %} class="{{ message.tags }} text-center" {% endif %}>{{ message }}</p>
               {% endfor %}
 
@@ -19,9 +19,9 @@
 
       </div>
       {% endif %}
-  </div>
-    <div class='col-lg-6 m-auto auth'>      
-      <h2 class="mb-4"> 
+    </div>
+    <div class='text-center col-lg-6 m-auto auth'>      
+      <h2 class="mb-4 "> 
             {% trans 'Login' %}
           
       </h2>

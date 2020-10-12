@@ -344,9 +344,18 @@ section.featured-posts .image img{
 
 .post p{
   color: #444;
-  font-size: 1.07em !important;
-  font-weight: 100 !important;
 }
+
+p.overview,
+.post p span{
+  line-height: 1.8em !important;
+}
+
+p.overview{
+font-size: 1.3em ;
+font-weight: 500;
+}
+
 
 .post .avatar{
   border: 1px solid #ddd;
@@ -402,6 +411,7 @@ section.featured-posts .image img{
   color: #fff;
   background-color: #3c3c3c;
 }
+
 
 #post-form .form-group .checkboxinput{
   right:60px;
@@ -710,6 +720,12 @@ section.python-cover .container .row{
   margin-bottom: 0;
 }
 
+.profile-form .checkboxinput{
+  right: 235px;
+}
+.profile-form input[type="file"]{
+  margin: 14px 0;
+}
 .profile-form input[type="submit"]{
   color: #333;
   background-color: transparent;
@@ -732,26 +748,19 @@ section.python-cover .container .row{
 
 .change-password-p,
 .delete-account-p{
-  display: inline;
   font-size: 17px;
-  color: #222;
-}
+  font-weight: 600;
+  display: inline-block;
+  color: #444444;
 
-.change-password-btn,
-.delete-account-btn{
-  color: #111;
-  margin: 0;
-  padding: 0;
-  margin-left: 6px;
-  font-weight: 100;
-  text-decoration: underline;
 }
-
-.change-password-btn:hover,
-.delete-account-btn:hover{
-  color: #fd4500;
+.change-password-p
+{
+margin: 15px 0px  25px 30px;
 }
-
+.delete-account-p{
+  margin: 15px 0px 0px 22px;
+}
 /* End (Profile) Page */
 
 /* Start (Footer) */
