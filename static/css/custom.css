@@ -4,7 +4,8 @@
 *{
   direction: rtl !important;
   text-align: right;
-
+  font-family: 'El Messiri', sans-serif;
+  font-size:1.01em;
 }
 
 h1{
@@ -425,7 +426,8 @@ font-weight: 500;
 
 .navbar-brand{
   text-transform: capitalize;
-  font-weight: 400;
+  font-family: 'Lalezar', cursive;
+  font-size:1.8em;
 }
 
 .navbar .navbar-nav a.nav-link{

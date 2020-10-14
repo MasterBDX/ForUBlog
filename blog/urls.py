@@ -3,6 +3,8 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 
+from django.views.generic import TemplateView
+
 from django.contrib.sitemaps.views import sitemap
 
 
@@ -18,7 +20,7 @@ sitemaps = {'static': StaticViewsSitemaps,
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-
+    path('error/',TemplateView.as_view(template_name='404.html')),
     path('sitemap.xml/', sitemap, {'sitemaps': sitemaps},
          name='django.contrib.sitemaps.views.sitemap'),
     path(r'tinymce/', include('tinymce.urls')),

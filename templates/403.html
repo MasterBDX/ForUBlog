@@ -1,20 +1,19 @@
 {% extends 'base.html' %}
-{% block title %}Home{% endblock %}
+{% load i18n %}
+{% block title %}{% trans '403 Error' %}{% endblock %}
 {% block content %}
 {% load static %}
 <div class="container">
   <div class="row">
-    <div class="col-lg-12 text-center">
-    	<br>
-    	<br>
-  <h1 class="display-4 error-pages">
-    <i class="fas fa-grin-tongue-wink fa-lg"></i> &nbsp; Permission Denied
-  </h1>
+    <div class="col-md-8 mb-3 m-auto ">
+    
+    <h1 class="display-4 mt-4 text-center">
+      <i class="fas fa-grin-tongue-wink fa-lg">
+      </i>  {% trans 'Permission Denied' %}
+    </h1>
 
-  <p class="lead">403 Error</p>
-  <br>
-  <br>
-  <br>
+  <p class="lead mb-5 mt-3 text-center">{% trans '403 Error' %}</p>
+ 
 </div>
 </div>
 </div>
