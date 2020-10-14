@@ -6,6 +6,7 @@ from tinymce import HTMLField
 from django.urls import reverse
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.utils.safestring import mark_safe
+from django.utils.translation import gettext_lazy as _
 
 from .utils import (unique_slug_generator,
                     thumbnail_random_name,
@@ -18,6 +19,10 @@ User = get_user_model()
 
 class Author(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name = _('Author')
+        verbose_name_plural = _('Authors')
 
     def __str__(self):
         return self.user.username
@@ -42,7 +47,8 @@ class Category(models.Model):
 
     class Meta:
         ordering = ['timestamp']
-        verbose_name_plural = 'Categories'
+        verbose_name = _('Category')
+        verbose_name_plural = _('Categories')
 
     def __str__(self):
         return self.title
@@ -107,6 +113,8 @@ class Post(models.Model):
 
     class Meta:
         ordering = ['-timestamp']
+        verbose_name = _('Post')
+        verbose_name_plural = _('Posts')
 
     objects = PostManger()
 

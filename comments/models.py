@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth import get_user_model
+from django.utils.translation import gettext_lazy as _
 
 from posts.models import Post
 
@@ -19,6 +20,9 @@ class Comment(models.Model):
 
     class Meta:
         ordering = ['-timestamp']
+        verbose_name = _('Comment')
+        verbose_name_plural = _('Comments')
+
     def __str__(self):
         return str(self.user.username)
 
@@ -35,7 +39,8 @@ class Reply(models.Model):
 
     class Meta:
         ordering = ['-timestamp']
-        verbose_name_plural = 'replies'
+        verbose_name = _('Reply')
+        verbose_name_plural = _('Replies')
 
     def __str__(self):
         return str(self.user.username)

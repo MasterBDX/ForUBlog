@@ -22,6 +22,7 @@ from django.db.models import Q
 
 from .forms import ContactForm
 
+from posts.utils import date_capture
 from posts.models import Post, Author, Category
 from .models import AboutMe, AboutBlog, PrivacyPolicy,MianImage
 from .mixins import AuthorRequiredMixin, AuthorCheckMixin,AdminRequiredMixin
@@ -109,8 +110,22 @@ class PostsDashboard(LoginRequiredMixin, AuthorRequiredMixin, generic.ListView):
     context_object_name = 'posts'
 
     def get_queryset(self):
+        q = self.request.GET.get('q')
+        date, exists = date_capture(q)
         author = self.request.user.author
-        qs = super().get_queryset().filter(author=author).order_by('slug')
+        
+        if q:
+            if exists:
+                year, month, day = date.split('-')
+                if int(year) == 0 or int(month) == 0 and int(day) == 0:
+                    date = '2000-12-12'
+            else:
+                date = '2000-12-12'
+
+            filters = Q(title__icontains=q) | Q(content__icontains=q) |Q(timestamp=date) | Q(slug__exact=q)
+            qs = super().get_queryset().filter(author=author).filter(filters).order_by('slug')
+        else:
+            qs = super().get_queryset().filter(author=author).order_by('slug')
         return qs
 
 
@@ -118,18 +133,6 @@ class CategoriesDashboard(LoginRequiredMixin,generic.ListView):
     template_name = 'main/dashboards/categories.html'
     model = Category
     context_object_name = 'cates'
-
-
-# class InfoDashboard(LoginRequiredMixin,AdminRequiredMixin,generic.ListView):
-#     template_name = 'main/dashboards/info.html'
-#     model = AboutBlog
-#     context_object_name = 'about_me'
-
-#     def get_context_data(self, **kwargs):
-#         context = super().get_context_data(**kwargs)
-#         context['about_me'] = AboutMe.objects.all()
-#         context['privacy_policy'] = PrivacyPolicy.objects.all()
-#         return context
 
 
 @login_required

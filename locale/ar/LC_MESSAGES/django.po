@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-10-12 18:53+0000\n"
+"POT-Creation-Date: 2020-10-14 04:03+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -118,6 +118,23 @@ msgstr "هذا البريد مستخدم بالفعل !"
 #: accounts/forms.py:189
 msgid "Profile Picture"
 msgstr "صورة الملف الشخصي"
+
+#: accounts/models.py:105
+
+msgid "Email Activation"
+msgstr "تفعيل البريد اﻹلكتروني"
+
+#: accounts/models.py:106
+msgid "Email Activations"
+msgstr "تفاعيل البريد اﻹلكتروني"
+
+#: accounts/models.py:178
+msgid "Profile Image"
+msgstr "صورة الملف الشخصي"
+
+#: accounts/models.py:179
+msgid "Profile Images"
+msgstr "صور الملفات الشخصية"
 
 #: accounts/passwords/forms.py:11
 msgid "The two password fields didn’t match."
@@ -444,6 +461,22 @@ msgstr " المحتوى "
 msgid " Type your comment "
 msgstr " يرجى إدخال تعليقك "
 
+#: comments/models.py:23
+msgid "Comment"
+msgstr "تعليق"
+
+#: comments/models.py:24 comments/templates/snippets/comment2.html:57
+msgid "Comments"
+msgstr "التعليقات"
+
+#: comments/models.py:42
+msgid "Reply"
+msgstr "رد"
+
+#: comments/models.py:43
+msgid "Replies"
+msgstr "الردود"
+
 #: comments/templates/snippets/comment2.html:6
 msgid "Leave a comment"
 msgstr "ﻹضافة تعليق"
@@ -453,10 +486,6 @@ msgstr "ﻹضافة تعليق"
 #: posts/templates/posts/create_category.html:44
 msgid "Add"
 msgstr "أضف"
-
-#: comments/templates/snippets/comment2.html:57
-msgid "Comments"
-msgstr "التعليقات"
 
 #: comments/templates/snippets/comment2.html:72
 msgid "Load more"
@@ -601,13 +630,13 @@ msgstr "لم يتم العثور على أي منشور"
 msgid "Home"
 msgstr "الرئيسية"
 
-#: main/templates/main/home.html:42
-msgid "Featured Posts"
-msgstr "مميزنا"
-
-#: main/templates/main/home.html:117
+#: main/templates/main/home.html:53
 msgid "Latest posts from the blog"
 msgstr "جديدنا"
+
+#: main/templates/main/snippets/featured_posts.html:6
+msgid "Featured Posts"
+msgstr "مميزنا"
 
 #: main/views.py:102
 msgid "your message has been sent"
@@ -648,6 +677,31 @@ msgstr "تنشيط"
 #: posts/forms.py:22
 msgid "featured"
 msgstr "مميز"
+
+#: posts/models.py:24
+msgid "Author"
+msgstr "مؤلف"
+
+#: posts/models.py:25
+msgid "Authors"
+msgstr "المؤلفون"
+
+#: posts/models.py:50
+msgid "Category"
+msgstr "صنف"
+
+#: posts/models.py:51 templates/snippets/footer.html:100
+#: templates/snippets/navbar.html:94
+msgid "Categories"
+msgstr "التصنيفات"
+
+#: posts/models.py:116
+msgid "Post"
+msgstr "منشور"
+
+#: posts/models.py:117 templates/snippets/navbar.html:97
+msgid "Posts"
+msgstr "المنشورات"
 
 #: posts/templates/posts/confirm_delete.html:20
 msgid "Are you sure you want to delete"
@@ -728,13 +782,13 @@ msgstr "خطأ 403"
 
 #: templates/403.html:12
 msgid "Permission Denied"
-msgstr ""
+msgstr "طلب الاذن مرفوض"
 
-#: templates/404.html:3
+#: templates/404.html:4 templates/404.html:16
 msgid "404 Error"
 msgstr "خطأ 404"
 
-#: templates/404.html:14
+#: templates/404.html:13
 msgid "Page Not Found"
 msgstr "الصفحة غير موجودة"
 
@@ -758,10 +812,6 @@ msgstr "خطأ 500 | لقد تلقينا المشكلة بالفعل وجاري 
 msgid "My Account"
 msgstr "حسابي"
 
-#: templates/snippets/footer.html:100 templates/snippets/navbar.html:94
-msgid "Categories"
-msgstr "التصنيفات"
-
 #: templates/snippets/footer.html:122
 msgid "2019. All rights reserved for Masterbdx team"
 msgstr "جميع الحقوق محفوظة لفريق MasterBDX ( 2019 )"
@@ -781,10 +831,6 @@ msgstr "لوحة التحكم الرئيسية"
 #: templates/snippets/navbar.html:88
 msgid "Dashboard"
 msgstr "لوحة التحكم"
-
-#: templates/snippets/navbar.html:97
-msgid "Posts"
-msgstr "المنشورات"
 
 #: templates/snippets/navbar.html:122
 msgid "Logout"

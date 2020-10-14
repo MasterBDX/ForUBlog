@@ -22,22 +22,15 @@
         {{obj.safe_content}}
         </h1>
         {% endif %}
-        <!-- <a href="{% url 'posts:list' %}" class="hero-link">
-          Take a look</a> -->
       </div>
     </div>
-
-    <!-- <span class="continue">
-      <i class="fa fa-long-arrow-down scrollDown"></i>
-      <span class="scrollDown">Scroll Down</span>
-    </span> -->
 
   </div>
 </section>
 
 
 {% if featured_posts.exists %}
-{% include 'snippets/featured_posts.html' %}
+{% include 'main/snippets/featured_posts.html' %}
 
 <!-- Divider Section-->
 <div class="divider">

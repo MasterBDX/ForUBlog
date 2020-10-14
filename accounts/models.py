@@ -6,6 +6,7 @@ from django.template.loader import get_template
 from django.core.mail import send_mail
 from django.contrib.auth.models import (
     AbstractBaseUser, AbstractUser)
+from django.utils.translation import gettext_lazy as _
 
 from main.models import BlogInfo
 from .managers import (UserManager, EmailActivationManager)
@@ -100,6 +101,10 @@ class EmailActivation(models.Model):
 
     objects = EmailActivationManager()
 
+    class Meta:
+        verbose_name = _('Email Activation')
+        verbose_name_plural = _('Email Activations')
+
     def __str__(self):
         return self.user.username
 
@@ -168,6 +173,10 @@ class ProfileImage(models.Model):
     image = models.ImageField(blank=True,
                               null=True,
                               upload_to=get_propic_name)  # default='default.png',
+
+    class Meta:
+        verbose_name = _('Profile Image')
+        verbose_name_plural = _('Profile Images')
 
     def __str__(self):
         return self.user.username + ' image'
