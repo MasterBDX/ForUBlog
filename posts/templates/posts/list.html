@@ -91,7 +91,8 @@
     <aside class="col-lg-4">
 
       <!-- Widget [Search Bar Widget]-->
-      {% include 'snippets/search_bar_widget.html' %}
+      {% url 'search:posts' as posts_url %}
+      {% include 'snippets/search_bar_widget.html' with url=posts_url %}
 
       {% if  blog_var %}
       <!-- Widget [Latest Posts Widget]        -->

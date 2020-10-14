@@ -3,7 +3,7 @@
   <header>
     <h3 class="h6">{% trans 'Search the blog' %}</h3>
   </header>
-  <form action="{% url 'search:posts' %} "method="get" class="search-form">
+  <form action="{{posts_url}} "method="get" class="search-form">
     <div class="form-group">
       <input type="search" name = "q"   placeholder="{% trans 'What are you looking for ?' %}">
       <button type="submit" class="submit"><i class="icon-search"></i></button>

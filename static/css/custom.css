@@ -14,6 +14,9 @@ h1{
   font-size: 45px;
 }
 
+
+
+
 #postComments h4,
 .add-comment h4,
 .contact h2,
@@ -329,6 +332,10 @@ section.featured-posts .image img{
 /* End Comments Styles */
 
 /* Start (Blog) */
+
+.posts-listing .category{
+margin-left:14px;
+} 
 
 .post .img-thumbnail{
   border: 1px solid #ccc;
