@@ -108,6 +108,7 @@ class PostsDashboard(LoginRequiredMixin, AuthorRequiredMixin, generic.ListView):
     template_name = 'main/dashboards/posts.html'
     model = Post
     context_object_name = 'posts'
+    paginate_by = 15
 
     def get_queryset(self):
         q = self.request.GET.get('q')    

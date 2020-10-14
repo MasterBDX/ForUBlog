@@ -85,6 +85,9 @@
 
         </tbody>
       </table>
+      <div>
+        {% include 'snippets/paginator.html' with page_var="page" %}
+      </div>
       {% else %}
       <p class="das-par text-center"> 
         {% trans 'There are no Posts' %} 
