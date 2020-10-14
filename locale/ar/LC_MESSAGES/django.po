@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-10-14 04:03+0000\n"
+"POT-Creation-Date: 2020-10-14 21:07+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -120,7 +120,6 @@ msgid "Profile Picture"
 msgstr "صورة الملف الشخصي"
 
 #: accounts/models.py:105
-
 msgid "Email Activation"
 msgstr "تفعيل البريد اﻹلكتروني"
 
@@ -203,7 +202,7 @@ msgstr "إعادة إرسال رابط التفعيل"
 
 #: accounts/templates/accounts/passwords/password_change_done.html:9
 msgid "Password successfully changed!"
-msgstr "تم تغيير الرقم السري بنجاح"
+msgstr "تم تغيير كلمة السر بنجاح"
 
 #: accounts/templates/accounts/passwords/password_change_form.html:4
 #: accounts/templates/accounts/passwords/password_change_form.html:12
@@ -351,7 +350,7 @@ msgstr "الملف الشخصي"
 
 #: accounts/templates/authentication/profile.html:42
 #: main/templates/main/dashboards/categories.html:51
-#: main/templates/main/dashboards/posts.html:73
+#: main/templates/main/dashboards/posts.html:76
 #: posts/templates/posts/create.html:5 posts/templates/posts/create.html:22
 #: posts/templates/posts/create.html:38
 #: posts/templates/posts/create_category.html:42
@@ -380,7 +379,7 @@ msgid "Delete your account from here :"
 msgstr "لحذف الحساب : "
 
 #: accounts/templates/authentication/profile.html:97
-#: main/templates/main/dashboards/posts.html:77
+#: main/templates/main/dashboards/posts.html:80
 #: posts/templates/posts/confirm_delete.html:4
 #: posts/templates/posts/confirm_delete.html:14
 #: posts/templates/posts/confirm_delete.html:27
@@ -505,10 +504,29 @@ msgstr "الموضوع"
 msgid "message"
 msgstr "المحتوى"
 
-#: main/templates/info/about_blog.html:3 main/templates/info/about_blog.html:11
-#: templates/snippets/footer.html:84
+#: main/models.py:21 main/models.py:22
+msgid "Blog Info"
+msgstr "بيانات المدونة"
+
+msgid "Mian Image"
+msgstr "الصورة الرئيسية"
+
+#: main/models.py:37
+msgid "Main Images"
+msgstr "الصور الرئيسية"
+
+#: main/models.py:52 main/models.py:53
+msgid "About Us"
+msgstr "من نكون"
+
+#: main/models.py:66 main/models.py:67 main/templates/info/about_blog.html:3
+#: main/templates/info/about_blog.html:11 templates/snippets/footer.html:84
 msgid "About Blog"
 msgstr "حول المدونة"
+
+#: main/models.py:81 main/models.py:82
+msgid "Privacy and Policy"
+msgstr "سياسة الخصوصية"
 
 #: main/templates/info/about_blog.html:25
 msgid "There is no About Blog description"
@@ -556,7 +574,7 @@ msgstr "اسم المستخدم"
 
 #: main/templates/main/authors_admin.html:42
 #: main/templates/main/dashboards/categories.html:35
-#: main/templates/main/dashboards/posts.html:52
+#: main/templates/main/dashboards/posts.html:55
 msgid "Slug"
 msgstr "رمز التعريف"
 
@@ -568,11 +586,11 @@ msgstr "البريد الإلكتروني"
 msgid "Status"
 msgstr "الحالة"
 
-#: main/templates/main/authors_admin.html:60 main/views.py:161
+#: main/templates/main/authors_admin.html:60 main/views.py:164
 msgid "deleted"
 msgstr "إزالة"
 
-#: main/templates/main/authors_admin.html:62 main/views.py:164
+#: main/templates/main/authors_admin.html:62 main/views.py:167
 msgid "created"
 msgstr "إضافة"
 
@@ -599,12 +617,12 @@ msgid "To add new Category"
 msgstr "ﻹضافة صنف جديد"
 
 #: main/templates/main/dashboards/categories.html:34
-#: main/templates/main/dashboards/posts.html:49
+#: main/templates/main/dashboards/posts.html:52
 msgid "Title"
 msgstr "العنوان"
 
 #: main/templates/main/dashboards/categories.html:36
-#: main/templates/main/dashboards/posts.html:53
+#: main/templates/main/dashboards/posts.html:56
 msgid "Created At"
 msgstr "صنع في"
 
@@ -621,7 +639,7 @@ msgstr "التحكم بالمنشورات"
 msgid "To add new post"
 msgstr "ﻹضافة منشور جديد"
 
-#: main/templates/main/dashboards/posts.html:87
+#: main/templates/main/dashboards/posts.html:90
 #: posts/templates/posts/list.html:79
 msgid "There are no Posts"
 msgstr "لم يتم العثور على أي منشور"
@@ -630,7 +648,7 @@ msgstr "لم يتم العثور على أي منشور"
 msgid "Home"
 msgstr "الرئيسية"
 
-#: main/templates/main/home.html:53
+#: main/templates/main/home.html:46
 msgid "Latest posts from the blog"
 msgstr "جديدنا"
 
@@ -638,15 +656,15 @@ msgstr "جديدنا"
 msgid "Featured Posts"
 msgstr "مميزنا"
 
-#: main/views.py:102
+#: main/views.py:103
 msgid "your message has been sent"
 msgstr "شكرا للتواصل معنا, سيتم إرسال الرد في أقرب وقت ممكن"
 
-#: main/views.py:154
+#: main/views.py:157
 msgid "create"
 msgstr "إضافة"
 
-#: main/views.py:168
+#: main/views.py:171
 msgid "You have successfuly {} Author for {} "
 msgstr "لقد قمت ب{} المؤلف للمستخدم {} بنجاح"
 
@@ -835,31 +853,3 @@ msgstr "لوحة التحكم"
 #: templates/snippets/navbar.html:122
 msgid "Logout"
 msgstr "تسجيل الخروج"
-
-#, python-format
-#~ msgid ""
-#~ "\n"
-#~ "Hello, \n"
-#~ "\n"
-#~ "Reset your password on %(domain)s for %(user)s \n"
-#~ msgstr ""
-#~ "\n"
-#~ "مرحبا : \n"
-#~ "<br /> \n"
-#~ "ﻹعادة تعيين كلمة المرور على : \n"
-#~ "<br /> \n"
-#~ "%(domain)s \n"
-#~ "للمستخدم \n"
-#~ "%(user)s \n"
-
-#~ msgid "Please click on :"
-#~ msgstr "الرجاءالضغط على الرابط أدناه"
-
-#~ msgid "Delete User"
-#~ msgstr "حذف"
-
-#~ msgid "Update"
-#~ msgstr "تحديث"
-
-#~ msgid "are you sure you want to {{status}} author for {{username}} ?"
-#~ msgstr "يرجى التأكيد للقيام ب{{status}}المؤلف للمستخدم {{username}} ?"

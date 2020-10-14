@@ -110,11 +110,11 @@ class PostsDashboard(LoginRequiredMixin, AuthorRequiredMixin, generic.ListView):
     context_object_name = 'posts'
 
     def get_queryset(self):
-        q = self.request.GET.get('q')
-        date, exists = date_capture(q)
+        q = self.request.GET.get('q')    
         author = self.request.user.author
         
         if q:
+            date, exists = date_capture(q)
             if exists:
                 year, month, day = date.split('-')
                 if int(year) == 0 or int(month) == 0 and int(day) == 0:

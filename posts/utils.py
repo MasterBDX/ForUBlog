@@ -17,13 +17,13 @@ def unique_slug_generator(instance, new_slug=None):
     if new_slug is not None:
         slug = new_slug
     else:
-        slug = random_string_generator(size=20)
+        slug = random_string_generator(size=10)
 
     klass = instance.__class__
     qs_exists = klass.objects.filter(slug=slug).exists()
     if qs_exists:
         new_slug = "{randstr}".format(
-                    randstr=random_string_generator(size=15)
+                    randstr=random_string_generator(size=10)
                 )
         return unique_slug_generator(instance, new_slug=new_slug)
     return slug

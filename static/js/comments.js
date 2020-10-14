@@ -169,7 +169,7 @@ $(function(){
                      </button>
                      <div class="dropdown-menu"
                            style="
-                           right: -28px;
+                           right: -35px;
                            text-align:center;
                            width: auto !important;
                            min-width: 6rem;
@@ -213,7 +213,7 @@ $(function(){
                   id="${name}-content-${data.id}"
                   style="display: inline-block;
                          align-content: ;
-                         width: 80%;
+                         width: 100%;
                   "
                   >
                   ${data.content}
@@ -305,14 +305,13 @@ $(function(){
          success:(data)=>{
             
             commentsContainer.prepend(loadingDiv)
-            setTimeout(()=>{
+           
                $('#comments-container-id .comments-loading').remove()
                commentsContainer.prepend(getComment(data))
               
                numConv('#comments-count','+')
                $(this).trigger("reset"); 
-            }
-               ,2000)
+           
                         
          },
          error:(error)=>{
@@ -366,12 +365,11 @@ $(function(){
       `
 
      commentContentSelector.html(loadingDiv)
-     setTimeout(()=>{
+     
          
          commentContentSelector.html(commentForm)
       
-      },
-     1000)
+    
       
    })
  
@@ -421,7 +419,7 @@ $(function(){
          success:(data)=>{
             const comment = $(`#${type}-${commentId}` )
             comment.html(loadingDiv)
-            setTimeout(()=>{
+            
                comment.remove()
                let container = 'comments-count';
                let hideable = false
@@ -433,7 +431,7 @@ $(function(){
                numConv(`#${container}`,'-',hideable)        
 
            
-            },1000)
+           
             
       
          },
@@ -460,10 +458,10 @@ $(function(){
       $('#load-more-comments-btn').on('click',function(e){
             e.preventDefault();
             $(this).html(loadingDiv);
-            setTimeout(()=>{
+            
                commentsContainer.append(getCommentsList(true))
                $(this).text('Load more');
-            },1000)
+           
 
          })
 
@@ -508,12 +506,12 @@ $(function(){
          method:'post',
          success:(data)=>{
            
-            setTimeout(()=>{
+         
                container.find('.comments-loading').remove()
                container.prepend(getComment(data,'reply'))
                $(this).trigger("reset");
                numConv(`#replies-count-${commentId}`,'+')
-            },1000)
+           
          },
          error:(error)=>{
             
@@ -571,10 +569,9 @@ $(function(){
          `
 
       replyContentSelector.html(loadingDiv)
-         setTimeout(()=>{   
+         
             replyContentSelector.html(replyForm)
-         },
-      1000)
+       
       })
    
    // ============== Click on delete dropdown btn ===============

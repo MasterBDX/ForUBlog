@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils.safestring import mark_safe
+from django.utils.translation import gettext_lazy as _
 from tinymce import HTMLField
 
 from .utils import get_image_name
@@ -16,6 +17,10 @@ class BlogInfo(models.Model):
     timestamp = models.DateField(auto_now_add=True)
     updated = models.DateField(auto_now=True)
 
+    class Meta:
+        verbose_name = _('Blog Info')
+        verbose_name_plural = _('Blog Info')
+
     def __str__(self):
         return self.name
 
@@ -27,6 +32,9 @@ class MianImage(models.Model):
     timestamp = models.DateField(auto_now_add=True)
     updated = models.DateField(auto_now=True)
 
+    class Meta:
+        verbose_name = _('Mian Image')
+        verbose_name_plural = _('Main Images')
 
     def safe_content(self):
         return mark_safe(self.content)
@@ -41,7 +49,8 @@ class AboutMe(models.Model):
     updated = models.DateField(auto_now=True)
 
     class Meta:
-        verbose_name_plural = 'About Me'
+        verbose_name = _('About Us')
+        verbose_name_plural = _('About Us')
 
     def safe_content(self):
         return mark_safe(self.content)
@@ -54,7 +63,9 @@ class AboutBlog(models.Model):
     updated = models.DateField(auto_now=True)
 
     class Meta:
-        verbose_name_plural = 'About Blog'
+        verbose_name = _('About Blog')
+        verbose_name_plural = _('About Blog')
+        
 
     def safe_content(self):
         return mark_safe(self.content)
@@ -67,7 +78,8 @@ class PrivacyPolicy(models.Model):
     updated = models.DateField(auto_now=True)
 
     class Meta:
-        verbose_name_plural = 'Privacy and Policy'
+        verbose_name = _('Privacy and Policy')
+        verbose_name_plural = _('Privacy and Policy')
 
     def safe_content(self):
         return mark_safe(self.content)
