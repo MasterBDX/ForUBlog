@@ -1,0 +1,66 @@
+<section class="featured-posts">
+    <div class="container ">
+      <header class="main-header">
+        <h2>{% trans 'Featured Posts' %} </h2>
+        <br />
+        <br />
+        <br /><br />
+      </header>
+      <!-- Post-->
+      {% for object in featured_posts %}
+      <div class="row d-flex align-items-stretch wow zoomIn">
+        {% if not forloop.first and not forloop.last %}
+        <div class="image col-lg-5">
+  
+          <img width="475" height="322.8" src="{% if  object.thumbnail.url %}
+                            {{object.thumbnail.url}}
+                        {% else %}
+                            {% static 'img/default_placeholder.png' %}
+                        {% endif %}
+                            " alt="..."></div>
+  
+        {% endif %}
+        <div class="text col-lg-7">
+          <div class="text-inner d-flex align-items-center">
+            <div class="content">
+              <header class="post-header">
+                <div class="category">
+                  {% for category in object.catrgories.all %}
+                  <a href="{% url 'posts:category_posts' cat_slug=category.slug %}">{{category.title}}</a>
+                  {% endfor %}
+  
+                </div><a href="{{object.get_absolute_url}}">
+                  <h2 class="h4">{{object.title}}</h2>
+                </a>
+              </header>
+              <p>{{object.overview|truncatewords:30}}</p>
+  
+              <footer class="post-footer d-flex align-items-center">
+                <a href="{% url 'posts:author_posts' auth_slug=object.author.user.slug %}"
+                  class="author d-flex align-items-center flex-wrap">
+                  <div class="title"><span>{{object.author.user.username}}</span></div>
+                </a>
+                <div class="avatar" style=" {% if object.author.user.profileimage.image %}
+                                        background-image:url({{ object.author.user.profileimage.image.url  }})
+                                        {% else %}
+                                        background-image:url({% static 'img/default.png' %})
+                                        {% endif %}
+                                        ;
+                                        background-size: cover;
+                                        ">
+  
+                </div>
+                <div class="date"><i class="icon-clock"></i>{{object.timestamp}}</div>
+                <div class="comments"><i class="icon-comment"></i>{{object.comment_count}}</div>
+              </footer>
+            </div>
+          </div>
+        </div>
+  
+        {% if forloop.first or forloop.last %}
+        <div class="image col-lg-5"><img src="{{object.thumbnail.url}}" alt="..."></div>
+        {% endif %}
+      </div>
+      {% endfor %}
+    </div>
+  </section>
