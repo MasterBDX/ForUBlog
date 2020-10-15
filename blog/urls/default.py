@@ -8,7 +8,7 @@ from django.views.generic import TemplateView
 from django.contrib.sitemaps.views import sitemap
 
 
-from .sitemaps import (StaticViewsSitemaps,
+from ..sitemaps import (StaticViewsSitemaps,
                        PostsViewsSitemap,
                        AuthorViewsSitemap,
                        CategoriesViewsSitemap)

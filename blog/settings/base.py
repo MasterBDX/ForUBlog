@@ -45,7 +45,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    # 'django_hosts.middleware.HostsRequestMiddleware',
+    'django_hosts.middleware.HostsRequestMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'blog.middleware.LangSessionMiddletware',
@@ -55,11 +55,12 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    # 'django_hosts.middleware.HostsResponseMiddleware' 
+    'django_hosts.middleware.HostsResponseMiddleware'
 ]
 
 ROOT_URLCONF = 'blog.urls'
 ROOT_HOSTCONF = 'blog.hosts'
+DEFAULT_HOST = 'www'
 
 
 

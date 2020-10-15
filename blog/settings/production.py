@@ -13,7 +13,6 @@ DEBUG = False
 
 ALLOWED_HOSTS = ['masterbdx-blog.herokuapp.com']
 
-DEFAULT_HOST = 'masterbdx-blog.herokuapp.com'
 
 SENDGRID_API_KEY = os.environ.get('SENDGRID_API_KEY')
 EMAIL_HOST = 'smtp.sendgrid.net'
@@ -26,23 +25,6 @@ EMAIL_USE_TLS = True
 BASE_URL = 'https://masterbdx-blog.herokuapp.com'
 
 
-
-# MIDDLEWARE = [
-#     # 'django_hosts.middleware.HostsRequestMiddleware',
-#     'debug_toolbar.middleware.DebugToolbarMiddleware',
-#     'django.middleware.security.SecurityMiddleware',
-#     'whitenoise.middleware.WhiteNoiseMiddleware',
-#     'django.contrib.sessions.middleware.SessionMiddleware',
-#     'django.middleware.common.CommonMiddleware',
-#     'django.middleware.csrf.CsrfViewMiddleware',
-#     'django.contrib.auth.middleware.AuthenticationMiddleware',
-#     'django.contrib.messages.middleware.MessageMiddleware',
-#     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-#     # 'django_hosts.middleware.HostsResponseMiddleware' 
-# ]
-
-
-# =============
 
 
 # mail chimp vars
