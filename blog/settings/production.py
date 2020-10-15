@@ -13,6 +13,7 @@ DEBUG = False
 
 ALLOWED_HOSTS = ['masterbdx-blog.herokuapp.com']
 
+PARENT_HOST = os.environ.get('PARENT_HOST')
 
 SENDGRID_API_KEY = os.environ.get('SENDGRID_API_KEY')
 EMAIL_HOST = 'smtp.sendgrid.net'
@@ -22,7 +23,9 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
 
-BASE_URL = 'https://masterbdx-blog.herokuapp.com'
+BASE_URL = os.environ.get('BASE_URL')
+
+
 
 
 
