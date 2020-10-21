@@ -5,7 +5,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(
 
 # Email host settings
 
-DEFAULT_FROM_EMAIL = 'masterbdxteam@gmail.com'
+
 
 
 MANAGERS = (('masterbdx', 'masterbdxteam@gmail.com'),)
@@ -81,7 +81,7 @@ SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
 TINYMCE_DEFAULT_CONFIG = {
     'height': 360,
-    'width': 700,
+    'width': 730,
     'cleanup_on_startup': True,
     'custom_undo_redo_levels': 20,
     'selector': 'textarea',

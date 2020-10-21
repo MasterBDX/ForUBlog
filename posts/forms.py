@@ -19,10 +19,10 @@ class AddPostForm(forms.ModelForm):
         labels = {'title':_('title'),'overview':_('overview'),
                   'content':_('content'),'thumbnail':_('thumbnail'),
                   'categories':_('categories'),'active':_('active'),
-                  'featured':_('featured')}
+                  'featured':_('featured'),'notificated':_('notificated')}
         model = Post
         fields = ['title', 'overview', 'content',
-                  'thumbnail', 'categories', 'active', 'featured']
+                  'thumbnail', 'categories', 'active','notificated' ,'featured']
     
 
 class AddCategoryForm(forms.ModelForm):

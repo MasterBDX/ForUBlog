@@ -304,6 +304,10 @@ section.featured-posts .image img{
 
 /* Comments Styles */
 
+.user .image{
+  width: 45px;
+}
+
 #reply-form-field,
 #editForm textarea{
   width:400px;
@@ -366,7 +370,7 @@ font-weight: 500;
 
 
 .post .avatar{
-  border: 1px solid #ddd;
+  
 }
 
 .post .title,
@@ -422,7 +426,7 @@ font-weight: 500;
 
 
 #post-form .form-group .checkboxinput{
-  right:60px;
+  right: 87px;
 }
 
 /* End (Post) */
@@ -946,5 +950,25 @@ header.main-header h2{
   font-size: 1.2em;
 }  
 
+
+/* -----
+SVG Icons - svgicons.sparkk.fr
+----- */
+
+.svg-icon {
+  width: 100%;
+  height: 100%;
+}
+
+.svg-icon path,
+.svg-icon polygon,
+.svg-icon rect {
+  fill: #848484;
+}
+
+.svg-icon circle {
+  stroke: #848484;
+  stroke-width: 1;
+}
 
 /* -------------------------- */

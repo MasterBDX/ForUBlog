@@ -1437,9 +1437,9 @@ main.posts-listing .post-footer {
 }
 
 .blog-post .post-comments img {
-  max-width: 40px;
-  min-width: 40px;
-  height: 40px;
+  max-width: 45px;
+  min-width: 45px;
+  height: 45px;
 }
 
 .blog-post .post-comments strong {

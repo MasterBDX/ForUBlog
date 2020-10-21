@@ -25,6 +25,7 @@
           <div class="post col-xl-6">
             <div class="post-thumbnail">
               <a href="{% url 'posts:detail' slug=obj.slug %}">
+              
                 <img src="{% if obj.thumbnail.url %} 
                             {{ obj.thumbnail.url }}
                             {% else %}
@@ -48,16 +49,24 @@
               <footer class="post-footer d-flex align-items-center">
                 <a href="{% url 'posts:author_posts' auth_slug=obj.author.user.slug %}"
                   class="author d-flex align-items-center flex-wrap">
-
-                  <div class="avatar" style=" {% if obj.author.user.profileimage.image %}
+                    
+                  <!-- <div class="avatar" style=" {% if obj.author.user.profileimage.image %}
                                     background-image:url({{ obj.author.user.profileimage.image.url  }})
                                     {% else %}
                                     background-image:url({% static 'img/default.png' %})
                                     {% endif %}
                                     ;
                                     background-size: cover;">
+                  </div> -->
+                  {% if obj.author.user.profileimage.image %}
+                    <div class="avatar" style=" background-image:url({{ obj.author.user.profileimage.image.url  }});
+                                                background-size: cover;" >
+                    </div>
+                  {% else %}
+                  <div class="avatar">
+                    {% include 'snippets/svg_icon.html' %}
                   </div>
-
+                  {% endif %}
                   <div class="title"><span>{{obj.author.user.username}}</span></div>
                 </a>
                 <div class="date"><i class="icon-clock"></i>{{obj.timestamp|timesince}}</div>
@@ -66,7 +75,7 @@
             </div>
           </div>
           {% endfor %}
-
+         
           {% else %}
           {% if request.GET.q %}
           <div class="col-md-10 m-auto text-center mytitle ">

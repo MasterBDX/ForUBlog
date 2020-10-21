@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-10-14 21:07+0000\n"
+"POT-Creation-Date: 2020-10-21 07:07+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -119,19 +119,27 @@ msgstr "هذا البريد مستخدم بالفعل !"
 msgid "Profile Picture"
 msgstr "صورة الملف الشخصي"
 
-#: accounts/models.py:105
+#: accounts/models.py:43
+msgid "User"
+msgstr "مستخدم"
+
+#: accounts/models.py:44
+msgid "Users"
+msgstr "المستخدمون"
+
+#: accounts/models.py:103
 msgid "Email Activation"
 msgstr "تفعيل البريد اﻹلكتروني"
 
-#: accounts/models.py:106
+#: accounts/models.py:104
 msgid "Email Activations"
 msgstr "تفاعيل البريد اﻹلكتروني"
 
-#: accounts/models.py:178
+#: accounts/models.py:176
 msgid "Profile Image"
 msgstr "صورة الملف الشخصي"
 
-#: accounts/models.py:179
+#: accounts/models.py:177
 msgid "Profile Images"
 msgstr "صور الملفات الشخصية"
 
@@ -230,7 +238,7 @@ msgstr "تم إعادة تعيين كلمة المرور , الآن من الم�
 #: accounts/templates/authentication/login.html:3
 #: accounts/templates/authentication/login.html:25
 #: accounts/templates/authentication/login.html:33
-#: templates/snippets/footer.html:69 templates/snippets/navbar.html:130
+#: templates/snippets/footer.html:69 templates/snippets/navbar.html:131
 msgid "Login"
 msgstr "تسجيل الدخول"
 
@@ -344,7 +352,7 @@ msgstr "نسيت كلمة المرور"
 
 #: accounts/templates/authentication/profile.html:4
 #: accounts/templates/authentication/profile.html:29
-#: templates/snippets/navbar.html:119
+#: templates/snippets/navbar.html:120
 msgid "Profile"
 msgstr "الملف الشخصي"
 
@@ -390,7 +398,7 @@ msgstr "حذف"
 #: accounts/templates/authentication/register.html:3
 #: accounts/templates/authentication/register.html:9
 #: accounts/templates/authentication/register.html:15
-#: templates/snippets/footer.html:74 templates/snippets/navbar.html:135
+#: templates/snippets/footer.html:74 templates/snippets/navbar.html:136
 msgid "Register"
 msgstr "التسجيل"
 
@@ -508,6 +516,7 @@ msgstr "المحتوى"
 msgid "Blog Info"
 msgstr "بيانات المدونة"
 
+#: main/models.py:36
 msgid "Mian Image"
 msgstr "الصورة الرئيسية"
 
@@ -560,7 +569,7 @@ msgid "There is no privacy & policy yet"
 msgstr "لم يتم وضع أي سياسة للخصوصية بعد"
 
 #: main/templates/main/authors_admin.html:5
-#: main/templates/main/authors_admin.html:29 templates/snippets/navbar.html:73
+#: main/templates/main/authors_admin.html:29 templates/snippets/navbar.html:74
 msgid "Authors Dashboard"
 msgstr "التحكم بالمؤلَفين"
 
@@ -586,11 +595,11 @@ msgstr "البريد الإلكتروني"
 msgid "Status"
 msgstr "الحالة"
 
-#: main/templates/main/authors_admin.html:60 main/views.py:164
+#: main/templates/main/authors_admin.html:60 main/views.py:165
 msgid "deleted"
 msgstr "إزالة"
 
-#: main/templates/main/authors_admin.html:62 main/views.py:167
+#: main/templates/main/authors_admin.html:62 main/views.py:170
 msgid "created"
 msgstr "إضافة"
 
@@ -639,12 +648,12 @@ msgstr "التحكم بالمنشورات"
 msgid "To add new post"
 msgstr "ﻹضافة منشور جديد"
 
-#: main/templates/main/dashboards/posts.html:90
+#: main/templates/main/dashboards/posts.html:93
 #: posts/templates/posts/list.html:79
 msgid "There are no Posts"
 msgstr "لم يتم العثور على أي منشور"
 
-#: main/templates/main/home.html:3 templates/snippets/navbar.html:42
+#: main/templates/main/home.html:3 templates/snippets/navbar.html:43
 msgid "Home"
 msgstr "الرئيسية"
 
@@ -660,11 +669,11 @@ msgstr "مميزنا"
 msgid "your message has been sent"
 msgstr "شكرا للتواصل معنا, سيتم إرسال الرد في أقرب وقت ممكن"
 
-#: main/views.py:157
+#: main/views.py:158
 msgid "create"
 msgstr "إضافة"
 
-#: main/views.py:171
+#: main/views.py:175
 msgid "You have successfuly {} Author for {} "
 msgstr "لقد قمت ب{} المؤلف للمستخدم {} بنجاح"
 
@@ -696,6 +705,10 @@ msgstr "تنشيط"
 msgid "featured"
 msgstr "مميز"
 
+#: posts/forms.py:22
+msgid "notificated"
+msgstr "تم اﻹشعار"
+
 #: posts/models.py:24
 msgid "Author"
 msgstr "مؤلف"
@@ -709,7 +722,7 @@ msgid "Category"
 msgstr "صنف"
 
 #: posts/models.py:51 templates/snippets/footer.html:100
-#: templates/snippets/navbar.html:94
+#: templates/snippets/navbar.html:95
 msgid "Categories"
 msgstr "التصنيفات"
 
@@ -717,9 +730,15 @@ msgstr "التصنيفات"
 msgid "Post"
 msgstr "منشور"
 
-#: posts/models.py:117 templates/snippets/navbar.html:97
+#: posts/models.py:117 templates/snippets/navbar.html:98
 msgid "Posts"
 msgstr "المنشورات"
+
+#: posts/signals.py:43
+#, fuzzy
+#| msgid "Next Post"
+msgid "New Post"
+msgstr "التالي"
 
 #: posts/templates/posts/confirm_delete.html:20
 msgid "Are you sure you want to delete"
@@ -751,7 +770,7 @@ msgstr "السابق"
 msgid "Next Post"
 msgstr "التالي"
 
-#: posts/templates/posts/list.html:5 templates/snippets/navbar.html:47
+#: posts/templates/posts/list.html:5 templates/snippets/navbar.html:48
 msgid "Blog"
 msgstr "المدونة"
 
@@ -772,7 +791,7 @@ msgid "Search the blog"
 msgstr "للبحث عن منشور"
 
 #: search/templates/snippets/search_bar_widget.html:8
-#: templates/snippets/navbar.html:14
+#: templates/snippets/navbar.html:15
 msgid "What are you looking for ?"
 msgstr "ما الذي يثير إهتمامك ؟"
 
@@ -834,22 +853,22 @@ msgstr "حسابي"
 msgid "2019. All rights reserved for Masterbdx team"
 msgstr "جميع الحقوق محفوظة لفريق MasterBDX ( 2019 )"
 
-#: templates/snippets/navbar.html:53
+#: templates/snippets/navbar.html:54
 msgid "Contact"
 msgstr "تواصل معنا"
 
-#: templates/snippets/navbar.html:66
+#: templates/snippets/navbar.html:67
 msgid "Admin"
 msgstr "المشرف"
 
-#: templates/snippets/navbar.html:76
+#: templates/snippets/navbar.html:77
 msgid "Ultimate Dashboard"
 msgstr "لوحة التحكم الرئيسية"
 
-#: templates/snippets/navbar.html:88
+#: templates/snippets/navbar.html:89
 msgid "Dashboard"
 msgstr "لوحة التحكم"
 
-#: templates/snippets/navbar.html:122
+#: templates/snippets/navbar.html:123
 msgid "Logout"
 msgstr "تسجيل الخروج"

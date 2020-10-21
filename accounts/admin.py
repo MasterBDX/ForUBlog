@@ -21,7 +21,8 @@ class UserAdmin(BaseUserAdmin):
         ('User Info', {'fields': ('email', 'username', 'slug', 'password')}),
 
         ('Permissions', {'fields': ('is_active', 'is_staff',
-                                    'is_admin', 'subscribed', 'check_subscribe')}),
+                                    'is_admin','is_author',
+                                    'subscribed', 'check_subscribe')}),
     )
 
     add_fieldsets = (

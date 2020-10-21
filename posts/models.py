@@ -109,7 +109,7 @@ class Post(models.Model):
                                   null=True, blank=True)
     categories = models.ManyToManyField(Category, related_name='categories')
     featured = models.BooleanField(default=False)
-    notification = models.BooleanField(default=False)
+    notificated = models.BooleanField(default=False)
 
     class Meta:
         ordering = ['-timestamp']

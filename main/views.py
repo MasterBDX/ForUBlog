@@ -164,10 +164,13 @@ def confirm_author_view(request, slug):
         if user.is_author:
             status = _('deleted')
             author = Author.objects.filter(user__slug=slug).first().delete()
+            user.is_author = False
+            
         else:
             status = _('created')
-            author = Author.objects.create(user=user)
-
+            user.is_author = True
+            author = Author.objects.create(user=user)        
+        user.save()
         messages.add_message(request, messages.SUCCESS,
                              _('You have successfuly {} Author for {} ').format(status, username).upper())
         return redirect('main:authors_admin')

@@ -29,6 +29,7 @@ class User(AbstractUser):
     check_subscribe = models.NullBooleanField(blank=True)
 
     is_active = models.BooleanField(default=False)
+    is_author = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
     is_admin = models.BooleanField(default=False)
 
@@ -36,6 +37,11 @@ class User(AbstractUser):
     REQUIRED_FIELDS = ['username']
 
     objects = UserManager()
+
+    class Meta:
+        ordering = ['-is_admin','-is_author','username']
+        verbose_name =_('User')
+        verbose_name_plural = _('Users')
 
     def __str__(self):
         return self.username
@@ -54,6 +60,7 @@ class User(AbstractUser):
 
     def get_absolute_url(self):
         return reverse('accounts:profile', kwargs={'user_slug': self.slug})
+
 
     def notification(self, link):
         from_email = getattr(settings, 'DEFAULT_FROM_EMAIL')
@@ -75,15 +82,6 @@ class User(AbstractUser):
         )
         return email > 0
 
-    @property
-    def is_author(self):
-        try:
-            if self.author:
-                return True
-        except self.__class__.author.RelatedObjectDoesNotExist:
-            return False
-        except:
-            raise ValueError('there is some problem')
 
 
 class EmailActivation(models.Model):

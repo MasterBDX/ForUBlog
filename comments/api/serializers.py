@@ -46,7 +46,7 @@ class ReplySerializer(serializers.ModelSerializer):
         try:
             image = obj.user.profileimage.image.url
         except:
-            image = '/static/img/default.png'
+            image = None
         return image
     
     def get_edit_url(self,obj):
@@ -101,7 +101,7 @@ class CommentSerialzer(serializers.ModelSerializer):
         try:
             image = obj.user.profileimage.image.url
         except:
-            image = '/static/img/default.png'
+            image = None
         return image
     
     def get_edit_url(self,obj):

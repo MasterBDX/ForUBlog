@@ -42,16 +42,18 @@
                   class="author d-flex align-items-center flex-wrap">
                   <div class="title"><span>{{object.author.user.username}}</span></div>
                 </a>
-                <div class="avatar" style=" {% if object.author.user.profileimage.image %}
-                                        background-image:url({{ object.author.user.profileimage.image.url  }})
-                                        {% else %}
-                                        background-image:url({% static 'img/default.png' %})
-                                        {% endif %}
-                                        ;
+                {% if object.author.user.profileimage.image %}
+                <div class="avatar" style=" 
+                                        background-image:url({{ object.author.user.profileimage.image.url  }});
                                         background-size: cover;
                                         ">
-  
+
                 </div>
+                {% else %}
+                    <div class="avatar">
+                        {% include 'snippets/svg_icon.html' %}
+                    </div>
+                {% endif %}
                 <div class="date"><i class="icon-clock"></i>{{object.timestamp}}</div>
                 <div class="comments"><i class="icon-comment"></i>{{object.comment_count}}</div>
               </footer>

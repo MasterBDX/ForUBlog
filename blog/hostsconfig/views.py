@@ -1,5 +1,6 @@
 from django.http import HttpResponseRedirect
+from django.conf import settings
 
 
 def www_redirect_root(request,path=None):
-    return HttpResponseRedirect('http://www.for4you.com:8000/')
+    return HttpResponseRedirect(getattr(settings,'BASE_URL'))
