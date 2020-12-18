@@ -1,16 +1,20 @@
-MasterBDX blog is an amazing blog , it have a great components  <br> what can you find in my blog ??
+# Foru Blog
+Foru blog is an amazing blog , it have a great components  <br> what can you find in my blog ??
+<br>  
+What can you find in my blog ??
 <br>
-1 - a great Authentication system
+1 - A great Authentication system
 <br>
-2 -  interactive Admin system to control your database
+2 - Interactive Admin system to control your database
 <br>
 3 - Custom Admin to upgrade your users to authors or versa
 <br>
 4 - Custom Admin for the authors to control their post
 <br>
-5 - Comment and Reply section  in every post
+5 - Comment and Reply section  (Asynchronous)
 <br>
-6 - more and more you have to take a look 
+6 - More and more you have to take a look 
+<br>
 
 
 Clone This Project (Make Sure You Have Git Installed)
