@@ -1,5 +1,5 @@
 # Foru Blog
-Foru blog is an amazing blog , it have a great components  <br> what can you find in my blog ??
+Foru blog is an amazing blog , it have a great components
 <br>  
 What can you find in my blog ??
 <br>
